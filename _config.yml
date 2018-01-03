@@ -3,7 +3,7 @@
 title: "CapeskyChung"
 description: "2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。"
 logo: # 120x120 px default image used for Twitter summary card
-teaser: # 400x250 px default teaser image used in image archive grid
+teaser: index.jpeg# 400x250 px default teaser image used in image archive grid
 locale: en
 url:
 feed:
@@ -34,7 +34,7 @@ owner:
     ad-slot:
   bio:
   avatar: bio-photo.jpg # 160x160 px image for author byline
-  disqus-shortname:
+  disqus-shortname: capeskychung
 
 
 include:
