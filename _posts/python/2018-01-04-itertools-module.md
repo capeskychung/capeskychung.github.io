@@ -18,7 +18,7 @@ itertools模块在python中处理可迭代的对象很方便。
 创建一个迭代器，只要函数predicate(item)为True，就丢弃iterable中的项，如果predicate返回False，就会生成iterable中的项和所有后续项。 
 
 等价实现:  
-```python
+{% highlight python %}
 def dropwhile(predicate, iterable):
 	iterable = iter(iterable)
 	for x in iterable:
@@ -27,11 +27,11 @@ def dropwhile(predicate, iterable):
 			break
 	for x in iterable:
 		yield x
-```
+{% endhighlight %}
 
 
 使用示例  
-```python
+{% highlight python %}
 from itertools import dropwhile
 
 def should_drop(x):
@@ -39,16 +39,17 @@ def should_drop(x):
 	return (x < 1)
 
 
-for i in drpwhile(should_drop, [-1, 0, 1, 2, 3, 4, 1, -2]):
+for i in dropwhile(should_drop, [-1, 0, 1, 2, 3, 4, 1, -2]):
 	print 'yield', i
-```
 
-Test: -1
-Test: 0
-Test: 1
-Yield: 1
-Yield: 2
-Yield: 3
-yield: 4
-yield: 1
-yield: -2
+Test: -1  
+Test: 0  
+Test: 1  
+Yield: 1  
+Yield: 2  
+Yield: 3  
+yield: 4  
+yield: 1  
+yield: -2  
+
+{% endhighlight %}
