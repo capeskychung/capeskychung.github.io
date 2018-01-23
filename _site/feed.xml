@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
     <title>CapeskyChung</title>
-    <generator uri="https://github.com/jekyll/jekyll">Jekyll v3.1.6</generator>
-		<icon>/apple-touch-icon-precomposed.png</icon>
-    <subtitle>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</subtitle>
-    <link href="/atom.xml" rel="self"/>
-    <link href="/" rel="alternate" type="text/html"/>
-    <updated>2018-01-23T15:27:11+08:00</updated>
-    <id>/</id>
-    <author>
-			<name>capeskychung</name>
-			<uri>/</uri>
-			
-		</author>
-
+    <description>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</description>
+    <link>http://cenalulu.github.io/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 23 Jan 2018 15:27:11 +0800</pubDate>
+    <lastBuildDate>Tue, 23 Jan 2018 15:27:11 +0800</lastBuildDate>
+    <generator>Jekyll v3.1.6</generator>
     
-    <entry>
+      <item>
         <title>itertools模块</title>
-        <link href="/python/itertools-module/"/>
-        <updated>2018-01-04T18:04:00+08:00</updated>
-        <id>/python/itertools-module</id>
-        <author>
-					<name>capeskychung</name>
-					<uri>/</uri>
-					
-				</author>
-        <content type="html">
-        	
-        	&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;itertools模块在python中处理可迭代的对象很方便。&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -77,23 +60,23 @@ yield: 4
 yield: 1
 yield: -2
 ```&lt;/p&gt;
-
-        </content>
-    </entry>
+</description>
+        <pubDate>Thu, 04 Jan 2018 18:04:00 +0800</pubDate>
+	<link>http://capeskychung.github.io/python/itertools-module/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/python/itertools-module/</guid>
+        
+        <category>itertools</category>
+        
+        <category>python</category>
+        
+        
+        <category>python</category>
+        
+      </item>
     
-    <entry>
+      <item>
         <title>Welcome to Jekyll!</title>
-        <link href="/jekyll/update/welcome-to-jekyll/"/>
-        <updated>2018-01-03T17:06:25+08:00</updated>
-        <id>/jekyll/update/welcome-to-jekyll</id>
-        <author>
-					<name>capeskychung</name>
-					<uri>/</uri>
-					
-				</author>
-        <content type="html">
-        	
-        	&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
 
 &lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
 
@@ -107,23 +90,21 @@ yield: -2
 
 &lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
 
-
-        </content>
-    </entry>
+</description>
+        <pubDate>Wed, 03 Jan 2018 17:06:25 +0800</pubDate>
+	<link>http://capeskychung.github.io/jekyll/update/welcome-to-jekyll/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/jekyll/update/welcome-to-jekyll/</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
     
-    <entry>
+      <item>
         <title>在Mac电脑上安装多版本的Python</title>
-        <link href="/python/multi-version-python-on-mac/"/>
-        <updated>2015-01-22T00:00:00+08:00</updated>
-        <id>/python/multi-version-python-on-mac</id>
-        <author>
-					<name>capeskychung</name>
-					<uri>/</uri>
-					
-				</author>
-        <content type="html">
-        	
-        	&lt;blockquote&gt;
+        <description>&lt;blockquote&gt;
   &lt;p&gt;本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -153,8 +134,15 @@ yield: -2
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;pyenv &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;2.7.5&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-
-        </content>
-    </entry>
+</description>
+        <pubDate>Thu, 22 Jan 2015 00:00:00 +0800</pubDate>
+	<link>http://capeskychung.github.io/python/multi-version-python-on-mac/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/python/multi-version-python-on-mac/</guid>
+        
+        
+        <category>python</category>
+        
+      </item>
     
-</feed>
+  </channel>
+</rss>

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>/python/itertools-module/</loc>
+<lastmod>2018-01-04T18:04:00+08:00</lastmod>
+</url>
+<url>
 <loc>/jekyll/update/welcome-to-jekyll/</loc>
 <lastmod>2018-01-03T17:06:25+08:00</lastmod>
+</url>
+<url>
+<loc>/python/multi-version-python-on-mac/</loc>
+<lastmod>2015-01-22T00:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>/404/</loc>
@@ -11,16 +19,16 @@
 <loc>/about/</loc>
 </url>
 <url>
-<loc>/python/</loc>
+<loc>/linux/</loc>
 </url>
 <url>
-<loc>/linux/</loc>
+<loc>/algorithm/</loc>
 </url>
 <url>
 <loc>/ai/</loc>
 </url>
 <url>
-<loc>/algorithm/</loc>
+<loc>/python/</loc>
 </url>
 <url>
 <loc>/</loc>
