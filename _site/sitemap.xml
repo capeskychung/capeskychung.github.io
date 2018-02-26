@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>/python/python-end%25E7%2594%25A8%25E6%25B3%2595/</loc>
+<lastmod>2018-01-04T18:04:00+08:00</lastmod>
+</url>
+<url>
 <loc>/python/itertools-module/</loc>
 <lastmod>2018-01-04T18:04:00+08:00</lastmod>
 </url>

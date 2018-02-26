@@ -2,19 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>在Mac电脑上安装多版本的Python • CapeskyChung</title>
-    <meta name="description" content="
-  本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法
-
+    <title>python用shell的end结束代码块 • CapeskyChung</title>
+    <meta name="description" content="初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码
 
 ">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="end, python">
     
     	<!-- Twitter Cards -->
-	<meta name="twitter:title" content="在Mac电脑上安装多版本的Python">
-	<meta name="twitter:description" content="
-  本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法
-
+	<meta name="twitter:title" content="python用shell的end结束代码块">
+	<meta name="twitter:description" content="初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码
 
 ">
 	
@@ -26,16 +22,14 @@
 	<!-- Open Graph -->
 	<meta property="og:locale" content="en">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="在Mac电脑上安装多版本的Python">
-	<meta property="og:description" content="
-  本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法
-
+	<meta property="og:title" content="python用shell的end结束代码块">
+	<meta property="og:description" content="初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码
 
 ">
-	<meta property="og:url" content="/python/multi-version-python-on-mac/">
+	<meta property="og:url" content="/python/python-end%E7%94%A8%E6%B3%95/">
 	<meta property="og:site_name" content="CapeskyChung">
 
-    <link rel="canonical" href="/python/multi-version-python-on-mac/">
+    <link rel="canonical" href="/python/python-end%E7%94%A8%E6%B3%95/">
 
     <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
     <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
@@ -144,39 +138,24 @@
   </nav><!-- /.breadcrumbs -->
 
 		<div class="page-title">
-			<h1>在Mac电脑上安装多版本的Python</h1>
+			<h1>python用shell的end结束代码块</h1>
 		</div>
 		<div class="inner-wrap">
 			<div id="content" class="page-content" itemprop="articleBody">
-				<blockquote>
-  <p>本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法</p>
-</blockquote>
+				<p>初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码</p>
 
-<blockquote>
-  <p>申明：本文是Stackoverflow的回答转载和翻译。<a href="http://stackoverflow.com/questions/18671253/how-can-i-use-homebrew-to-install-both-python-2-and-3-on-mac-mountain-lion">原文链接</a></p>
-</blockquote>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">__builtins__</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="bp">None</span>
 
-<h2 id="section">具体方法</h2>
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">print</span> <span class="s">'a &gt; 0'</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">print</span> <span class="s">'a &lt;= 0'</span>
+	<span class="n">end</span>
+<span class="n">end</span>
 
-<p>首先通过<code class="highlighter-rouge">homebrew</code>安装<code class="highlighter-rouge">pyenv</code>，之后的所有Python安装和管理通过<code class="highlighter-rouge">pyenv</code>进行。</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>brew install pyenv</code></pre></figure>
-
-<p><code class="highlighter-rouge">pyenv</code>安装完以后，就可以选择性的进行Python环境安装了。下面已安装Python2.7为例：</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pyenv install 2.7.5</code></pre></figure>
-
-<p>此外，你还可以通过<code class="highlighter-rouge">pyenv</code>查看目前系统中已经安装过的Python版本</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pyenv versions</code></pre></figure>
-
-<p>如果需要在不同版本的Python间进行切换的话，使用以下命令：</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pyenv global 3.3.1</code></pre></figure>
-
-<p>当然，你也可以让版本切换只对当前目录生效</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pyenv <span class="nb">local </span>2.7.5</code></pre></figure>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+	<span class="n">test</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
 
 
 				<hr />
@@ -191,13 +170,13 @@
 	<p class="author-bio"></p>
 </div><!-- ./author-content -->
 					<div class="inline-btn">
-	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=在Mac电脑上安装多版本的Python&amp;url=/python/multi-version-python-on-mac/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
-	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/python/multi-version-python-on-mac/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
-	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/python/multi-version-python-on-mac/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=python用shell的end结束代码块&amp;url=/python/python-end%E7%94%A8%E6%B3%95/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/python/python-end%E7%94%A8%E6%B3%95/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/python/python-end%E7%94%A8%E6%B3%95/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
 </div><!-- /.share-this -->
 
 					<div class="page-meta">
-	<p>Updated <time datetime="2015-01-22T00:00:00Z" itemprop="datePublished">January 22, 2015</time></p>
+	<p>Updated <time datetime="2018-01-04T18:04:00Z" itemprop="datePublished">January 04, 2018</time></p>
 </div><!-- /.page-meta -->
 				</footer><!-- /.footer -->
 				<aside>
@@ -205,20 +184,7 @@
 				</aside>
 			</div><!-- /.content -->
 		</div><!-- /.inner-wrap -->
-		<div class="ads"><style>
-.responsive-ads { width: 300px; height: 200px; }
-@media(min-width: 520px) { .responsive-ads { width: 468px; height: 60px; } }
-@media(min-width: 768px) { .responsive-ads { width: 160px; height: 600px; } }
-</style>
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle responsive-ads"
-	style="display:inline-block"
-	data-ad-client=""
-	data-ad-slot=""></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script></div><!-- /.ads -->
+		
 	</article><!-- ./wrap -->
 </div><!-- /#main -->
 
