@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>python inspect解析 • CapeskyChung</title>
+    <meta name="description" content="inspect用法，用于判断python的对象的类型.
+
+">
+    <meta name="keywords" content="inspect, python">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="python inspect解析">
+	<meta name="twitter:description" content="inspect用法，用于判断python的对象的类型.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="python inspect解析">
+	<meta property="og:description" content="inspect用法，用于判断python的对象的类型.
+
+">
+	<meta property="og:url" content="/python/python-inspect/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/python/python-inspect/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/python/" >Python</a></li>
+  
+    
+    <li><a href="/linux/" >Linux</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/python/">
+        
+        <div class="title">Python</div>
+        
+      </a>
+    </li><li>
+      <a href="/linux/">
+        
+        <div class="title">Linux</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/python/" itemprop="url">
+        <span itemprop="title">Python</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>python inspect解析</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>inspect用法，用于判断python的对象的类型.</p>
+
+<h4 id="ismodule">ismodule</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{}</span>
+<span class="k">def</span> <span class="nf">ismodule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a module.
+
+    Module objects provide these attributes:
+        __doc__         documentation string
+        __file__        filename (missing for built-in modules)"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="isclass">isclass</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a class.
+
+    Class objects provide these attributes:
+        __doc__         documentation string
+        __module__      name of module in which this class was defined"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">ClassType</span><span class="p">))</span></code></pre></figure>
+
+<h4 id="ismethod">ismethod</h4>
+<p>用来判断一个方法是否是一个类的成员方法</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is an instance method.
+
+    Instance method objects provide these attributes:
+        __doc__         documentation string
+        __name__        name with which this method was defined
+        im_class        class object in which this method belongs
+        im_func         function object containing implementation of method
+        im_self         instance to which this method is bound, or None"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="ismethoddescriptor">ismethoddescriptor</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">ismethoddescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a method descriptor.
+
+    But not if ismethod() or isclass() or isfunction() are true.
+
+    This is new in Python 2.2, and, for example, is true of int.__add__.
+    An object passing this test has a __get__ attribute but not a __set__
+    attribute, but beyond that the set of attributes varies.  __name__ is
+    usually sensible, and __doc__ often is.
+
+    Methods implemented via descriptors that also pass one of the other
+    tests return false from the ismethoddescriptor() test, simply because
+    the other tests promise more -- you can, e.g., count on having the
+    im_func attribute (etc) when an object passes ismethod()."""</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__get__"</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__set__"</span><span class="p">)</span> <span class="c"># else it's a data descriptor</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>           <span class="c"># mutual exclusion</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">isclass</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span></code></pre></figure>
+
+<h4 id="isdatadescriptor">isdatadescriptor</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isdatadescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a data descriptor.
+
+    Data descriptors have both a __get__ and a __set__ attribute.  Examples are
+    properties (defined in Python) and getsets and members (defined in C).
+    Typically, data descriptors will also have __name__ and __doc__ attributes
+    (properties, getsets, and members have both of these attributes), but this
+    is not guaranteed."""</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__set__"</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__get__"</span><span class="p">))</span></code></pre></figure>
+
+<h4 id="ismemberdescriptorobject">ismemberdescriptor(object)</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="s">'MemberDescriptorType'</span><span class="p">):</span>
+    <span class="c"># CPython and equivalent</span>
+    <span class="k">def</span> <span class="nf">ismemberdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="s">"""Return true if the object is a member descriptor.
+
+        Member descriptors are specialized descriptors defined in extension
+        modules."""</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MemberDescriptorType</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># Other implementations</span>
+    <span class="k">def</span> <span class="nf">ismemberdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="s">"""Return true if the object is a member descriptor.
+
+        Member descriptors are specialized descriptors defined in extension
+        modules."""</span>
+        <span class="k">return</span> <span class="bp">False</span></code></pre></figure>
+
+<h4 id="isgetsetdescriptor">isgetsetdescriptor</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="s">'GetSetDescriptorType'</span><span class="p">):</span>
+    <span class="c"># CPython and equivalent</span>
+    <span class="k">def</span> <span class="nf">isgetsetdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="s">"""Return true if the object is a getset descriptor.
+
+        getset descriptors are specialized descriptors defined in extension
+        modules."""</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">GetSetDescriptorType</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># Other implementations</span>
+    <span class="k">def</span> <span class="nf">isgetsetdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="s">"""Return true if the object is a getset descriptor.
+
+        getset descriptors are specialized descriptors defined in extension
+        modules."""</span>
+        <span class="k">return</span> <span class="bp">False</span></code></pre></figure>
+
+<h4 id="isfunction">isfunction</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a user-defined function.
+
+    Function objects provide these attributes:
+        __doc__         documentation string
+        __name__        name with which this function was defined
+        func_code       code object containing compiled function bytecode
+        func_defaults   tuple of any default values for arguments
+        func_doc        (same as __doc__)
+        func_globals    global namespace in which this function was defined
+        func_name       (same as __name__)"""</span>
+    <span class="k">if</span> <span class="n">_signature_is_functionlike</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_signature_is_functionlike</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s">'cython_function_or_method'</span></code></pre></figure>
+
+<h4 id="isgeneratorfunction">isgeneratorfunction</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isgeneratorfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a user-defined generator function.
+
+    Generator function objects provides same attributes as functions.
+
+    See help(isfunction) for attributes listing."""</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">((</span><span class="n">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="ow">or</span> <span class="n">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span> <span class="ow">and</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_flags</span> <span class="o">&amp;</span> <span class="n">CO_GENERATOR</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="istraceback">istraceback</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">istraceback</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a traceback.
+
+    Traceback objects provide these attributes:
+        tb_frame        frame object at this level
+        tb_lasti        index of last attempted instruction in bytecode
+        tb_lineno       current line number in Python source code
+        tb_next         next inner traceback object (called by this level)"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">TracebackType</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="isframe">isframe</h4>
+<p>栈帧表示程序运行时函数调用栈中的某一帧。函数没有属性可以获取它，因为它在函数调用时才会产生，而生成器则是由函数调用返回的，所以有属性指向栈帧。获取某个函数的相关的栈帧，则必须在调用这个函数且这个函数尚未放回时获取。通过sys.getframe()函数或者inspect模块的currentframe()函数获取当前栈帧。属性为只读</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isframe</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a frame object.
+
+    Frame objects provide these attributes:
+        f_back          next outer frame object (this frame's caller) 调用栈的前一帧
+        f_builtins      built-in namespace seen by this frame
+        f_code          code object being executed in this frame 栈帧对应的code对象
+        f_exc_traceback traceback if raised in this frame, or None
+        f_exc_type      exception type if raised in this frame, or None
+        f_exc_value     exception value if raised in this frame, or None
+        f_globals       global namespace seen by this frame
+        f_lasti         index of last attempted instruction in bytecode
+        f_lineno        current line number in Python source code
+        f_locals        local namespace seen by this frame
+        f_restricted    0 or 1 if frame is in restricted execution mode
+        f_trace         tracing function for this frame, or None"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FrameType</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// 每个栈用PyFrameObject结构表示
+</span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_frame</span> <span class="p">{</span>
+    <span class="n">PyObject_VAR_HEAD</span>
+    <span class="k">struct</span> <span class="n">_frame</span> <span class="o">*</span><span class="n">f_back</span><span class="p">;</span>     <span class="c1">// 前一个运行栈，调用方
+</span>    <span class="n">PyCodeObject</span> <span class="o">*</span><span class="n">f_code</span><span class="p">;</span>      <span class="c1">// 执行的PyCodeObject对象
+</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_builtins</span><span class="p">;</span>      <span class="c1">// builtins环境变量集合
+</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_globals</span><span class="p">;</span>       <span class="c1">// globals全局变量集合
+</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_locals</span><span class="p">;</span>        <span class="c1">// locals本地变量集合
+</span>    <span class="n">PyObject</span> <span class="o">**</span><span class="n">f_valuestack</span><span class="p">;</span>   <span class="c1">// 栈起始地址，最后一个本地变量之后
+</span>    <span class="n">PyObject</span> <span class="o">**</span><span class="n">f_stacktop</span><span class="p">;</span>     <span class="c1">// 栈针位置，指向栈中下一个空闲位置
+</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_trace</span><span class="p">;</span>         <span class="c1">// trace函数
+</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_exc_type</span><span class="p">,</span> <span class="o">*</span><span class="n">f_exc_value</span><span class="p">,</span> <span class="o">*</span><span class="n">f_exc_traceback</span><span class="p">;</span>  <span class="c1">// 记录异常处理
+</span>    <span class="n">PyThreadState</span> <span class="o">*</span><span class="n">f_tstate</span><span class="p">;</span>   <span class="c1">// 当前的线程
+</span>    <span class="kt">int</span> <span class="n">f_lasti</span><span class="p">;</span>		       <span class="c1">// 当前执行的字节码的地址
+</span>    <span class="kt">int</span> <span class="n">f_lineno</span><span class="p">;</span>		       <span class="c1">// 当前的行号
+</span>    <span class="kt">int</span> <span class="n">f_iblock</span><span class="p">;</span>		       <span class="c1">// 一些局部block块
+</span>    <span class="n">PyTryBlock</span> <span class="n">f_blockstack</span><span class="p">[</span><span class="n">CO_MAXBLOCKS</span><span class="p">];</span> <span class="cm">/* for try and loop blocks */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_localsplus</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>	<span class="c1">// 栈地址，大小为 本地变量+co_stacksize
+</span><span class="p">}</span> <span class="n">PyFrameObject</span><span class="p">;</span></code></pre></figure>
+
+<p><img src="https://fanchao01.github.io/blog/images/python_frame_structure.png" alt="image" />
+当执行函数调用时会进入新的栈帧，那么当前栈帧就作为下一个栈帧的f_back字段。<br />
+<img src="https://fanchao01.github.io/blog/images/python_frame_link.png" alt="image" />
+多个栈帧链属于一个线程，而同时可能存在多个线程，每个线程拥有一个栈帧链。这样形成了Python的虚拟机运行环境。<br />
+<img src="https://fanchao01.github.io/blog/images/python_runtime_env.png" alt="image" /></p>
+
+<p>参考：https://fanchao01.github.io/blog/2016/11/13/python-pycode_and_frame/</p>
+
+<h4 id="iscode">iscode</h4>
+<p>代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。<br />
+&gt; co_argcount:普通参数的总数，不包括* 参数和 ** 参数<br />
+&gt; co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，<br />
+&gt; co_varnames:所有局部变量的元组。 <br />
+&gt; co_filename: 源代码所在的文件名。 <br />
+&gt; co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">iscode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a code object.
+
+    Code objects provide these attributes:
+        co_argcount     number of arguments (not including * or ** args)
+        co_code         string of raw compiled bytecode
+        co_consts       tuple of constants used in the bytecode
+        co_filename     name of file in which this code object was created
+        co_firstlineno  number of first line in Python source code
+        co_flags        bitmap: 1=optimized | 2=newlocals | 4=*arg | 8=**arg
+        co_lnotab       encoded mapping of line numbers to bytecode indices
+        co_name         name with which this code object was defined
+        co_names        tuple of names of local variables
+        co_nlocals      number of local variables
+        co_stacksize    virtual machine stack space required
+        co_varnames     tuple of names of arguments and local variables"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">CodeType</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">PyObject_HEAD</span>
+    <span class="kt">int</span> <span class="n">co_argcount</span><span class="p">;</span>        <span class="cm">/* 位置参数个数 */</span>
+    <span class="kt">int</span> <span class="n">co_nlocals</span><span class="p">;</span>         <span class="cm">/* 局部变量个数 */</span>
+    <span class="kt">int</span> <span class="n">co_stacksize</span><span class="p">;</span>       <span class="cm">/* 栈大小 */</span>
+    <span class="kt">int</span> <span class="n">co_flags</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_code</span><span class="p">;</span>      <span class="cm">/* 字节码指令序列 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_consts</span><span class="p">;</span>    <span class="cm">/* 所有常量集合 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_names</span><span class="p">;</span>     <span class="cm">/* 所有符号名称集合 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_varnames</span><span class="p">;</span>  <span class="cm">/* 局部变量名称集合 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_freevars</span><span class="p">;</span>  <span class="cm">/* 闭包用的的变量名集合 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_cellvars</span><span class="p">;</span>  <span class="cm">/* 内部嵌套函数引用的变量名集合 */</span>
+
+    <span class="cm">/* The rest doesn’t count for hash/cmp */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_filename</span><span class="p">;</span>  <span class="cm">/* 代码所在文件名 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_name</span><span class="p">;</span>      <span class="cm">/* 模块名|函数名|类名 */</span>
+    <span class="kt">int</span> <span class="n">co_firstlineno</span><span class="p">;</span>     <span class="cm">/* 代码块在文件中的起始行号 */</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_lnotab</span><span class="p">;</span>    <span class="cm">/* 字节码指令和行号的对应关系 */</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">co_zombieframe</span><span class="p">;</span>   <span class="cm">/* for optimization only (see frameobject.c) */</span>
+<span class="p">}</span> <span class="n">PyCodeObject</span><span class="p">;</span></code></pre></figure>
+
+<p>加载模块时，模块对应的PyCodeObject对象被写入.pyc文件，格式：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>block</th>
+      <th>type</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MAGIC</td>
+      <td>long</td>
+      <td>魔数，区分不同版本的python</td>
+    </tr>
+    <tr>
+      <td>MTIME</td>
+      <td>long</td>
+      <td>修改时间</td>
+    </tr>
+    <tr>
+      <td>TYPE_CODE</td>
+      <td>byte</td>
+      <td>PyCodeObject对象</td>
+    </tr>
+    <tr>
+      <td>co_argcount</td>
+      <td>long</td>
+      <td>对应PyCodeObject结构体各个域</td>
+    </tr>
+    <tr>
+      <td>co_nlocals</td>
+      <td>long</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>co_stacksize</td>
+      <td>long</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>co_flags</td>
+      <td>long</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>TYPE_STRING</td>
+      <td>byte</td>
+      <td>“字符串表示方法，对应PyCodeObject中的co_code”</td>
+    </tr>
+    <tr>
+      <td>co_code size</td>
+      <td>long</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>co_code value</td>
+      <td>bytes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>TYPE_LIST</td>
+      <td>byte</td>
+      <td>列表</td>
+    </tr>
+    <tr>
+      <td>co_const size</td>
+      <td>long</td>
+      <td>列表co_consts的元素个数</td>
+    </tr>
+    <tr>
+      <td>TYPE_INT</td>
+      <td>byte</td>
+      <td>co_const[0]是一个整型</td>
+    </tr>
+    <tr>
+      <td>co_const[0]</td>
+      <td>long</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>TYPE_STRING</td>
+      <td>byte</td>
+      <td>co_consts[1]是一个字符串</td>
+    </tr>
+    <tr>
+      <td>co_consts[1] size</td>
+      <td>long</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>co_consts[1] value</td>
+      <td>bytes</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>TYPE_CODE</td>
+      <td>byte</td>
+      <td>co_consts[2]是一个PyCodeObject对象，对应的代码可能是一个函数或者类</td>
+    </tr>
+    <tr>
+      <td>co_consts[2]</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>co_flags</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define CO_OPTIMIZED	0x0001
+#define CO_NEWLOCALS	0x0002
+#define CO_VARARGS	0x0004
+#define CO_VARKEYWORDS	0x0008
+#define CO_NESTED       0x0010
+#define CO_GENERATOR    0x0020
+</span><span class="cm">/* The CO_NOFREE flag is set if there are no free or cell variables.
+   This information is redundant, but it allows a single flag test
+   to determine whether there is any extra work to be done when the
+   call frame it setup.
+*/</span>
+<span class="cp">#define CO_NOFREE       0x0040
+</span>
+<span class="c">#if 0
+/* This is no longer used.  Stopped defining in 2.5, do not re-use. */
+#define CO_GENERATOR_ALLOWED    0x1000
+#endif
+</span><span class="cp">#define CO_FUTURE_DIVISION    	0x2000
+#define CO_FUTURE_ABSOLUTE_IMPORT 0x4000 </span><span class="cm">/* do absolute imports by default */</span><span class="cp">
+#define CO_FUTURE_WITH_STATEMENT  0x8000
+#define CO_FUTURE_PRINT_FUNCTION  0x10000
+#define CO_FUTURE_UNICODE_LITERALS 0x20000
+</span>
+<span class="cm">/* This should be defined if a future statement modifies the syntax.
+   For example, when a keyword is added.
+*/</span>
+<span class="cp">#if 1
+#define PY_PARSER_REQUIRES_FUTURE_KEYWORD
+#endif</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">16</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">z</span></code></pre></figure>
+
+<p>dir(f) —&gt; [‘func_closure’, ‘func_code’, ‘func_defaults’, ‘func_dict’, ‘func_doc’, ‘func_globals’, ‘func_name’]
+在funcobject.c中对PyFunction_Type的定义：</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyMemberDef</span> <span class="n">func_memberlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">"func_closure"</span><span class="p">,</span> <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_closure</span><span class="p">),</span> <span class="n">RESTRICTED</span><span class="o">|</span><span class="n">READONLY</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"func_doc"</span><span class="p">,</span>     <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_doc</span><span class="p">),</span> <span class="n">WRITE_RESTRICTED</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"__doc__"</span><span class="p">,</span>      <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_doc</span><span class="p">),</span> <span class="n">WRITE_RESTRICTED</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"func_globals"</span><span class="p">,</span> <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_globals</span><span class="p">),</span> <span class="n">RESTRICTED</span><span class="o">|</span><span class="n">READONLY</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"__module__"</span><span class="p">,</span>   <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_module</span><span class="p">),</span> <span class="n">WRITE_RESTRICTED</span><span class="p">},</span>
+    <span class="p">{</span><span class="nb">NULL</span><span class="p">}</span>  <span class="cm">/* Sentinel */</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="n">PyGetSetDef</span> <span class="n">func_getsetlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">"func_code"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_code</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_code</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"func_defaults"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_defaults</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_defaults</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"func_dict"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_dict</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_dict</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"__dict__"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_dict</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_dict</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"func_name"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_name</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_name</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">"__name__"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_name</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_name</span><span class="p">},</span>
+    <span class="p">{</span><span class="nb">NULL</span><span class="p">}</span> <span class="cm">/* Sentinel */</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>f.func_defaults记录的是函数的默认值，tuple(10, 16)</p>
+
+<p>f.func_code是一个code对象，对应PyCodeObject,有三个co_varnames, co_freevars, co_cellvars,分别对应了 local variables, free variables, cell variables.free variables指enclosing scope中的变量，cell variables则是指会被多个scope访问的变量。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">def</span> <span class="nf">bar</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">a</span>
+    <span class="k">print</span> <span class="s">"cellvars:"</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_cellvars</span>
+    <span class="k">print</span> <span class="s">"freevars:"</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_freevars</span>
+    <span class="k">return</span> <span class="n">bar</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_freevars</span>
+<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_cellvars</span></code></pre></figure>
+
+<p>LOAD_GLOBAL在代码对象的co_names属性中寻找变量名。<br />
+LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。<br />
+注意这些命令的参数都为整数，变量名是通过将参数作为下标从对应的变量名元组中获得的。所以：“LOAD_GLOBAL 0”相当于载入f1.func_globals[f1.func_code.co_names[0]]对象。对于局域变量，Python做了尽可能的优化处理，因此它使用LOAD_FAST和STORE_FAST对局域变量进行存取，它们可以通过其参数直接存取一个用来保存局域变量的C语言数组。</p>
+
+<h4 id="isbuiltin">isbuiltin</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isbuiltin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is a built-in function or method.
+
+    Built-in functions and methods provide these attributes:
+        __doc__         documentation string
+        __name__        original name of this function or method
+        __self__        instance to which a method is bound, or None"""</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">BuiltinFunctionType</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="isroutine">isroutine</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isroutine</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is any kind of function or method."""</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">isbuiltin</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">ismethoddescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span></code></pre></figure>
+
+<h4 id="isabstract">isabstract</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isabstract</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="s">"""Return true if the object is an abstract base class (ABC)."""</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">object</span><span class="o">.</span><span class="n">__flags__</span> <span class="o">&amp;</span> <span class="n">TPFLAGS_IS_ABSTRACT</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="getmembers">getmembers</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getmembers</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="s">"""Return all members of an object as (name, value) pairs sorted by name.
+    Optionally, only return members that satisfy a given predicate."""</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">except</span> <span class="nb">AttributeError</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">predicate</span> <span class="ow">or</span> <span class="n">predicate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">results</span></code></pre></figure>
+
+<h4 id="getmro">getmro</h4>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getmro</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="s">"Return tuple of base classes (including cls) in method resolution order."</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">"__mro__"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">__mro__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">_searchbases</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></figure>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=python%20inspect解析&amp;url=/python/python-inspect/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/python/python-inspect/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/python/python-inspect/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-03-20T18:04:00Z" itemprop="datePublished">March 20, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

@@ -6,7 +6,7 @@ categories: python
 tags: [end, python]
 image:
 #	teaser: /teaser/index.jpeg
-date: 2018-01-04T11:04:00+01:00
+date: 2018-02-26T11:04:00+01:00
 ---
 
 初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码

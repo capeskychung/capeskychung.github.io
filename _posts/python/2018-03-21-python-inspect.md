@@ -6,7 +6,7 @@ categories: python
 tags: [inspect, python]
 image:
 #	teaser: /teaser/index.jpeg
-date: 2018-01-04T11:04:00+01:00
+date: 2018-03-20T11:04:00+01:00
 ---
 inspect用法，用于判断python的对象的类型.
 

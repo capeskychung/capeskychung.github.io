@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>find命令 • CapeskyChung</title>
+    <meta name="description" content="文件查找指令
+
+">
+    <meta name="keywords" content="find, linux">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="find命令">
+	<meta name="twitter:description" content="文件查找指令
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="find命令">
+	<meta property="og:description" content="文件查找指令
+
+">
+	<meta property="og:url" content="/linux/linux-find/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/linux/linux-find/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/python/" >Python</a></li>
+  
+    
+    <li><a href="/linux/" >Linux</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/python/">
+        
+        <div class="title">Python</div>
+        
+      </a>
+    </li><li>
+      <a href="/linux/">
+        
+        <div class="title">Linux</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/linux/" itemprop="url">
+        <span itemprop="title">Linux</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>find命令</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>文件查找指令</p>
+
+<h2 id="find">find</h2>
+<hr />
+<p>在目录结构下搜索文件，并指定执行操作。find命令用于在一个目录()/及子目录中搜索文件。可以指定一些匹配条件，如按文件名、文件类型、用户甚至时间戳查找文件。
+man文档给出的find命令的一般形式为：
+find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]</p>
+
+<p>-H: find遇到的每个符号链接求值得文件信息和文件类型就是该链接所引用的信息和类型，而不是链接本身。如果所引用文件不存在，那么会将文件信息和类型用于该链接本身。不在命令行上的所有符号链接的文件信息是链接本身的文件信息。<br />
+-L: 符号链接求值的文件信息和文件类型就是该链接所引用文件的信息和类型，而不是该链接本身。</p>
+
+<h5 id="section">选项</h5>
+<hr />
+<ul>
+  <li>-amin<分钟>：查找在指定时间曾被存取过的文件或目录，单位以分钟计算</分钟></li>
+  <li>-anewer<参考文件或目录>：查找其存取时间较指定文件或目录的存取时间更接近现在的文件或目录；</参考文件或目录></li>
+  <li>-atime&lt;24小时数&gt;：查找在指定时间曾被存取过的文件或目录，单位以24小时计算</li>
+  <li>-cmin<分钟>：查找在指定时间之时被更改过的文件或目录；</分钟></li>
+  <li>-cnewer<参考文件或目录>查找其更改时间较指定文件或目录的更改时间更接近现在的文件或目录；</参考文件或目录></li>
+  <li>-ctime&lt;24小时数&gt;：查找在指定时间之时被更改的文件或目录，单位以24小时计算；</li>
+  <li>-daystart：从本日开始计算时间；</li>
+  <li>-depth：从指定目录下最深层的子目录开始查找；</li>
+  <li>-expty：寻找文件大小为0   Byte的文件，或目录下没有任何子目录或文件的空目录；</li>
+  <li>-exec<执行指令>：假设find指令的回传值为True，就执行该指令；</执行指令></li>
+  <li>-false：将find指令的回传值皆设为False；</li>
+  <li>-fls<列表文件>：此参数的效果和指定“-ls”参数类似，但会把结果保存为指定的列表文件；</列表文件></li>
+  <li>-follow：排除符号连接；</li>
+  <li>-fprint<列表文件>：此参数的效果和指定“-print”参数类似，但会把结果保存成指定的列表文件；</列表文件></li>
+  <li>-fprint0<列表文件>：此参数的效果和指定“-print0”参数类似，但会把结果保存成指定的列表文件；</列表文件></li>
+  <li>-fprintf<列表文件><输出格式>：此参数的效果和指定“-printf”参数类似，但会把结果保存成指定的列表文件；</输出格式></列表文件></li>
+  <li>-fstype<文件系统类型>：只寻找该文件系统类型下的文件或目录；</文件系统类型></li>
+  <li>-gid<群组识别码>：查找符合指定之群组识别码的文件或目录；</群组识别码></li>
+  <li>-group<群组名称>：查找符合指定之群组名称的文件或目录；</群组名称></li>
+  <li>-help或——help：在线帮助；</li>
+  <li>-ilname<范本样式>：此参数的效果和指定“-lname”参数类似，但忽略字符大小写的差别；</范本样式></li>
+  <li>-iname<范本样式>：此参数的效果和指定“-name”参数类似，但忽略字符大小写的差别；</范本样式></li>
+  <li>-inum<inode编号>：查找符合指定的inode编号的文件或目录；</inode编号></li>
+  <li>-ipath<范本样式>：此参数的效果和指定“-path”参数类似，但忽略字符大小写的差别；</范本样式></li>
+  <li>-iregex<范本样式>：此参数的效果和指定“-regexe”参数类似，但忽略字符大小写的差别；</范本样式></li>
+  <li>-links<连接数目>：查找符合指定的硬连接数目的文件或目录；</连接数目></li>
+  <li>-iname<范本样式>：指定字符串作为寻找符号连接的范本样式；</范本样式></li>
+  <li>-ls：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出；</li>
+  <li>-maxdepth<目录层级>：设置最大目录层级；</目录层级></li>
+  <li>-mindepth<目录层级>：设置最小目录层级；</目录层级></li>
+  <li>-mmin<分钟>：查找在指定时间曾被更改过的文件或目录，单位以分钟计算；</分钟></li>
+  <li>-mount：此参数的效果和指定“-xdev”相同；</li>
+  <li>-mtime&lt;24小时数&gt;：查找在指定时间曾被更改过的文件或目录，单位以24小时计算；</li>
+  <li>-name<范本样式>：指定字符串作为寻找文件或目录的范本样式；</范本样式></li>
+  <li>-newer<参考文件或目录>：查找其更改时间较指定文件或目录的更改时间更接近现在的文件或目录；</参考文件或目录></li>
+  <li>-nogroup：找出不属于本地主机群组识别码的文件或目录；</li>
+  <li>-noleaf：不去考虑目录至少需拥有两个硬连接存在；</li>
+  <li>-nouser：找出不属于本地主机用户识别码的文件或目录；</li>
+  <li>-ok<执行指令>：此参数的效果和指定“-exec”类似，但在执行指令之前会先询问用户，若回答“y”或“Y”，则放弃执行命令；</执行指令></li>
+  <li>-path<范本样式>：指定字符串作为寻找目录的范本样式；</范本样式></li>
+  <li>-perm<权限数值>：查找符合指定的权限数值的文件或目录；</权限数值></li>
+  <li>-print：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式为每列一个名称，每个名称前皆有“./”字符串；</li>
+  <li>-print0：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式为全部的名称皆在同一行；</li>
+  <li>-printf<输出格式>：假设find指令的回传值为Ture，就将文件或目录名称列出到标准输出。格式可以自行指定；</输出格式></li>
+  <li>-prune：不寻找字符串作为寻找文件或目录的范本样式;</li>
+  <li>-regex<范本样式>：指定字符串作为寻找文件或目录的范本样式；</范本样式></li>
+  <li>-size<文件大小>：查找符合指定的文件大小的文件；</文件大小></li>
+  <li>-true：将find指令的回传值皆设为True；</li>
+  <li>-type<文件类型>：只寻找符合指定的文件类型的文件；</文件类型></li>
+  <li>-uid<用户识别码>：查找符合指定的用户识别码的文件或目录；</用户识别码></li>
+  <li>-used<日数>：查找文件或目录被更改之后在指定时间曾被存取过的文件或目录，单位以日计算；</日数></li>
+  <li>-user<拥有者名称>：查找符和指定的拥有者名称的文件或目录；</拥有者名称></li>
+  <li>-version或——version：显示版本信息；</li>
+  <li>-xdev：将范围局限在先行的文件系统中；</li>
+  <li>-xtype<文件类型>：此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查。</文件类型></li>
+</ul>
+
+<h5 id="section-1">特殊用法</h5>
+<p>可以用来删除文件 find . -name ‘*pyc’ -delete</p>
+
+<p>+表示大于某个值， -表示小于某个值</p>
+
+<p>参考： http://man.linuxde.net/find</p>
+
+<h2 id="locate">locate</h2>
+<p>locate是find -name的另外一种写法，运行要快于后者。因为locate不搜索具体目录，只搜索数据库/var/lib/locatedb,这个数据库含有本地所有文件的信息。linux系统会自动创建这个数据库，并且每天自动更新一次，所以locate命令查找不到最修改变动的文件。可以通过updatedb的命令更新收据库</p>
+
+<h4 id="section-2">选项</h4>
+<p>-d 目录或者–datebase=<目录>；指定数据库所在的目录   
+-u 更新slocate数据库</目录></p>
+
+<h2 id="whereis">whereis</h2>
+<p>whereis命令只能用于程序名的搜索，而且只搜索二进制文件（参数-b）、man说明文件（参数-m）和源代码文件（参数-s）。如果省略参数，则返回所有信息</p>
+
+<h2 id="which">which</h2>
+<p>which命令的作用是，在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果。也就是说，使用which命令，就可以看到某个系统命令是否存在，以及执行的到底是哪一个位置的命令。</p>
+
+<h2 id="type">type</h2>
+<p>type命令其实不能算查找命令，它是用来区分某个命令到底是由shell自带的，还是由shell外部的独立二进制文件提供的。如果一个命令是外部命令，那么使用-p参数，会显示该命令的路径，相当于which命令。</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=find命令&amp;url=/linux/linux-find/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/linux/linux-find/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/linux/linux-find/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-03-20T18:04:00Z" itemprop="datePublished">March 20, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
