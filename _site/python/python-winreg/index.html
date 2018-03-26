@@ -153,494 +153,964 @@
 			<div id="content" class="page-content" itemprop="articleBody">
 				<p>_winreg用法，python用于操作windows注册表模块.</p>
 
-<p>#### 
-#### ismodule</p>
+<h4 id="createkey">CreateKey</h4>
+<p>参数1： obKey 注册表key对象 <br />
+参数2：subKey 字符串对象，子key的名称</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{}</span>
-<span class="k">def</span> <span class="nf">ismodule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a module.
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyCreateKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="n">HKEY</span> <span class="n">retKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oz:CreateKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegCreateKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retKey</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"CreateKey"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">PyHKEY_FromHKEY</span><span class="p">(</span><span class="n">retKey</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
-    Module objects provide these attributes:
-        __doc__         documentation string
-        __file__        filename (missing for built-in modules)"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">_winreg</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">CreateKey</span><span class="p">(</span><span class="n">_winreg</span><span class="o">.</span><span class="n">HKEY_CURRENT_USER</span><span class="p">,</span> <span class="s">r"Software</span><span class="se">\\</span><span class="s">Extensions"</span><span class="p">)</span></code></pre></figure>
 
-<h4 id="isclass">isclass</h4>
+<h4 id="createkeyex">CreateKeyEx</h4>
+<p>参数1： obKey 注册表键对象 <br />
+参数2：subKey 字符串，健名称 <br />
+参数3：res  <br />
+参数4： sam 表示访问权限</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isclass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a class.
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyCreateKeyEx</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="n">HKEY</span> <span class="n">retKey</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">REGSAM</span> <span class="n">sam</span> <span class="o">=</span> <span class="n">KEY_WRITE</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oz|ii:CreateKeyEx"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">,</span>
+                                              <span class="o">&amp;</span><span class="n">res</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sam</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 
-    Class objects provide these attributes:
-        __doc__         documentation string
-        __module__      name of module in which this class was defined"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">ClassType</span><span class="p">))</span></code></pre></figure>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegCreateKeyEx</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="p">(</span><span class="n">DWORD</span><span class="p">)</span><span class="nb">NULL</span><span class="p">,</span>
+                                            <span class="n">sam</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retKey</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"CreateKeyEx"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">PyHKEY_FromHKEY</span><span class="p">(</span><span class="n">retKey</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
-<h4 id="ismethod">ismethod</h4>
-<p>用来判断一个方法是否是一个类的成员方法</p>
+<h4 id="deletekey">DeleteKey</h4>
+<p>参数1：已经打开的key <br />
+参数2：需要删除的key的名称，不能为None，key可能没有子key <br />
+方法不能删除带有子key的keys。删除成功的话，整个key包含值回忆起被删掉，如果失败，会有一个WindowsError异常</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is an instance method.
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyDeleteKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Os:DeleteKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegDeleteKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span> <span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegDeleteKey"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-    Instance method objects provide these attributes:
-        __doc__         documentation string
-        __name__        name with which this method was defined
-        im_class        class object in which this method belongs
-        im_func         function object containing implementation of method
-        im_self         instance to which this method is bound, or None"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">)</span></code></pre></figure>
+<h4 id="deletekeyex">DeleteKeyEx</h4>
+<p>参数1：obKey<br />
+参数2：需要删除的子key，字符串类型，不能为None，可能没有subkeys<br />
+参数3: sam访问权限，可无<br />
+参数4：res预留字段，必须为0，默认值为0，可无</p>
 
-<h4 id="ismethoddescriptor">ismethoddescriptor</h4>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyDeleteKeyEx</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="n">HMODULE</span> <span class="n">hMod</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">LONG</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">RDKEFunc</span><span class="p">)(</span><span class="n">HKEY</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">,</span> <span class="n">REGSAM</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+    <span class="n">RDKEFunc</span> <span class="n">pfn</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">REGSAM</span> <span class="n">sam</span> <span class="o">=</span> <span class="n">KEY_WOW64_64KEY</span><span class="p">;</span>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">ismethoddescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a method descriptor.
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Os|ii:DeleteKeyEx"</span><span class="p">,</span>
+                                              <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sam</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 
-    But not if ismethod() or isclass() or isfunction() are true.
+    <span class="cm">/* Only available on 64bit platforms, so we must load it
+       dynamically. */</span>
+    <span class="n">hMod</span> <span class="o">=</span> <span class="n">GetModuleHandle</span><span class="p">(</span><span class="s">"advapi32.dll"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hMod</span><span class="p">)</span>
+        <span class="n">pfn</span> <span class="o">=</span> <span class="p">(</span><span class="n">RDKEFunc</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hMod</span><span class="p">,</span>
+                                                                   <span class="s">"RegDeleteKeyExA"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pfn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_NotImplementedError</span><span class="p">,</span>
+                                        <span class="s">"not implemented on this platform"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pfn</span><span class="p">)(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="n">sam</span><span class="p">,</span> <span class="n">res</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
 
-    This is new in Python 2.2, and, for example, is true of int.__add__.
-    An object passing this test has a __get__ attribute but not a __set__
-    attribute, but beyond that the set of attributes varies.  __name__ is
-    usually sensible, and __doc__ often is.
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegDeleteKeyEx"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-    Methods implemented via descriptors that also pass one of the other
-    tests return false from the ismethoddescriptor() test, simply because
-    the other tests promise more -- you can, e.g., count on having the
-    im_func attribute (etc) when an object passes ismethod()."""</span>
-    <span class="k">return</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__get__"</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__set__"</span><span class="p">)</span> <span class="c"># else it's a data descriptor</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>           <span class="c"># mutual exclusion</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">isclass</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span></code></pre></figure>
+<h4 id="deletevalue">DeleteValue</h4>
+<p>参数1：一个已经打开的key<br />
+参数2：value 字符串</p>
 
-<h4 id="isdatadescriptor">isdatadescriptor</h4>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyDeleteValue</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oz:DeleteValue"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegDeleteValue</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span><span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegDeleteValue"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isdatadescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a data descriptor.
+<h4 id="connectregistry">ConnectRegistry</h4>
+<p>在另一台机器上建立一个预定义的注册表句柄连接，返回一个句柄对象。  <br />
+参数1： 另外一台机器的ip或者机器名  <br />
+参数2： 一个要打开的key  ，必须是HKEY_CURRENT_USER,HKEY_LOCAL_MACHINE等预先定义好的值，拿到返回的key后就可以进行操作</p>
 
-    Data descriptors have both a __get__ and a __set__ attribute.  Examples are
-    properties (defined in Python) and getsets and members (defined in C).
-    Typically, data descriptors will also have __name__ and __doc__ attributes
-    (properties, getsets, and members have both of these attributes), but this
-    is not guaranteed."""</span>
-    <span class="k">return</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__set__"</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="s">"__get__"</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyConnectRegistry</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">szCompName</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">HKEY</span> <span class="n">retKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"zO:ConnectRegistry"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">szCompName</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegConnectRegistry</span><span class="p">(</span><span class="n">szCompName</span><span class="p">,</span> <span class="n">hKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retKey</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"ConnectRegistry"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">PyHKEY_FromHKEY</span><span class="p">(</span><span class="n">retKey</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
-<h4 id="ismemberdescriptorobject">ismemberdescriptor(object)</h4>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">_winreg</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">ConnectRegisty</span><span class="p">(</span><span class="s">"IP地址或者机器名"</span><span class="p">,</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">HKEY_CURRENT_USER</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="s">'MemberDescriptorType'</span><span class="p">):</span>
-    <span class="c"># CPython and equivalent</span>
-    <span class="k">def</span> <span class="nf">ismemberdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="s">"""Return true if the object is a member descriptor.
+<h4 id="disablereflectionkey">DisableReflectionKey</h4>
+<p>禁止一个32位的进程运行在64位的操作系统上时注册表的映射</p>
 
-        Member descriptors are specialized descriptors defined in extension
-        modules."""</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MemberDescriptorType</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c"># Other implementations</span>
-    <span class="k">def</span> <span class="nf">ismemberdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="s">"""Return true if the object is a member descriptor.
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyDisableReflectionKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="n">HMODULE</span> <span class="n">hMod</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">LONG</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">RDRKFunc</span><span class="p">)(</span><span class="n">HKEY</span><span class="p">);</span>
+    <span class="n">RDRKFunc</span> <span class="n">pfn</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">LONG</span> <span class="n">rc</span><span class="p">;</span>
 
-        Member descriptors are specialized descriptors defined in extension
-        modules."""</span>
-        <span class="k">return</span> <span class="bp">False</span></code></pre></figure>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"O:DisableReflectionKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 
-<h4 id="isgetsetdescriptor">isgetsetdescriptor</h4>
+    <span class="cm">/* Only available on 64bit platforms, so we must load it
+       dynamically. */</span>
+    <span class="n">hMod</span> <span class="o">=</span> <span class="n">GetModuleHandle</span><span class="p">(</span><span class="s">"advapi32.dll"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hMod</span><span class="p">)</span>
+        <span class="n">pfn</span> <span class="o">=</span> <span class="p">(</span><span class="n">RDRKFunc</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hMod</span><span class="p">,</span>
+                                       <span class="s">"RegDisableReflectionKey"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pfn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_NotImplementedError</span><span class="p">,</span>
+                        <span class="s">"not implemented on this platform"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pfn</span><span class="p">)(</span><span class="n">hKey</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegDisableReflectionKey"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">types</span><span class="p">,</span> <span class="s">'GetSetDescriptorType'</span><span class="p">):</span>
-    <span class="c"># CPython and equivalent</span>
-    <span class="k">def</span> <span class="nf">isgetsetdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="s">"""Return true if the object is a getset descriptor.
+<h4 id="enablereflectionkey">EnableReflectionKey</h4>
+<p>为指定的残值回复注册表反射</p>
 
-        getset descriptors are specialized descriptors defined in extension
-        modules."""</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">GetSetDescriptorType</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c"># Other implementations</span>
-    <span class="k">def</span> <span class="nf">isgetsetdescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="s">"""Return true if the object is a getset descriptor.
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyEnableReflectionKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="n">HMODULE</span> <span class="n">hMod</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">LONG</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">RERKFunc</span><span class="p">)(</span><span class="n">HKEY</span><span class="p">);</span>
+    <span class="n">RERKFunc</span> <span class="n">pfn</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">LONG</span> <span class="n">rc</span><span class="p">;</span>
 
-        getset descriptors are specialized descriptors defined in extension
-        modules."""</span>
-        <span class="k">return</span> <span class="bp">False</span></code></pre></figure>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"O:EnableReflectionKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 
-<h4 id="isfunction">isfunction</h4>
+    <span class="cm">/* Only available on 64bit platforms, so we must load it
+       dynamically. */</span>
+    <span class="n">hMod</span> <span class="o">=</span> <span class="n">GetModuleHandle</span><span class="p">(</span><span class="s">"advapi32.dll"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hMod</span><span class="p">)</span>
+        <span class="n">pfn</span> <span class="o">=</span> <span class="p">(</span><span class="n">RERKFunc</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hMod</span><span class="p">,</span>
+                                       <span class="s">"RegEnableReflectionKey"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pfn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_NotImplementedError</span><span class="p">,</span>
+                        <span class="s">"not implemented on this platform"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pfn</span><span class="p">)(</span><span class="n">hKey</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegEnableReflectionKey"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a user-defined function.
+<h4 id="enumkey">EnumKey</h4>
+<p>枚举子key
+参数1：已经打开的key <br />
+参数2：子key的索引</p>
 
-    Function objects provide these attributes:
-        __doc__         documentation string
-        __name__        name with which this function was defined
-        func_code       code object containing compiled function bytecode
-        func_defaults   tuple of any default values for arguments
-        func_doc        (same as __doc__)
-        func_globals    global namespace in which this function was defined
-        func_name       (same as __name__)"""</span>
-    <span class="k">if</span> <span class="n">_signature_is_functionlike</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">True</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyEnumKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">retStr</span><span class="p">;</span>
 
-<span class="k">def</span> <span class="nf">_signature_is_functionlike</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">False</span>
-    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s">'cython_function_or_method'</span></code></pre></figure>
+    <span class="cm">/* The Windows docs claim that the max key name length is 255
+     * characters, plus a terminating nul character.  However,
+     * empirical testing demonstrates that it is possible to
+     * create a 256 character key that is missing the terminating
+     * nul.  RegEnumKeyEx requires a 257 character buffer to
+     * retrieve such a key name. */</span>
+    <span class="kt">char</span> <span class="n">tmpbuf</span><span class="p">[</span><span class="mi">257</span><span class="p">];</span>
+    <span class="n">DWORD</span> <span class="n">len</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">tmpbuf</span><span class="p">);</span> <span class="cm">/* includes NULL terminator */</span>
 
-<h4 id="isgeneratorfunction">isgeneratorfunction</h4>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oi:EnumKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">index</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isgeneratorfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a user-defined generator function.
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegEnumKeyEx</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">tmpbuf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegEnumKeyEx"</span><span class="p">);</span>
 
-    Generator function objects provides same attributes as functions.
+    <span class="n">retStr</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="n">tmpbuf</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">retStr</span><span class="p">;</span>  <span class="cm">/* can be NULL */</span>
+<span class="p">}</span></code></pre></figure>
 
-    See help(isfunction) for attributes listing."""</span>
-    <span class="k">return</span> <span class="nb">bool</span><span class="p">((</span><span class="n">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="ow">or</span> <span class="n">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span> <span class="ow">and</span>
-                <span class="nb">object</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_flags</span> <span class="o">&amp;</span> <span class="n">CO_GENERATOR</span><span class="p">)</span></code></pre></figure>
-
-<h4 id="istraceback">istraceback</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">istraceback</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a traceback.
-
-    Traceback objects provide these attributes:
-        tb_frame        frame object at this level
-        tb_lasti        index of last attempted instruction in bytecode
-        tb_lineno       current line number in Python source code
-        tb_next         next inner traceback object (called by this level)"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">TracebackType</span><span class="p">)</span></code></pre></figure>
-
-<h4 id="isframe">isframe</h4>
-<p>栈帧表示程序运行时函数调用栈中的某一帧。函数没有属性可以获取它，因为它在函数调用时才会产生，而生成器则是由函数调用返回的，所以有属性指向栈帧。获取某个函数的相关的栈帧，则必须在调用这个函数且这个函数尚未放回时获取。通过sys.getframe()函数或者inspect模块的currentframe()函数获取当前栈帧。属性为只读</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isframe</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a frame object.
-
-    Frame objects provide these attributes:
-        f_back          next outer frame object (this frame's caller) 调用栈的前一帧
-        f_builtins      built-in namespace seen by this frame
-        f_code          code object being executed in this frame 栈帧对应的code对象
-        f_exc_traceback traceback if raised in this frame, or None
-        f_exc_type      exception type if raised in this frame, or None
-        f_exc_value     exception value if raised in this frame, or None
-        f_globals       global namespace seen by this frame
-        f_lasti         index of last attempted instruction in bytecode
-        f_lineno        current line number in Python source code
-        f_locals        local namespace seen by this frame
-        f_restricted    0 or 1 if frame is in restricted execution mode
-        f_trace         tracing function for this frame, or None"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FrameType</span><span class="p">)</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="c1">// 每个栈用PyFrameObject结构表示
-</span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_frame</span> <span class="p">{</span>
-    <span class="n">PyObject_VAR_HEAD</span>
-    <span class="k">struct</span> <span class="n">_frame</span> <span class="o">*</span><span class="n">f_back</span><span class="p">;</span>     <span class="c1">// 前一个运行栈，调用方
-</span>    <span class="n">PyCodeObject</span> <span class="o">*</span><span class="n">f_code</span><span class="p">;</span>      <span class="c1">// 执行的PyCodeObject对象
-</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_builtins</span><span class="p">;</span>      <span class="c1">// builtins环境变量集合
-</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_globals</span><span class="p">;</span>       <span class="c1">// globals全局变量集合
-</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_locals</span><span class="p">;</span>        <span class="c1">// locals本地变量集合
-</span>    <span class="n">PyObject</span> <span class="o">**</span><span class="n">f_valuestack</span><span class="p">;</span>   <span class="c1">// 栈起始地址，最后一个本地变量之后
-</span>    <span class="n">PyObject</span> <span class="o">**</span><span class="n">f_stacktop</span><span class="p">;</span>     <span class="c1">// 栈针位置，指向栈中下一个空闲位置
-</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_trace</span><span class="p">;</span>         <span class="c1">// trace函数
-</span>    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_exc_type</span><span class="p">,</span> <span class="o">*</span><span class="n">f_exc_value</span><span class="p">,</span> <span class="o">*</span><span class="n">f_exc_traceback</span><span class="p">;</span>  <span class="c1">// 记录异常处理
-</span>    <span class="n">PyThreadState</span> <span class="o">*</span><span class="n">f_tstate</span><span class="p">;</span>   <span class="c1">// 当前的线程
-</span>    <span class="kt">int</span> <span class="n">f_lasti</span><span class="p">;</span>		       <span class="c1">// 当前执行的字节码的地址
-</span>    <span class="kt">int</span> <span class="n">f_lineno</span><span class="p">;</span>		       <span class="c1">// 当前的行号
-</span>    <span class="kt">int</span> <span class="n">f_iblock</span><span class="p">;</span>		       <span class="c1">// 一些局部block块
-</span>    <span class="n">PyTryBlock</span> <span class="n">f_blockstack</span><span class="p">[</span><span class="n">CO_MAXBLOCKS</span><span class="p">];</span> <span class="cm">/* for try and loop blocks */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">f_localsplus</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>	<span class="c1">// 栈地址，大小为 本地变量+co_stacksize
-</span><span class="p">}</span> <span class="n">PyFrameObject</span><span class="p">;</span></code></pre></figure>
-
-<p><img src="https://fanchao01.github.io/blog/images/python_frame_structure.png" alt="image" />
-当执行函数调用时会进入新的栈帧，那么当前栈帧就作为下一个栈帧的f_back字段。<br />
-<img src="https://fanchao01.github.io/blog/images/python_frame_link.png" alt="image" />
-多个栈帧链属于一个线程，而同时可能存在多个线程，每个线程拥有一个栈帧链。这样形成了Python的虚拟机运行环境。<br />
-<img src="https://fanchao01.github.io/blog/images/python_runtime_env.png" alt="image" /></p>
-
-<p>参考：https://fanchao01.github.io/blog/2016/11/13/python-pycode_and_frame/</p>
-
-<h4 id="iscode">iscode</h4>
-<p>代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。<br />
-- co_argcount:普通参数的总数，不包括* 参数和 ** 参数<br />
-- co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，<br />
-- co_varnames:所有局部变量的元组。 <br />
-- co_filename: 源代码所在的文件名。 <br />
-- co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">iscode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a code object.
-
-    Code objects provide these attributes:
-        co_argcount     number of arguments (not including * or ** args)
-        co_code         string of raw compiled bytecode
-        co_consts       tuple of constants used in the bytecode
-        co_filename     name of file in which this code object was created
-        co_firstlineno  number of first line in Python source code
-        co_flags        bitmap: 1=optimized | 2=newlocals | 4=*arg | 8=**arg
-        co_lnotab       encoded mapping of line numbers to bytecode indices
-        co_name         name with which this code object was defined
-        co_names        tuple of names of local variables
-        co_nlocals      number of local variables
-        co_stacksize    virtual machine stack space required
-        co_varnames     tuple of names of arguments and local variables"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">CodeType</span><span class="p">)</span></code></pre></figure>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-    <span class="n">PyObject_HEAD</span>
-    <span class="kt">int</span> <span class="n">co_argcount</span><span class="p">;</span>        <span class="cm">/* 位置参数个数 */</span>
-    <span class="kt">int</span> <span class="n">co_nlocals</span><span class="p">;</span>         <span class="cm">/* 局部变量个数 */</span>
-    <span class="kt">int</span> <span class="n">co_stacksize</span><span class="p">;</span>       <span class="cm">/* 栈大小 */</span>
-    <span class="kt">int</span> <span class="n">co_flags</span><span class="p">;</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_code</span><span class="p">;</span>      <span class="cm">/* 字节码指令序列 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_consts</span><span class="p">;</span>    <span class="cm">/* 所有常量集合 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_names</span><span class="p">;</span>     <span class="cm">/* 所有符号名称集合 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_varnames</span><span class="p">;</span>  <span class="cm">/* 局部变量名称集合 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_freevars</span><span class="p">;</span>  <span class="cm">/* 闭包用的的变量名集合 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_cellvars</span><span class="p">;</span>  <span class="cm">/* 内部嵌套函数引用的变量名集合 */</span>
-
-    <span class="cm">/* The rest doesn’t count for hash/cmp */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_filename</span><span class="p">;</span>  <span class="cm">/* 代码所在文件名 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_name</span><span class="p">;</span>      <span class="cm">/* 模块名|函数名|类名 */</span>
-    <span class="kt">int</span> <span class="n">co_firstlineno</span><span class="p">;</span>     <span class="cm">/* 代码块在文件中的起始行号 */</span>
-    <span class="n">PyObject</span> <span class="o">*</span><span class="n">co_lnotab</span><span class="p">;</span>    <span class="cm">/* 字节码指令和行号的对应关系 */</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">co_zombieframe</span><span class="p">;</span>   <span class="cm">/* for optimization only (see frameobject.c) */</span>
-<span class="p">}</span> <span class="n">PyCodeObject</span><span class="p">;</span></code></pre></figure>
-
-<p>加载模块时，模块对应的PyCodeObject对象被写入.pyc文件，格式：</p>
+<h4 id="enumvalue">EnumValue</h4>
+<p>枚举一个打开的注册表key，返回一个tuple <br />
+参数1： 一个打开的注册表key <br />
+参数2：key中注册表值的索引</p>
 
 <table>
   <thead>
     <tr>
-      <th>block</th>
-      <th>type</th>
-      <th>description</th>
+      <th>Index</th>
+      <th>Meaning</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>MAGIC</td>
-      <td>long</td>
-      <td>魔数，区分不同版本的python</td>
+      <td>0</td>
+      <td>value名称</td>
     </tr>
     <tr>
-      <td>MTIME</td>
-      <td>long</td>
-      <td>修改时间</td>
+      <td>1</td>
+      <td>值</td>
     </tr>
     <tr>
-      <td>TYPE_CODE</td>
-      <td>byte</td>
-      <td>PyCodeObject对象</td>
-    </tr>
-    <tr>
-      <td>co_argcount</td>
-      <td>long</td>
-      <td>对应PyCodeObject结构体各个域</td>
-    </tr>
-    <tr>
-      <td>co_nlocals</td>
-      <td>long</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>co_stacksize</td>
-      <td>long</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>co_flags</td>
-      <td>long</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>TYPE_STRING</td>
-      <td>byte</td>
-      <td>“字符串表示方法，对应PyCodeObject中的co_code”</td>
-    </tr>
-    <tr>
-      <td>co_code size</td>
-      <td>long</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>co_code value</td>
-      <td>bytes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>TYPE_LIST</td>
-      <td>byte</td>
-      <td>列表</td>
-    </tr>
-    <tr>
-      <td>co_const size</td>
-      <td>long</td>
-      <td>列表co_consts的元素个数</td>
-    </tr>
-    <tr>
-      <td>TYPE_INT</td>
-      <td>byte</td>
-      <td>co_const[0]是一个整型</td>
-    </tr>
-    <tr>
-      <td>co_const[0]</td>
-      <td>long</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>TYPE_STRING</td>
-      <td>byte</td>
-      <td>co_consts[1]是一个字符串</td>
-    </tr>
-    <tr>
-      <td>co_consts[1] size</td>
-      <td>long</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>co_consts[1] value</td>
-      <td>bytes</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>TYPE_CODE</td>
-      <td>byte</td>
-      <td>co_consts[2]是一个PyCodeObject对象，对应的代码可能是一个函数或者类</td>
-    </tr>
-    <tr>
-      <td>co_consts[2]</td>
-      <td> </td>
-      <td> </td>
+      <td>2</td>
+      <td>值的类型</td>
     </tr>
   </tbody>
 </table>
 
-<p>co_flags</p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyEnumValue</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">index</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">retValueBuf</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">retDataBuf</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">tmpBuf</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">retValueSize</span><span class="p">,</span> <span class="n">bufValueSize</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">retDataSize</span><span class="p">,</span> <span class="n">bufDataSize</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">typ</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obData</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">retVal</span><span class="p">;</span>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define CO_OPTIMIZED	0x0001
-#define CO_NEWLOCALS	0x0002
-#define CO_VARARGS	0x0004
-#define CO_VARKEYWORDS	0x0008
-#define CO_NESTED       0x0010
-#define CO_GENERATOR    0x0020
-</span><span class="cm">/* The CO_NOFREE flag is set if there are no free or cell variables.
-   This information is redundant, but it allows a single flag test
-   to determine whether there is any extra work to be done when the
-   call frame it setup.
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oi:EnumValue"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">index</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">rc</span> <span class="o">=</span> <span class="n">RegQueryInfoKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span>
+                              <span class="nb">NULL</span><span class="p">,</span>
+                              <span class="o">&amp;</span><span class="n">retValueSize</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retDataSize</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span>
+        <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegQueryInfoKey"</span><span class="p">);</span>
+    <span class="o">++</span><span class="n">retValueSize</span><span class="p">;</span>    <span class="cm">/* include null terminators */</span>
+    <span class="o">++</span><span class="n">retDataSize</span><span class="p">;</span>
+    <span class="n">bufDataSize</span> <span class="o">=</span> <span class="n">retDataSize</span><span class="p">;</span>
+    <span class="n">bufValueSize</span> <span class="o">=</span> <span class="n">retValueSize</span><span class="p">;</span>
+    <span class="n">retValueBuf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">PyMem_Malloc</span><span class="p">(</span><span class="n">retValueSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retValueBuf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+    <span class="n">retDataBuf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">PyMem_Malloc</span><span class="p">(</span><span class="n">retDataSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retDataBuf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retValueBuf</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">RegEnumValue</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span>
+                  <span class="n">index</span><span class="p">,</span>
+                  <span class="n">retValueBuf</span><span class="p">,</span>
+                  <span class="o">&amp;</span><span class="n">retValueSize</span><span class="p">,</span>
+                  <span class="nb">NULL</span><span class="p">,</span>
+                  <span class="o">&amp;</span><span class="n">typ</span><span class="p">,</span>
+                  <span class="p">(</span><span class="n">BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">retDataBuf</span><span class="p">,</span>
+                  <span class="o">&amp;</span><span class="n">retDataSize</span><span class="p">);</span>
+        <span class="n">Py_END_ALLOW_THREADS</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_MORE_DATA</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="n">bufDataSize</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">tmpBuf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">PyMem_Realloc</span><span class="p">(</span><span class="n">retDataBuf</span><span class="p">,</span> <span class="n">bufDataSize</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tmpBuf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+            <span class="n">retVal</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+            <span class="k">goto</span> <span class="n">fail</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">retDataBuf</span> <span class="o">=</span> <span class="n">tmpBuf</span><span class="p">;</span>
+        <span class="n">retDataSize</span> <span class="o">=</span> <span class="n">bufDataSize</span><span class="p">;</span>
+        <span class="n">retValueSize</span> <span class="o">=</span> <span class="n">bufValueSize</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">retVal</span> <span class="o">=</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                     <span class="s">"PyRegEnumValue"</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">fail</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">obData</span> <span class="o">=</span> <span class="n">Reg2Py</span><span class="p">(</span><span class="n">retDataBuf</span><span class="p">,</span> <span class="n">retDataSize</span><span class="p">,</span> <span class="n">typ</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">obData</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">retVal</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">fail</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">retVal</span> <span class="o">=</span> <span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">"sOi"</span><span class="p">,</span> <span class="n">retValueBuf</span><span class="p">,</span> <span class="n">obData</span><span class="p">,</span> <span class="n">typ</span><span class="p">);</span>
+    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">obData</span><span class="p">);</span>
+  <span class="nl">fail:</span>
+    <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retValueBuf</span><span class="p">);</span>
+    <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retDataBuf</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">retVal</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">_winreg</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">OpenKey</span><span class="p">(</span><span class="n">_winreg</span><span class="o">.</span><span class="n">HKEY_CURRENT_KEY</span><span class="p">,</span> <span class="s">r"Netease</span><span class="err">\</span><span class="s">txm"</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+	<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">vtype</span> <span class="o">=</span> <span class="n">_winreg</span><span class="o">.</span><span class="n">EnumValue</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+		<span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span>
+		<span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
+	<span class="k">pass</span></code></pre></figure>
+
+<h4 id="expandenvironmentstrings">ExpandEnvironmentStrings</h4>
+<p>展开环境变量中的引用</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyExpandEnvironmentStrings</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_UNICODE</span> <span class="o">*</span><span class="n">retValue</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_UNICODE</span> <span class="o">*</span><span class="n">src</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">retValueSize</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">o</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"u:ExpandEnvironmentStrings"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">src</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">retValueSize</span> <span class="o">=</span> <span class="n">ExpandEnvironmentStringsW</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">retValue</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retValueSize</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">retValueSize</span><span class="p">,</span>
+                                        <span class="s">"ExpandEnvironmentStrings"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">retValue</span> <span class="o">=</span> <span class="p">(</span><span class="n">Py_UNICODE</span> <span class="o">*</span><span class="p">)</span><span class="n">PyMem_Malloc</span><span class="p">(</span><span class="n">retValueSize</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Py_UNICODE</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retValue</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">ExpandEnvironmentStringsW</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">retValue</span><span class="p">,</span> <span class="n">retValueSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retValue</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">retValueSize</span><span class="p">,</span>
+                                        <span class="s">"ExpandEnvironmentStrings"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">PyUnicode_FromUnicode</span><span class="p">(</span><span class="n">retValue</span><span class="p">,</span> <span class="n">wcslen</span><span class="p">(</span><span class="n">retValue</span><span class="p">));</span>
+    <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retValue</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ExpandEnvironmentStrings</span><span class="p">(</span><span class="s">u"</span><span class="si">%</span><span class="s">windir</span><span class="si">%</span><span class="s">"</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="s">"C:</span><span class="se">\\</span><span class="s">Windows"</span></code></pre></figure>
+
+<h4 id="flushkey">FlushKey</h4>
+<p>将key的所有属性全部写入注册表 <br />
+参数1：已经打开的key</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyFlushKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"O:FlushKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegFlushKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegFlushKey"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="loadkey">LoadKey</h4>
+<p>参数1：一个已经打开的key <br />
+参数2：需要操作的子key的名称 <br />
+参数3：文件名称 <br />
+从指定的文件中读入子健的信息</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyLoadKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">fileName</span><span class="p">;</span>
+
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oss:LoadKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fileName</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegLoadKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="n">fileName</span> <span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegLoadKey"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="openkey">OpenKey</h4>
+<p>参数1: 一个已经打开的key，注册表有六大健根， HKEY_USERS, HKEY_CURRENT_USE,HKEY_CURRENT_CONFIG,HKEY_CLASSES_ROOT,HKEY_LOCAL_MACHINE, HKEY_DYN_DATA <br />
+参数2: 需要操作的子健 <br />
+参数3: 必须为0 <br />
+参数4：sam，默认为只读模式，蚕蛹的有KEY_ALL_ACCESS, KEY_WRITE, KEY_READ访问权限，默认为只读</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyOpenKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">HKEY</span> <span class="n">retKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">REGSAM</span> <span class="n">sam</span> <span class="o">=</span> <span class="n">KEY_READ</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oz|ii:OpenKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">res</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sam</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegOpenKeyEx</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">sam</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retKey</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegOpenKeyEx"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">PyHKEY_FromHKEY</span><span class="p">(</span><span class="n">retKey</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="openkeyex">OpenKeyEx</h4>
+<p>跟接口OpenKey一致</p>
+
+<h4 id="closekey">CloseKey</h4>
+<p>关闭一个打开的key<br />
+参数1： 一个打开的注册表key</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyCloseKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"O:CloseKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_Close</span><span class="p">(</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="queryvalue">QueryValue</h4>
+<p>在注册表中检索一个健的路径<br />
+注册表值有名字，类型，和数据值。这个方法找回一个key的第一个值（名字为NULL）但是API调用的时候不会回type，因此一般用QueryValueEx()</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyQueryValue</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">retStr</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">retBuf</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">bufSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">retSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">tmp</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oz:QueryValue"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegQueryValue</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ERROR_MORE_DATA</span><span class="p">)</span>
+        <span class="n">retSize</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegQueryValue"</span><span class="p">);</span>
+
+    <span class="n">bufSize</span> <span class="o">=</span> <span class="n">retSize</span><span class="p">;</span>
+    <span class="n">retBuf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyMem_Malloc</span><span class="p">(</span><span class="n">bufSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retBuf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">retSize</span> <span class="o">=</span> <span class="n">bufSize</span><span class="p">;</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">RegQueryValue</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="n">retBuf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retSize</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_MORE_DATA</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="n">bufSize</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyMem_Realloc</span><span class="p">(</span><span class="n">retBuf</span><span class="p">,</span> <span class="n">bufSize</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tmp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retBuf</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">retBuf</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retBuf</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegQueryValue"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">retBuf</span><span class="p">[</span><span class="n">retSize</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'\x00'</span><span class="p">)</span>
+        <span class="n">retSize</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">retStr</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="n">retBuf</span><span class="p">,</span> <span class="n">retSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retStr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retBuf</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">retStr</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="queryvalueex">QueryValueEx</h4>
+<p>找到一个注册表key下的某个指定名字的type和数据值。 <br />
+参数1： key一个已经打开的注册表key <br />
+参数2：value_name是一个要查询到注册表值得名字<br />
+返回的是一个2个值得tuple</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>注册表项的值</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>注册表值得类型</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyQueryValueEx</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">valueName</span><span class="p">;</span>
+
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">retBuf</span><span class="p">,</span> <span class="o">*</span><span class="n">tmp</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">bufSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">retSize</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">typ</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obData</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">result</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Oz:QueryValueEx"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">valueName</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegQueryValueEx</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">valueName</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bufSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ERROR_MORE_DATA</span><span class="p">)</span>
+        <span class="n">bufSize</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegQueryValueEx"</span><span class="p">);</span>
+    <span class="n">retBuf</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">PyMem_Malloc</span><span class="p">(</span><span class="n">bufSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retBuf</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">retSize</span> <span class="o">=</span> <span class="n">bufSize</span><span class="p">;</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">RegQueryValueEx</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">valueName</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">typ</span><span class="p">,</span>
+                             <span class="p">(</span><span class="n">BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">retBuf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">retSize</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_MORE_DATA</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="n">bufSize</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyMem_Realloc</span><span class="p">(</span><span class="n">retBuf</span><span class="p">,</span> <span class="n">bufSize</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">tmp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retBuf</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">PyErr_NoMemory</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">retBuf</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyMem_Free</span><span class="p">(</span><span class="n">retBuf</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegQueryValueEx"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">obData</span> <span class="o">=</span> <span class="n">Reg2Py</span><span class="p">(</span><span class="n">retBuf</span><span class="p">,</span> <span class="n">bufSize</span><span class="p">,</span> <span class="n">typ</span><span class="p">);</span>
+    <span class="n">PyMem_Free</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">retBuf</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">obData</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">"Oi"</span><span class="p">,</span> <span class="n">obData</span><span class="p">,</span> <span class="n">typ</span><span class="p">);</span>
+    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">obData</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="queryinfokey">QueryInfoKey</h4>
+<p>返回一个key的信息，返回类型是tuple<br />
+参数1： 一个打开的key</p>
+
+<p>返回结果是一个3个值得tuple</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Index</td>
+      <td>Meaning</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>一个整型，表示key有多少子key</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>一个整型，表示key有多少个值</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>一个长整型，代表上次修改的时间</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyQueryInfoKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+  <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+  <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+  <span class="n">DWORD</span> <span class="n">nSubKeys</span><span class="p">,</span> <span class="n">nValues</span><span class="p">;</span>
+  <span class="n">FILETIME</span> <span class="n">ft</span><span class="p">;</span>
+  <span class="n">LARGE_INTEGER</span> <span class="n">li</span><span class="p">;</span>
+  <span class="n">PyObject</span> <span class="o">*</span><span class="n">l</span><span class="p">;</span>
+  <span class="n">PyObject</span> <span class="o">*</span><span class="n">ret</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"O:QueryInfoKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">((</span><span class="n">rc</span> <span class="o">=</span> <span class="n">RegQueryInfoKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nSubKeys</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span>
+                            <span class="o">&amp;</span><span class="n">nValues</span><span class="p">,</span>  <span class="nb">NULL</span><span class="p">,</span>  <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ft</span><span class="p">))</span>
+      <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegQueryInfoKey"</span><span class="p">);</span>
+  <span class="n">li</span><span class="p">.</span><span class="n">LowPart</span> <span class="o">=</span> <span class="n">ft</span><span class="p">.</span><span class="n">dwLowDateTime</span><span class="p">;</span>
+  <span class="n">li</span><span class="p">.</span><span class="n">HighPart</span> <span class="o">=</span> <span class="n">ft</span><span class="p">.</span><span class="n">dwHighDateTime</span><span class="p">;</span>
+  <span class="n">l</span> <span class="o">=</span> <span class="n">PyLong_FromLongLong</span><span class="p">(</span><span class="n">li</span><span class="p">.</span><span class="n">QuadPart</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">"iiO"</span><span class="p">,</span> <span class="n">nSubKeys</span><span class="p">,</span> <span class="n">nValues</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
+  <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="queryreflectionkey">QueryReflectionKey</h4>
+<p>查询一个key的反射状态<br />
+参数1： 一个打开的注册表key <br />
+返回True的话表示反射被禁止  <br />
+在32位的操作系统上会抛出NotImplemented异常</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PyQueryReflectionKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="n">HMODULE</span> <span class="n">hMod</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">LONG</span> <span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span><span class="n">RQRKFunc</span><span class="p">)(</span><span class="n">HKEY</span><span class="p">,</span> <span class="n">BOOL</span> <span class="o">*</span><span class="p">);</span>
+    <span class="n">RQRKFunc</span> <span class="n">pfn</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">BOOL</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">LONG</span> <span class="n">rc</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"O:QueryReflectionKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="cm">/* Only available on 64bit platforms, so we must load it
+       dynamically. */</span>
+    <span class="n">hMod</span> <span class="o">=</span> <span class="n">GetModuleHandle</span><span class="p">(</span><span class="s">"advapi32.dll"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hMod</span><span class="p">)</span>
+        <span class="n">pfn</span> <span class="o">=</span> <span class="p">(</span><span class="n">RQRKFunc</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hMod</span><span class="p">,</span>
+                                       <span class="s">"RegQueryReflectionKey"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pfn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_NotImplementedError</span><span class="p">,</span>
+                        <span class="s">"not implemented on this platform"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pfn</span><span class="p">)(</span><span class="n">hKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegQueryReflectionKey"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="savekey">SaveKey</h4>
+<p>参数1： 一个打开的注册表key<br />
+参数2： 文件名称<br />
+保存一个指key和它的所有的子key到文件中。需要管理员权限<br />
+参考： https://stackoverflow.com/questions/30984406/winreg-savekey-error-a-required-privilege-is-not-held-by-the-client</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PySaveKey</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">fileName</span><span class="p">;</span>
+    <span class="n">LPSECURITY_ATTRIBUTES</span> <span class="n">pSA</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"Os:SaveKey"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fileName</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="cm">/*  One day we may get security into the core?
+    if (!PyWinObject_AsSECURITY_ATTRIBUTES(obSA, &amp;pSA, TRUE))
+        return NULL;
 */</span>
-<span class="cp">#define CO_NOFREE       0x0040
-</span>
-<span class="c">#if 0
-/* This is no longer used.  Stopped defining in 2.5, do not re-use. */
-#define CO_GENERATOR_ALLOWED    0x1000
-#endif
-</span><span class="cp">#define CO_FUTURE_DIVISION    	0x2000
-#define CO_FUTURE_ABSOLUTE_IMPORT 0x4000 </span><span class="cm">/* do absolute imports by default */</span><span class="cp">
-#define CO_FUTURE_WITH_STATEMENT  0x8000
-#define CO_FUTURE_PRINT_FUNCTION  0x10000
-#define CO_FUTURE_UNICODE_LITERALS 0x20000
-</span>
-<span class="cm">/* This should be defined if a future statement modifies the syntax.
-   For example, when a keyword is added.
-*/</span>
-<span class="cp">#if 1
-#define PY_PARSER_REQUIRES_FUTURE_KEYWORD
-#endif</span></code></pre></figure>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegSaveKey</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">pSA</span> <span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegSaveKey"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">16</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">z</span></code></pre></figure>
+<h4 id="setvalue">SetValue</h4>
+<p>关联一个key与值 <br />
+参数1： 一个打开的注册表key <br />
+参数2： subkey的名称<br />
+参数3： 类型<br />
+参数4： 新的值，子key的默认值  <br />
+设置之后类似于文件夹的子文件夹</p>
 
-<p>dir(f) —&gt; [‘func_closure’, ‘func_code’, ‘func_defaults’, ‘func_dict’, ‘func_doc’, ‘func_globals’, ‘func_name’]
-在funcobject.c中对PyFunction_Type的定义：</p>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PySetValue</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">subKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">typ</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">len</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obStrVal</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obSubKey</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"OOiO:SetValue"</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">obSubKey</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">typ</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">obStrVal</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">typ</span> <span class="o">!=</span> <span class="n">REG_SZ</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">,</span>
+                        <span class="s">"Type must be _winreg.REG_SZ"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="cm">/* XXX - need Unicode support */</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="n">PyString_AsString</span><span class="p">(</span><span class="n">obStrVal</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">str</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">len</span> <span class="o">=</span> <span class="n">PyString_Size</span><span class="p">(</span><span class="n">obStrVal</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">obSubKey</span> <span class="o">==</span> <span class="n">Py_None</span><span class="p">)</span>
+        <span class="n">subKey</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">subKey</span> <span class="o">=</span> <span class="n">PyString_AsString</span><span class="p">(</span><span class="n">obSubKey</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">subKey</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegSetValue</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">subKey</span><span class="p">,</span> <span class="n">REG_SZ</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="n">len</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="s">"RegSetValue"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyMemberDef</span> <span class="n">func_memberlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">{</span><span class="s">"func_closure"</span><span class="p">,</span> <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_closure</span><span class="p">),</span> <span class="n">RESTRICTED</span><span class="o">|</span><span class="n">READONLY</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"func_doc"</span><span class="p">,</span>     <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_doc</span><span class="p">),</span> <span class="n">WRITE_RESTRICTED</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"__doc__"</span><span class="p">,</span>      <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_doc</span><span class="p">),</span> <span class="n">WRITE_RESTRICTED</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"func_globals"</span><span class="p">,</span> <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_globals</span><span class="p">),</span> <span class="n">RESTRICTED</span><span class="o">|</span><span class="n">READONLY</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"__module__"</span><span class="p">,</span>   <span class="n">T_OBJECT</span><span class="p">,</span> <span class="n">OFF</span><span class="p">(</span><span class="n">func_module</span><span class="p">),</span> <span class="n">WRITE_RESTRICTED</span><span class="p">},</span>
-    <span class="p">{</span><span class="nb">NULL</span><span class="p">}</span>  <span class="cm">/* Sentinel */</span>
-<span class="p">};</span>
+<h4 id="setvalueex">SetValueEx</h4>
+<p>关一个key与值 <br />
+参数1： 一个已经打开的注册表的key<br />
+参数2： subkey的名字字符串，子keyw的值关联。<br />
+参数3： 值得类型  <br />
+参数4： res默认值为0<br />
+参数5： value，注册表值得具体内容 <br />
+关系类似于文件夹下的文件。</p>
 
-<span class="k">static</span> <span class="n">PyGetSetDef</span> <span class="n">func_getsetlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">{</span><span class="s">"func_code"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_code</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_code</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"func_defaults"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_defaults</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_defaults</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"func_dict"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_dict</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_dict</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"__dict__"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_dict</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_dict</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"func_name"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_name</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_name</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">"__name__"</span><span class="p">,</span> <span class="p">(</span><span class="n">getter</span><span class="p">)</span><span class="n">func_get_name</span><span class="p">,</span> <span class="p">(</span><span class="n">setter</span><span class="p">)</span><span class="n">func_set_name</span><span class="p">},</span>
-    <span class="p">{</span><span class="nb">NULL</span><span class="p">}</span> <span class="cm">/* Sentinel */</span>
-<span class="p">};</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">PySetValueEx</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">HKEY</span> <span class="n">hKey</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obKey</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">valueName</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">obRes</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">BYTE</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">len</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">typ</span><span class="p">;</span>
 
-<p>f.func_defaults记录的是函数的默认值，tuple(10, 16)</p>
+    <span class="n">LONG</span> <span class="n">rc</span><span class="p">;</span>
 
-<p>f.func_code是一个code对象，对应PyCodeObject,有三个co_varnames, co_freevars, co_cellvars,分别对应了 local variables, free variables, cell variables.free variables指enclosing scope中的变量，cell variables则是指会被多个scope访问的变量。</p>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"OzOiO:SetValueEx"</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">obKey</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">valueName</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">obRes</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">typ</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyHKEY_AsHKEY</span><span class="p">(</span><span class="n">obKey</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hKey</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Py2Reg</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">len</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyErr_Occurred</span><span class="p">())</span>
+            <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_ValueError</span><span class="p">,</span>
+                     <span class="s">"Could not convert the data to the specified type."</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Py_BEGIN_ALLOW_THREADS</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">RegSetValueEx</span><span class="p">(</span><span class="n">hKey</span><span class="p">,</span> <span class="n">valueName</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+    <span class="n">Py_END_ALLOW_THREADS</span>
+    <span class="n">PyMem_DEL</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">ERROR_SUCCESS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyErr_SetFromWindowsErrWithFunction</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span>
+                                                   <span class="s">"RegSetValueEx"</span><span class="p">);</span>
+    <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">Py_None</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Py_None</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="k">def</span> <span class="nf">bar</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">a</span>
-    <span class="k">print</span> <span class="s">"cellvars:"</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_cellvars</span>
-    <span class="k">print</span> <span class="s">"freevars:"</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_freevars</span>
-    <span class="k">return</span> <span class="n">bar</span>
+<p>REG_NONE 0
+REG_SZ 1
+REG_EXPAND_SZ 2
+REG_BINARY 3
+REG_DWORD 4
+REG_DWORD_LITTLE_ENDIAN 4
+REG_DWORD_BIG_ENDIAN 5
+REG_LINK 6
+REG_MULTI_SZ 7
+REG_RESOURCE_LIST 8
+REG_FULL_RESOURCE_DESCRIPTOR 9
+REG_RESOURCE_REQUIREMENTS_LIST 10
+REG_QWORD 11
+REG_QWORD_LITLE_ENDIAN 12</p>
 
-<span class="n">g</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
-<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_freevars</span>
-<span class="k">print</span> <span class="n">foo</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_cellvars</span></code></pre></figure>
-
-<p>LOAD_GLOBAL在代码对象的co_names属性中寻找变量名。<br />
-LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。<br />
-注意这些命令的参数都为整数，变量名是通过将参数作为下标从对应的变量名元组中获得的。所以：“LOAD_GLOBAL 0”相当于载入f1.func_globals[f1.func_code.co_names[0]]对象。对于局域变量，Python做了尽可能的优化处理，因此它使用LOAD_FAST和STORE_FAST对局域变量进行存取，它们可以通过其参数直接存取一个用来保存局域变量的C语言数组。</p>
-
-<h4 id="isbuiltin">isbuiltin</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isbuiltin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is a built-in function or method.
-
-    Built-in functions and methods provide these attributes:
-        __doc__         documentation string
-        __name__        original name of this function or method
-        __self__        instance to which a method is bound, or None"""</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">BuiltinFunctionType</span><span class="p">)</span></code></pre></figure>
-
-<h4 id="isroutine">isroutine</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isroutine</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is any kind of function or method."""</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">isbuiltin</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
-            <span class="ow">or</span> <span class="n">isfunction</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
-            <span class="ow">or</span> <span class="n">ismethod</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
-            <span class="ow">or</span> <span class="n">ismethoddescriptor</span><span class="p">(</span><span class="nb">object</span><span class="p">))</span></code></pre></figure>
-
-<h4 id="isabstract">isabstract</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">isabstract</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="s">"""Return true if the object is an abstract base class (ABC)."""</span>
-    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">object</span><span class="o">.</span><span class="n">__flags__</span> <span class="o">&amp;</span> <span class="n">TPFLAGS_IS_ABSTRACT</span><span class="p">)</span></code></pre></figure>
-
-<h4 id="getmembers">getmembers</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getmembers</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">predicate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="s">"""Return all members of an object as (name, value) pairs sorted by name.
-    Optionally, only return members that satisfy a given predicate."""</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-        <span class="k">except</span> <span class="nb">AttributeError</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">predicate</span> <span class="ow">or</span> <span class="n">predicate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-    <span class="n">results</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">results</span></code></pre></figure>
-
-<h4 id="getmro">getmro</h4>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getmro</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-    <span class="s">"Return tuple of base classes (including cls) in method resolution order."</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">"__mro__"</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">__mro__</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">_searchbases</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></figure>
-
+<p>参考：https://docs.python.org/2/library/_winreg.html</p>
 
 				<hr />
 				<footer class="page-footer">
