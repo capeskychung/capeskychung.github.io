@@ -5,9 +5,515 @@
     <description>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</description>
     <link>http://cenalulu.github.io/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 21 Mar 2018 17:33:30 +0800</pubDate>
-    <lastBuildDate>Wed, 21 Mar 2018 17:33:30 +0800</lastBuildDate>
+    <pubDate>Mon, 26 Mar 2018 19:19:33 +0800</pubDate>
+    <lastBuildDate>Mon, 26 Mar 2018 19:19:33 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>python winreg模块</title>
+        <description>&lt;p&gt;_winreg用法，python用于操作windows注册表模块.&lt;/p&gt;
+
+&lt;p&gt;#### 
+#### ismodule&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ismodule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a module.
+
+    Module objects provide these attributes:
+        __doc__         documentation string
+        __file__        filename (missing for built-in modules)&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ModuleType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isclass&quot;&gt;isclass&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isclass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a class.
+
+    Class objects provide these attributes:
+        __doc__         documentation string
+        __module__      name of module in which this class was defined&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ClassType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;ismethod&quot;&gt;ismethod&lt;/h4&gt;
+&lt;p&gt;用来判断一个方法是否是一个类的成员方法&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ismethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is an instance method.
+
+    Instance method objects provide these attributes:
+        __doc__         documentation string
+        __name__        name with which this method was defined
+        im_class        class object in which this method belongs
+        im_func         function object containing implementation of method
+        im_self         instance to which this method is bound, or None&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MethodType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;ismethoddescriptor&quot;&gt;ismethoddescriptor&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ismethoddescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a method descriptor.
+
+    But not if ismethod() or isclass() or isfunction() are true.
+
+    This is new in Python 2.2, and, for example, is true of int.__add__.
+    An object passing this test has a __get__ attribute but not a __set__
+    attribute, but beyond that the set of attributes varies.  __name__ is
+    usually sensible, and __doc__ often is.
+
+    Methods implemented via descriptors that also pass one of the other
+    tests return false from the ismethoddescriptor() test, simply because
+    the other tests promise more -- you can, e.g., count on having the
+    im_func attribute (etc) when an object passes ismethod().&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__get__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__set__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# else it&#39;s a data descriptor&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ismethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;           &lt;span class=&quot;c&quot;&gt;# mutual exclusion&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isclass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isdatadescriptor&quot;&gt;isdatadescriptor&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isdatadescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a data descriptor.
+
+    Data descriptors have both a __get__ and a __set__ attribute.  Examples are
+    properties (defined in Python) and getsets and members (defined in C).
+    Typically, data descriptors will also have __name__ and __doc__ attributes
+    (properties, getsets, and members have both of these attributes), but this
+    is not guaranteed.&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__set__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__get__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;ismemberdescriptorobject&quot;&gt;ismemberdescriptor(object)&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;MemberDescriptorType&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# CPython and equivalent&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ismemberdescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a member descriptor.
+
+        Member descriptors are specialized descriptors defined in extension
+        modules.&quot;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MemberDescriptorType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Other implementations&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ismemberdescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a member descriptor.
+
+        Member descriptors are specialized descriptors defined in extension
+        modules.&quot;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isgetsetdescriptor&quot;&gt;isgetsetdescriptor&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;GetSetDescriptorType&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# CPython and equivalent&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isgetsetdescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a getset descriptor.
+
+        getset descriptors are specialized descriptors defined in extension
+        modules.&quot;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetSetDescriptorType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Other implementations&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isgetsetdescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a getset descriptor.
+
+        getset descriptors are specialized descriptors defined in extension
+        modules.&quot;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isfunction&quot;&gt;isfunction&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a user-defined function.
+
+    Function objects provide these attributes:
+        __doc__         documentation string
+        __name__        name with which this function was defined
+        func_code       code object containing compiled function bytecode
+        func_defaults   tuple of any default values for arguments
+        func_doc        (same as __doc__)
+        func_globals    global namespace in which this function was defined
+        func_name       (same as __name__)&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_signature_is_functionlike&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FunctionType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;_signature_is_functionlike&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;callable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isclass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;cython_function_or_method&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isgeneratorfunction&quot;&gt;isgeneratorfunction&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isgeneratorfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a user-defined generator function.
+
+    Generator function objects provides same attributes as functions.
+
+    See help(isfunction) for attributes listing.&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ismethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt;
+                &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_flags&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CO_GENERATOR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;istraceback&quot;&gt;istraceback&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;istraceback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a traceback.
+
+    Traceback objects provide these attributes:
+        tb_frame        frame object at this level
+        tb_lasti        index of last attempted instruction in bytecode
+        tb_lineno       current line number in Python source code
+        tb_next         next inner traceback object (called by this level)&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TracebackType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isframe&quot;&gt;isframe&lt;/h4&gt;
+&lt;p&gt;栈帧表示程序运行时函数调用栈中的某一帧。函数没有属性可以获取它，因为它在函数调用时才会产生，而生成器则是由函数调用返回的，所以有属性指向栈帧。获取某个函数的相关的栈帧，则必须在调用这个函数且这个函数尚未放回时获取。通过sys.getframe()函数或者inspect模块的currentframe()函数获取当前栈帧。属性为只读&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isframe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a frame object.
+
+    Frame objects provide these attributes:
+        f_back          next outer frame object (this frame&#39;s caller) 调用栈的前一帧
+        f_builtins      built-in namespace seen by this frame
+        f_code          code object being executed in this frame 栈帧对应的code对象
+        f_exc_traceback traceback if raised in this frame, or None
+        f_exc_type      exception type if raised in this frame, or None
+        f_exc_value     exception value if raised in this frame, or None
+        f_globals       global namespace seen by this frame
+        f_lasti         index of last attempted instruction in bytecode
+        f_lineno        current line number in Python source code
+        f_locals        local namespace seen by this frame
+        f_restricted    0 or 1 if frame is in restricted execution mode
+        f_trace         tracing function for this frame, or None&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FrameType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// 每个栈用PyFrameObject结构表示
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_frame&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject_VAR_HEAD&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_frame&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;// 前一个运行栈，调用方
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyCodeObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// 执行的PyCodeObject对象
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_builtins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// builtins环境变量集合
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_globals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;// globals全局变量集合
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_locals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;// locals本地变量集合
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_valuestack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 栈起始地址，最后一个本地变量之后
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_stacktop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;// 栈针位置，指向栈中下一个空闲位置
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_trace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;// trace函数
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_exc_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_exc_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_exc_traceback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 记录异常处理
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyThreadState&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_tstate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// 当前的线程
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_lasti&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		       &lt;span class=&quot;c1&quot;&gt;// 当前执行的字节码的地址
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_lineno&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		       &lt;span class=&quot;c1&quot;&gt;// 当前的行号
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_iblock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;		       &lt;span class=&quot;c1&quot;&gt;// 一些局部block块
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;PyTryBlock&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f_blockstack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CO_MAXBLOCKS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* for try and loop blocks */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f_localsplus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;	&lt;span class=&quot;c1&quot;&gt;// 栈地址，大小为 本地变量+co_stacksize
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PyFrameObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://fanchao01.github.io/blog/images/python_frame_structure.png&quot; alt=&quot;image&quot; /&gt;
+当执行函数调用时会进入新的栈帧，那么当前栈帧就作为下一个栈帧的f_back字段。&lt;br /&gt;
+&lt;img src=&quot;https://fanchao01.github.io/blog/images/python_frame_link.png&quot; alt=&quot;image&quot; /&gt;
+多个栈帧链属于一个线程，而同时可能存在多个线程，每个线程拥有一个栈帧链。这样形成了Python的虚拟机运行环境。&lt;br /&gt;
+&lt;img src=&quot;https://fanchao01.github.io/blog/images/python_runtime_env.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;参考：https://fanchao01.github.io/blog/2016/11/13/python-pycode_and_frame/&lt;/p&gt;
+
+&lt;h4 id=&quot;iscode&quot;&gt;iscode&lt;/h4&gt;
+&lt;p&gt;代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。&lt;br /&gt;
+- co_argcount:普通参数的总数，不包括* 参数和 ** 参数&lt;br /&gt;
+- co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，&lt;br /&gt;
+- co_varnames:所有局部变量的元组。 &lt;br /&gt;
+- co_filename: 源代码所在的文件名。 &lt;br /&gt;
+- co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp;amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp;amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp;amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;iscode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a code object.
+
+    Code objects provide these attributes:
+        co_argcount     number of arguments (not including * or ** args)
+        co_code         string of raw compiled bytecode
+        co_consts       tuple of constants used in the bytecode
+        co_filename     name of file in which this code object was created
+        co_firstlineno  number of first line in Python source code
+        co_flags        bitmap: 1=optimized | 2=newlocals | 4=*arg | 8=**arg
+        co_lnotab       encoded mapping of line numbers to bytecode indices
+        co_name         name with which this code object was defined
+        co_names        tuple of names of local variables
+        co_nlocals      number of local variables
+        co_stacksize    virtual machine stack space required
+        co_varnames     tuple of names of arguments and local variables&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CodeType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject_HEAD&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;co_argcount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;        &lt;span class=&quot;cm&quot;&gt;/* 位置参数个数 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;co_nlocals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/* 局部变量个数 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;co_stacksize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;       &lt;span class=&quot;cm&quot;&gt;/* 栈大小 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;co_flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/* 字节码指令序列 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_consts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    &lt;span class=&quot;cm&quot;&gt;/* 所有常量集合 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/* 所有符号名称集合 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_varnames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 局部变量名称集合 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_freevars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 闭包用的的变量名集合 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_cellvars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 内部嵌套函数引用的变量名集合 */&lt;/span&gt;
+
+    &lt;span class=&quot;cm&quot;&gt;/* The rest doesn’t count for hash/cmp */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 代码所在文件名 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      &lt;span class=&quot;cm&quot;&gt;/* 模块名|函数名|类名 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;co_firstlineno&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;     &lt;span class=&quot;cm&quot;&gt;/* 代码块在文件中的起始行号 */&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;PyObject&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_lnotab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    &lt;span class=&quot;cm&quot;&gt;/* 字节码指令和行号的对应关系 */&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_zombieframe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;cm&quot;&gt;/* for optimization only (see frameobject.c) */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PyCodeObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;加载模块时，模块对应的PyCodeObject对象被写入.pyc文件，格式：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;block&lt;/th&gt;
+      &lt;th&gt;type&lt;/th&gt;
+      &lt;th&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MAGIC&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt;魔数，区分不同版本的python&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;MTIME&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt;修改时间&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TYPE_CODE&lt;/td&gt;
+      &lt;td&gt;byte&lt;/td&gt;
+      &lt;td&gt;PyCodeObject对象&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_argcount&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt;对应PyCodeObject结构体各个域&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_nlocals&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_stacksize&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_flags&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TYPE_STRING&lt;/td&gt;
+      &lt;td&gt;byte&lt;/td&gt;
+      &lt;td&gt;“字符串表示方法，对应PyCodeObject中的co_code”&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_code size&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_code value&lt;/td&gt;
+      &lt;td&gt;bytes&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TYPE_LIST&lt;/td&gt;
+      &lt;td&gt;byte&lt;/td&gt;
+      &lt;td&gt;列表&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_const size&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt;列表co_consts的元素个数&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TYPE_INT&lt;/td&gt;
+      &lt;td&gt;byte&lt;/td&gt;
+      &lt;td&gt;co_const[0]是一个整型&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_const[0]&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TYPE_STRING&lt;/td&gt;
+      &lt;td&gt;byte&lt;/td&gt;
+      &lt;td&gt;co_consts[1]是一个字符串&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_consts[1] size&lt;/td&gt;
+      &lt;td&gt;long&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_consts[1] value&lt;/td&gt;
+      &lt;td&gt;bytes&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TYPE_CODE&lt;/td&gt;
+      &lt;td&gt;byte&lt;/td&gt;
+      &lt;td&gt;co_consts[2]是一个PyCodeObject对象，对应的代码可能是一个函数或者类&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;co_consts[2]&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;co_flags&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#define CO_OPTIMIZED	0x0001
+#define CO_NEWLOCALS	0x0002
+#define CO_VARARGS	0x0004
+#define CO_VARKEYWORDS	0x0008
+#define CO_NESTED       0x0010
+#define CO_GENERATOR    0x0020
+&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/* The CO_NOFREE flag is set if there are no free or cell variables.
+   This information is redundant, but it allows a single flag test
+   to determine whether there is any extra work to be done when the
+   call frame it setup.
+*/&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#define CO_NOFREE       0x0040
+&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#if 0
+/* This is no longer used.  Stopped defining in 2.5, do not re-use. */
+#define CO_GENERATOR_ALLOWED    0x1000
+#endif
+&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;#define CO_FUTURE_DIVISION    	0x2000
+#define CO_FUTURE_ABSOLUTE_IMPORT 0x4000 &lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/* do absolute imports by default */&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;
+#define CO_FUTURE_WITH_STATEMENT  0x8000
+#define CO_FUTURE_PRINT_FUNCTION  0x10000
+#define CO_FUTURE_UNICODE_LITERALS 0x20000
+&lt;/span&gt;
+&lt;span class=&quot;cm&quot;&gt;/* This should be defined if a future statement modifies the syntax.
+   For example, when a keyword is added.
+*/&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#if 1
+#define PY_PARSER_REQUIRES_FUTURE_KEYWORD
+#endif&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;dir(f) —&amp;gt; [‘func_closure’, ‘func_code’, ‘func_defaults’, ‘func_dict’, ‘func_doc’, ‘func_globals’, ‘func_name’]
+在funcobject.c中对PyFunction_Type的定义：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PyMemberDef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;func_memberlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_closure&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T_OBJECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OFF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_closure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RESTRICTED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;READONLY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_doc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;T_OBJECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OFF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_doc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WRITE_RESTRICTED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;__doc__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;T_OBJECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OFF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_doc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WRITE_RESTRICTED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_globals&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T_OBJECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OFF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_globals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RESTRICTED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;READONLY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;__module__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;T_OBJECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OFF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WRITE_RESTRICTED&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* Sentinel */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PyGetSetDef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;func_getsetlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_code&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_get_code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_set_code&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_defaults&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_get_defaults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_set_defaults&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_dict&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_get_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_set_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;__dict__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_get_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_set_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;func_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_get_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_set_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;__name__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_get_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_set_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* Sentinel */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;f.func_defaults记录的是函数的默认值，tuple(10, 16)&lt;/p&gt;
+
+&lt;p&gt;f.func_code是一个code对象，对应PyCodeObject,有三个co_varnames, co_freevars, co_cellvars,分别对应了 local variables, free variables, cell variables.free variables指enclosing scope中的变量，cell variables则是指会被多个scope访问的变量。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;cellvars:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_cellvars&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;freevars:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_freevars&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_freevars&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;co_cellvars&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;LOAD_GLOBAL在代码对象的co_names属性中寻找变量名。&lt;br /&gt;
+LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。&lt;br /&gt;
+注意这些命令的参数都为整数，变量名是通过将参数作为下标从对应的变量名元组中获得的。所以：“LOAD_GLOBAL 0”相当于载入f1.func_globals[f1.func_code.co_names[0]]对象。对于局域变量，Python做了尽可能的优化处理，因此它使用LOAD_FAST和STORE_FAST对局域变量进行存取，它们可以通过其参数直接存取一个用来保存局域变量的C语言数组。&lt;/p&gt;
+
+&lt;h4 id=&quot;isbuiltin&quot;&gt;isbuiltin&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isbuiltin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a built-in function or method.
+
+    Built-in functions and methods provide these attributes:
+        __doc__         documentation string
+        __name__        original name of this function or method
+        __self__        instance to which a method is bound, or None&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BuiltinFunctionType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isroutine&quot;&gt;isroutine&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isroutine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is any kind of function or method.&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isbuiltin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ismethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ismethoddescriptor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;isabstract&quot;&gt;isabstract&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isabstract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is an abstract base class (ABC).&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__flags__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TPFLAGS_IS_ABSTRACT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;getmembers&quot;&gt;getmembers&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getmembers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predicate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return all members of an object as (name, value) pairs sorted by name.
+    Optionally, only return members that satisfy a given predicate.&quot;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;getattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;AttributeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predicate&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;predicate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;getmro&quot;&gt;getmro&lt;/h4&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getmro&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;Return tuple of base classes (including cls) in method resolution order.&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hasattr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__mro__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__mro__&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_searchbases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+        <pubDate>Sun, 25 Mar 2018 18:04:00 +0800</pubDate>
+	<link>http://capeskychung.github.io/python/python-winreg/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/python/python-winreg/</guid>
+        
+        <category>winreg</category>
+        
+        <category>python</category>
+        
+        
+        <category>python</category>
+        
+      </item>
     
       <item>
         <title>python inspect解析</title>
@@ -216,11 +722,11 @@
 
 &lt;h4 id=&quot;iscode&quot;&gt;iscode&lt;/h4&gt;
 &lt;p&gt;代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。&lt;br /&gt;
-&amp;gt; co_argcount:普通参数的总数，不包括* 参数和 ** 参数&lt;br /&gt;
-&amp;gt; co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，&lt;br /&gt;
-&amp;gt; co_varnames:所有局部变量的元组。 &lt;br /&gt;
-&amp;gt; co_filename: 源代码所在的文件名。 &lt;br /&gt;
-&amp;gt; co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp;amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp;amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp;amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)&lt;/p&gt;
+- co_argcount:普通参数的总数，不包括* 参数和 ** 参数&lt;br /&gt;
+- co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，&lt;br /&gt;
+- co_varnames:所有局部变量的元组。 &lt;br /&gt;
+- co_filename: 源代码所在的文件名。 &lt;br /&gt;
+- co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp;amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp;amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp;amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;iscode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a code object.
@@ -511,6 +1017,163 @@ LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。&l
         
         
         <category>python</category>
+        
+      </item>
+    
+      <item>
+        <title>nginx负载均衡</title>
+        <description>&lt;p&gt;nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。&lt;/p&gt;
+
+&lt;p&gt;考虑到目前开发对效率要求很高，需要快速搭建一个http服务器，用其他的语言可能并没有那么快，而且目前主要使用的诗python，所以以python作为开发语言。python的web目前用的比较多的框架有flask、bottle、django等。flask和bottle是轻量级的，使用非常方便。这里快速的选择了bottle，比较适合做一些工具网站之类的。&lt;/p&gt;
+
+&lt;p&gt;由于bottle框架自带wsgi是单进程单线程运行模式（bottle默认运行在内置的wsgireg服务器上，单线程的http服务器在开发的时候特别有用，但是性能比较低，随着服务器负载不断增加，会出现性能瓶颈，一次只能响应一个请求）。为了提高程序的性能，首先需要启用多线程，在程序中使用gevent（大多数服务器的线程池都限制了线程池中线程的数量，避免创建和切换线程的代价。尽管和进程的fork比起来，线程还是很便宜，但是为每一个请求创建一个线程的代价就比较高了。）gevent添加了greenlet的支持，greenlet和传统的线程类似，但其创建只需要消耗很少的资源，基于gevent的服务器可以生成成千上万的greenlet，为每个练剑分配一个greenlet无性能压力。阻塞greenlet，也不会影响到服务器接受新的请求，同时处理的连接数理论上是没有限制的）。只需要在run中加上server=gevent即可。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patch_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;0.0.0.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;gevent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;使用了多线程模式之后，但是线程都在一个进程中运行，所以需要多开进程来提升并发能力，在启动http服务器的时候，端口应该是灵活的，通过变量来传递，最好可以从配置文件中读取。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# app_log.py&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patch_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;port is error&#39;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;port num should be greater than 1024&#39;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;0.0.0.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;gevent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;执行方式: python app_log 8811&lt;/p&gt;
+
+&lt;h4 id=&quot;shell&quot;&gt;shell启动&lt;/h4&gt;
+&lt;p&gt;可以通过shell脚本来控制多进程http服务器的启动和关闭.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;8811 8812 8813&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 设置三个端口也即是启动三个http进程&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;pro_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;~/logWeb/app_log.py&#39;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+start&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i inn &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[*]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;do
+		&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/usr/sbin/lsof -i :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; | wc -l&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; -ge 2 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;then
+			&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; already exists&quot;&lt;/span&gt; /bin/false
+		&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+			/usr/bin/python &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pro_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &amp;amp;&amp;gt;&amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;then
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; start ...&quot;&lt;/span&gt; /bin/true
+			&lt;span class=&quot;k&quot;&gt;else
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; start ...&quot;&lt;/span&gt; /bin/false
+			&lt;span class=&quot;k&quot;&gt;fi
+		fi
+	done
+return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+stop&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[*]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;do
+		&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/var/run/app_log_&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.pid&quot;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -f &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;then
+			&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;cat &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+			&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -9 &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;%?
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;then
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stop ...&quot;&lt;/span&gt; /bin/true
+			&lt;span class=&quot;k&quot;&gt;else
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stop ...&quot;&lt;/span&gt; /bin/false
+			&lt;span class=&quot;k&quot;&gt;fi
+			&lt;/span&gt;rm -f &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;else
+			&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; Has stopped !&quot;&lt;/span&gt; /bin/false
+		&lt;span class=&quot;k&quot;&gt;fi
+	done&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in
+	&lt;/span&gt;start&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		start
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	stop&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		stop
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	status&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		status -p &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;app_log&#39;&lt;/span&gt;
+		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	restart&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		stop
+		sleep 2
+		start
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	condrestart|try-restart&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;status -p &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;app_log&#39;&lt;/span&gt; &amp;gt;&amp;amp;dev/null; &lt;span class=&quot;k&quot;&gt;then
+			&lt;/span&gt;stop
+			start
+		&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	force-reload|reload&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		reload
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;$&quot;Usage: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$prog&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; {start|stop|restart|condrestart|try-restart|force-reload|reload|status|fullstatus|gracefull|help|configtest}&quot;&lt;/span&gt; 
+		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2
+&lt;span class=&quot;k&quot;&gt;esac
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;nginx-&quot;&gt;nginx 代理负载&lt;/h4&gt;
+&lt;p&gt;用nginx代理负载，nginx的配置如下&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-conf&quot; data-lang=&quot;conf&quot;&gt;&lt;span class=&quot;n&quot;&gt;upstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt; {
+	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8811&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8812&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8813&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
+}
+
+&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
+	&lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8001&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; /
+	{
+		&lt;span class=&quot;n&quot;&gt;proxy_pass&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;://&lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt;;
+		&lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;;
+		&lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;Forwarded&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;For&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;remote_addr&lt;/span&gt;;
+		&lt;span class=&quot;n&quot;&gt;proxy_cache_key&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;is_args&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;;
+	}
+	&lt;span class=&quot;n&quot;&gt;access_log&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;off&lt;/span&gt;;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;启动nginx之后，访问8001端口时，nginx就会负载均衡到每个端口，实现多进程，提升并发处理能力。&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 20 Mar 2018 18:04:00 +0800</pubDate>
+	<link>http://capeskychung.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid>
+        
+        <category>nginx</category>
+        
+        <category>balance</category>
+        
+        <category>linux</category>
+        
+        
+        <category>linux</category>
         
       </item>
     

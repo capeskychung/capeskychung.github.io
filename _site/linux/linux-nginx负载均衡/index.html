@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>nginx负载均衡 • CapeskyChung</title>
+    <meta name="description" content="nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。
+
+">
+    <meta name="keywords" content="nginx, balance, linux">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="nginx负载均衡">
+	<meta name="twitter:description" content="nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="nginx负载均衡">
+	<meta property="og:description" content="nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。
+
+">
+	<meta property="og:url" content="/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/python/" >Python</a></li>
+  
+    
+    <li><a href="/linux/" >Linux</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/python/">
+        
+        <div class="title">Python</div>
+        
+      </a>
+    </li><li>
+      <a href="/linux/">
+        
+        <div class="title">Linux</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/linux/" itemprop="url">
+        <span itemprop="title">Linux</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>nginx负载均衡</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。</p>
+
+<p>考虑到目前开发对效率要求很高，需要快速搭建一个http服务器，用其他的语言可能并没有那么快，而且目前主要使用的诗python，所以以python作为开发语言。python的web目前用的比较多的框架有flask、bottle、django等。flask和bottle是轻量级的，使用非常方便。这里快速的选择了bottle，比较适合做一些工具网站之类的。</p>
+
+<p>由于bottle框架自带wsgi是单进程单线程运行模式（bottle默认运行在内置的wsgireg服务器上，单线程的http服务器在开发的时候特别有用，但是性能比较低，随着服务器负载不断增加，会出现性能瓶颈，一次只能响应一个请求）。为了提高程序的性能，首先需要启用多线程，在程序中使用gevent（大多数服务器的线程池都限制了线程池中线程的数量，避免创建和切换线程的代价。尽管和进程的fork比起来，线程还是很便宜，但是为每一个请求创建一个线程的代价就比较高了。）gevent添加了greenlet的支持，greenlet和传统的线程类似，但其创建只需要消耗很少的资源，基于gevent的服务器可以生成成千上万的greenlet，为每个练剑分配一个greenlet无性能压力。阻塞greenlet，也不会影响到服务器接受新的请求，同时处理的连接数理论上是没有限制的）。只需要在run中加上server=gevent即可。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">gevent</span>
+<span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">monkey</span>
+<span class="n">monkey</span><span class="o">.</span><span class="n">patch_all</span><span class="p">()</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="s">'gevent'</span><span class="p">)</span></code></pre></figure>
+
+<p>使用了多线程模式之后，但是线程都在一个进程中运行，所以需要多开进程来提升并发能力，在启动http服务器的时候，端口应该是灵活的，通过变量来传递，最好可以从配置文件中读取。</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># app_log.py</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">monkey</span>
+<span class="n">monkey</span><span class="o">.</span><span class="n">patch_all</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+	<span class="n">portnum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
+	<span class="k">print</span> <span class="s">'port is error'</span>
+	<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">portnum</span> <span class="o">&lt;=</span> <span class="mi">1024</span><span class="p">:</span>
+	<span class="k">print</span> <span class="s">'port num should be greater than 1024'</span>
+	<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">portnum</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="s">'gevent'</span><span class="p">)</span></code></pre></figure>
+
+<p>执行方式: python app_log 8811</p>
+
+<h4 id="shell">shell启动</h4>
+<p>可以通过shell脚本来控制多进程http服务器的启动和关闭.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c">#!/bin/bash</span>
+
+<span class="nv">port_list</span><span class="o">=(</span>8811 8812 8813<span class="o">)</span>  <span class="c"># 设置三个端口也即是启动三个http进程</span>
+<span class="nv">pro_path</span><span class="o">=</span><span class="s1">'~/logWeb/app_log.py'</span>
+<span class="nv">RETVAL</span><span class="o">=</span>0
+start<span class="o">()</span> <span class="o">{</span>
+	<span class="k">for </span>i inn <span class="k">${</span><span class="nv">port_list</span><span class="p">[*]</span><span class="k">}</span>
+	<span class="k">do
+		</span><span class="nv">p</span><span class="o">=</span><span class="sb">`</span>/usr/sbin/lsof -i :<span class="k">${</span><span class="nv">i</span><span class="k">}</span> | wc -l<span class="sb">`</span>
+		<span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">p</span><span class="k">}</span> -ge 2 <span class="o">]</span>
+		<span class="k">then
+			</span>action <span class="s2">"app_log </span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2"> already exists"</span> /bin/false
+		<span class="k">else</span>
+			/usr/bin/python <span class="k">${</span><span class="nv">pro_path</span><span class="k">}</span> <span class="k">${</span><span class="nv">i</span><span class="k">}</span> &amp;&gt;&gt; <span class="k">${</span><span class="nv">log_path</span><span class="k">}</span>
+		<span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
+			<span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">RETVAL</span><span class="k">}</span> <span class="o">==</span> 0 <span class="o">]</span>
+			<span class="k">then
+				</span>action <span class="s2">"app_log </span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2"> start ..."</span> /bin/true
+			<span class="k">else
+				</span>action <span class="s2">"app_log </span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2"> start ..."</span> /bin/false
+			<span class="k">fi
+		fi
+	done
+return</span> <span class="nv">$RETVAL</span>
+<span class="o">}</span>
+stop<span class="o">()</span> <span class="o">{</span>
+	<span class="k">for </span>i <span class="k">in</span> <span class="k">${</span><span class="nv">port_list</span><span class="p">[*]</span><span class="k">}</span>
+	<span class="k">do
+		</span><span class="nv">pidfile</span><span class="o">=</span><span class="s2">"/var/run/app_log_</span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2">.pid"</span>
+		<span class="k">if</span> <span class="o">[</span> -f <span class="k">${</span><span class="nv">pidfile</span><span class="k">}</span> <span class="o">]</span>
+		<span class="k">then
+			</span><span class="nv">pid</span><span class="o">=</span><span class="sb">`</span>cat <span class="k">${</span><span class="nv">pidfile</span><span class="k">}</span><span class="sb">`</span>
+			<span class="nb">kill</span> -9 <span class="k">${</span><span class="nv">pid</span><span class="k">}</span>
+			<span class="nv">RETVAL</span><span class="o">=</span>%?
+			<span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">RETVAL</span><span class="k">}</span> <span class="o">==</span> 0 <span class="o">]</span>
+			<span class="k">then
+				</span>action <span class="s2">"app_log </span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2"> stop ..."</span> /bin/true
+			<span class="k">else
+				</span>action <span class="s2">"app_log </span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2"> stop ..."</span> /bin/false
+			<span class="k">fi
+			</span>rm -f <span class="k">${</span><span class="nv">pidfile</span><span class="k">}</span>
+		<span class="k">else
+			</span>action <span class="s2">"app_log </span><span class="k">${</span><span class="nv">i</span><span class="k">}</span><span class="s2"> Has stopped !"</span> /bin/false
+		<span class="k">fi
+	done</span> 
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+	</span>start<span class="p">)</span>
+		start
+		<span class="p">;;</span>
+	stop<span class="p">)</span>
+		stop
+		<span class="p">;;</span>
+	status<span class="p">)</span>
+		status -p <span class="k">${</span><span class="nv">pidfile</span><span class="k">}</span> <span class="s1">'app_log'</span>
+		<span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
+		<span class="p">;;</span>
+	restart<span class="p">)</span>
+		stop
+		sleep 2
+		start
+		<span class="p">;;</span>
+	condrestart|try-restart<span class="p">)</span>
+		<span class="k">if </span>status -p <span class="k">${</span><span class="nv">pidfile</span><span class="k">}</span> <span class="s1">'app_log'</span> &gt;&amp;dev/null; <span class="k">then
+			</span>stop
+			start
+		<span class="k">fi</span>
+		<span class="p">;;</span>
+	force-reload|reload<span class="p">)</span>
+		reload
+		<span class="p">;;</span>
+	<span class="k">*</span><span class="p">)</span>
+		<span class="nb">echo</span> <span class="s2">$"Usage: </span><span class="nv">$prog</span><span class="s2"> {start|stop|restart|condrestart|try-restart|force-reload|reload|status|fullstatus|gracefull|help|configtest}"</span> 
+		<span class="nv">RETVAL</span><span class="o">=</span>2
+<span class="k">esac
+</span><span class="nb">exit</span> <span class="nv">$RETVAL</span></code></pre></figure>
+
+<h4 id="nginx-">nginx 代理负载</h4>
+<p>用nginx代理负载，nginx的配置如下</p>
+
+<figure class="highlight"><pre><code class="language-conf" data-lang="conf"><span class="n">upstream</span> <span class="n">app_log</span> {
+	<span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">8811</span> <span class="n">weight</span>=<span class="m">4</span> <span class="n">max_fails</span>=<span class="m">2</span> <span class="n">fail_timeout</span>=<span class="m">30</span><span class="n">s</span>;
+	<span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">8812</span> <span class="n">weight</span>=<span class="m">4</span> <span class="n">max_fails</span>=<span class="m">2</span> <span class="n">fail_timeout</span>=<span class="m">30</span><span class="n">s</span>;
+	<span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">8813</span> <span class="n">weight</span>=<span class="m">4</span> <span class="n">max_fails</span>=<span class="m">2</span> <span class="n">fail_timeout</span>=<span class="m">30</span><span class="n">s</span>;
+}
+
+<span class="n">server</span> {
+	<span class="n">listen</span> <span class="m">8001</span>;
+	<span class="n">server_name</span> <span class="n">localhost</span>;
+	<span class="n">location</span> /
+	{
+		<span class="n">proxy_pass</span> <span class="n">http</span>://<span class="n">app_log</span>;
+		<span class="n">proxy_set_header</span> <span class="n">Host</span> $<span class="n">host</span>;
+		<span class="n">proxy_set_header</span> <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">For</span> $<span class="n">remote_addr</span>;
+		<span class="n">proxy_cache_key</span> $<span class="n">host</span>$<span class="n">url</span>$<span class="n">is_args</span>$<span class="n">args</span>;
+	}
+	<span class="n">access_log</span> <span class="n">off</span>;
+}</code></pre></figure>
+
+<p>启动nginx之后，访问8001端口时，nginx就会负载均衡到每个端口，实现多进程，提升并发处理能力。</p>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=nginx负载均衡&amp;url=/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-03-20T18:04:00Z" itemprop="datePublished">March 20, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

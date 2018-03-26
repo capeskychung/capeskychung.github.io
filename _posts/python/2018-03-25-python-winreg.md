@@ -1,15 +1,17 @@
 ---
 layout: article
-title: "python inspect解析"
+title: "python winreg模块"
 categories: python
 #excerpt:
-tags: [inspect, python]
+tags: [winreg, python]
 image:
 #	teaser: /teaser/index.jpeg
-date: 2018-03-20T11:04:00+01:00
+date: 2018-03-25T11:04:00+01:00
 ---
-inspect用法，用于判断python的对象的类型.
 
+\_winreg用法，python用于操作windows注册表模块.
+
+#### 
 #### ismodule
 {% highlight python %}
 {}
