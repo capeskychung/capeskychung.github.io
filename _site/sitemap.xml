@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>/linux/linux-nginx%25E8%25B4%259F%25E8%25BD%25BD%25E5%259D%2587%25E8%25A1%25A1/</loc>
+<lastmod>2018-03-26T05:00:00+08:00</lastmod>
+</url>
+<url>
 <loc>/python/python-winreg/</loc>
 <lastmod>2018-03-25T18:04:00+08:00</lastmod>
 </url>
 <url>
 <loc>/python/python-inspect/</loc>
-<lastmod>2018-03-20T18:04:00+08:00</lastmod>
-</url>
-<url>
-<loc>/linux/linux-nginx%25E8%25B4%259F%25E8%25BD%25BD%25E5%259D%2587%25E8%25A1%25A1/</loc>
 <lastmod>2018-03-20T18:04:00+08:00</lastmod>
 </url>
 <url>

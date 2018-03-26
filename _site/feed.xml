@@ -5,9 +5,166 @@
     <description>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</description>
     <link>http://cenalulu.github.io/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 26 Mar 2018 19:19:33 +0800</pubDate>
-    <lastBuildDate>Mon, 26 Mar 2018 19:19:33 +0800</lastBuildDate>
+    <pubDate>Mon, 26 Mar 2018 18:57:22 +0800</pubDate>
+    <lastBuildDate>Mon, 26 Mar 2018 18:57:22 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>nginx负载均衡</title>
+        <description>&lt;p&gt;nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。&lt;/p&gt;
+
+&lt;p&gt;考虑到目前开发对效率要求很高，需要快速搭建一个http服务器，用其他的语言可能并没有那么快，而且目前主要使用的诗python，所以以python作为开发语言。python的web目前用的比较多的框架有flask、bottle、django等。flask和bottle是轻量级的，使用非常方便。这里快速的选择了bottle，比较适合做一些工具网站之类的。&lt;/p&gt;
+
+&lt;p&gt;由于bottle框架自带wsgi是单进程单线程运行模式（bottle默认运行在内置的wsgireg服务器上，单线程的http服务器在开发的时候特别有用，但是性能比较低，随着服务器负载不断增加，会出现性能瓶颈，一次只能响应一个请求）。为了提高程序的性能，首先需要启用多线程，在程序中使用gevent（大多数服务器的线程池都限制了线程池中线程的数量，避免创建和切换线程的代价。尽管和进程的fork比起来，线程还是很便宜，但是为每一个请求创建一个线程的代价就比较高了。）gevent添加了greenlet的支持，greenlet和传统的线程类似，但其创建只需要消耗很少的资源，基于gevent的服务器可以生成成千上万的greenlet，为每个练剑分配一个greenlet无性能压力。阻塞greenlet，也不会影响到服务器接受新的请求，同时处理的连接数理论上是没有限制的）。只需要在run中加上server=gevent即可。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patch_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;0.0.0.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;gevent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;使用了多线程模式之后，但是线程都在一个进程中运行，所以需要多开进程来提升并发能力，在启动http服务器的时候，端口应该是灵活的，通过变量来传递，最好可以从配置文件中读取。&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# app_log.py&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patch_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;port is error&#39;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;port num should be greater than 1024&#39;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;0.0.0.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;gevent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;执行方式: python app_log 8811&lt;/p&gt;
+
+&lt;h4 id=&quot;shell&quot;&gt;shell启动&lt;/h4&gt;
+&lt;p&gt;可以通过shell脚本来控制多进程http服务器的启动和关闭.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;8811 8812 8813&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 设置三个端口也即是启动三个http进程&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;pro_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;~/logWeb/app_log.py&#39;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+start&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i inn &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[*]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;do
+		&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/usr/sbin/lsof -i :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; | wc -l&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; -ge 2 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;then
+			&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; already exists&quot;&lt;/span&gt; /bin/false
+		&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+			/usr/bin/python &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pro_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &amp;amp;&amp;gt;&amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;then
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; start ...&quot;&lt;/span&gt; /bin/true
+			&lt;span class=&quot;k&quot;&gt;else
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; start ...&quot;&lt;/span&gt; /bin/false
+			&lt;span class=&quot;k&quot;&gt;fi
+		fi
+	done
+return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+stop&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[*]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;do
+		&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/var/run/app_log_&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.pid&quot;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -f &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;then
+			&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;cat &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+			&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -9 &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+			&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;%?
+			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;then
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stop ...&quot;&lt;/span&gt; /bin/true
+			&lt;span class=&quot;k&quot;&gt;else
+				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stop ...&quot;&lt;/span&gt; /bin/false
+			&lt;span class=&quot;k&quot;&gt;fi
+			&lt;/span&gt;rm -f &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;else
+			&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; Has stopped !&quot;&lt;/span&gt; /bin/false
+		&lt;span class=&quot;k&quot;&gt;fi
+	done&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in
+	&lt;/span&gt;start&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		start
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	stop&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		stop
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	status&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		status -p &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;app_log&#39;&lt;/span&gt;
+		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	restart&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		stop
+		sleep 2
+		start
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	condrestart|try-restart&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;status -p &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;app_log&#39;&lt;/span&gt; &amp;gt;&amp;amp;dev/null; &lt;span class=&quot;k&quot;&gt;then
+			&lt;/span&gt;stop
+			start
+		&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	force-reload|reload&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		reload
+		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;$&quot;Usage: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$prog&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; {start|stop|restart|condrestart|try-restart|force-reload|reload|status|fullstatus|gracefull|help|configtest}&quot;&lt;/span&gt; 
+		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2
+&lt;span class=&quot;k&quot;&gt;esac
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h4 id=&quot;nginx-&quot;&gt;nginx 代理负载&lt;/h4&gt;
+&lt;p&gt;用nginx代理负载，nginx的配置如下&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-conf&quot; data-lang=&quot;conf&quot;&gt;&lt;span class=&quot;n&quot;&gt;upstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt; {
+	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8811&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8812&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8813&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
+}
+
+&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
+	&lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8001&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
+	&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; /
+	{
+		&lt;span class=&quot;n&quot;&gt;proxy_pass&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;://&lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt;;
+		&lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;;
+		&lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;Forwarded&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;For&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;remote_addr&lt;/span&gt;;
+		&lt;span class=&quot;n&quot;&gt;proxy_cache_key&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;is_args&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;;
+	}
+	&lt;span class=&quot;n&quot;&gt;access_log&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;off&lt;/span&gt;;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;启动nginx之后，访问8001端口时，nginx就会负载均衡到每个端口，实现多进程，提升并发处理能力。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 26 Mar 2018 05:00:00 +0800</pubDate>
+	<link>http://capeskychung.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid>
+        
+        <category>nginx</category>
+        
+        <category>balance</category>
+        
+        <category>linux</category>
+        
+        
+        <category>linux</category>
+        
+      </item>
     
       <item>
         <title>python winreg模块</title>
@@ -1017,163 +1174,6 @@ LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。&l
         
         
         <category>python</category>
-        
-      </item>
-    
-      <item>
-        <title>nginx负载均衡</title>
-        <description>&lt;p&gt;nginx的负载均衡功能很早之前就听说了，一直没有部署使用该功能。在项目中分析程序打印的日志，根据相似度将日志归类。由于相似度的计算对精度要求不高，只是简单的分类，这个是后话（后续的博客会更新相似度计算的方法）。分析出结果之后要以一个比较直观的方式显示给程序看，所以考虑到数据可视化，就使用百度的框架echats来显示。后续觉得echats有点多余，直接以网页的显示，表格来显示具体的日志出现的次数。&lt;/p&gt;
-
-&lt;p&gt;考虑到目前开发对效率要求很高，需要快速搭建一个http服务器，用其他的语言可能并没有那么快，而且目前主要使用的诗python，所以以python作为开发语言。python的web目前用的比较多的框架有flask、bottle、django等。flask和bottle是轻量级的，使用非常方便。这里快速的选择了bottle，比较适合做一些工具网站之类的。&lt;/p&gt;
-
-&lt;p&gt;由于bottle框架自带wsgi是单进程单线程运行模式（bottle默认运行在内置的wsgireg服务器上，单线程的http服务器在开发的时候特别有用，但是性能比较低，随着服务器负载不断增加，会出现性能瓶颈，一次只能响应一个请求）。为了提高程序的性能，首先需要启用多线程，在程序中使用gevent（大多数服务器的线程池都限制了线程池中线程的数量，避免创建和切换线程的代价。尽管和进程的fork比起来，线程还是很便宜，但是为每一个请求创建一个线程的代价就比较高了。）gevent添加了greenlet的支持，greenlet和传统的线程类似，但其创建只需要消耗很少的资源，基于gevent的服务器可以生成成千上万的greenlet，为每个练剑分配一个greenlet无性能压力。阻塞greenlet，也不会影响到服务器接受新的请求，同时处理的连接数理论上是没有限制的）。只需要在run中加上server=gevent即可。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patch_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;0.0.0.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8080&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;gevent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;使用了多线程模式之后，但是线程都在一个进程中运行，所以需要多开进程来提升并发能力，在启动http服务器的时候，端口应该是灵活的，通过变量来传递，最好可以从配置文件中读取。&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# app_log.py&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gevent&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;monkey&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;patch_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;port is error&#39;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;port num should be greater than 1024&#39;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;0.0.0.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;gevent&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;执行方式: python app_log 8811&lt;/p&gt;
-
-&lt;h4 id=&quot;shell&quot;&gt;shell启动&lt;/h4&gt;
-&lt;p&gt;可以通过shell脚本来控制多进程http服务器的启动和关闭.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-
-&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;8811 8812 8813&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# 设置三个端口也即是启动三个http进程&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;pro_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;~/logWeb/app_log.py&#39;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
-start&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i inn &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[*]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;do
-		&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/usr/sbin/lsof -i :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; | wc -l&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; -ge 2 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;then
-			&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; already exists&quot;&lt;/span&gt; /bin/false
-		&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-			/usr/bin/python &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pro_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &amp;amp;&amp;gt;&amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;log_path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
-			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-			&lt;span class=&quot;k&quot;&gt;then
-				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; start ...&quot;&lt;/span&gt; /bin/true
-			&lt;span class=&quot;k&quot;&gt;else
-				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; start ...&quot;&lt;/span&gt; /bin/false
-			&lt;span class=&quot;k&quot;&gt;fi
-		fi
-	done
-return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-stop&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;i &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[*]&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;do
-		&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/var/run/app_log_&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.pid&quot;&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -f &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;then
-			&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;cat &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-			&lt;span class=&quot;nb&quot;&gt;kill&lt;/span&gt; -9 &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pid&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-			&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;%?
-			&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-			&lt;span class=&quot;k&quot;&gt;then
-				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stop ...&quot;&lt;/span&gt; /bin/true
-			&lt;span class=&quot;k&quot;&gt;else
-				&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; stop ...&quot;&lt;/span&gt; /bin/false
-			&lt;span class=&quot;k&quot;&gt;fi
-			&lt;/span&gt;rm -f &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;else
-			&lt;/span&gt;action &lt;span class=&quot;s2&quot;&gt;&quot;app_log &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; Has stopped !&quot;&lt;/span&gt; /bin/false
-		&lt;span class=&quot;k&quot;&gt;fi
-	done&lt;/span&gt; 
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in
-	&lt;/span&gt;start&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		start
-		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
-	stop&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		stop
-		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
-	status&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		status -p &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;app_log&#39;&lt;/span&gt;
-		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt;
-		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
-	restart&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		stop
-		sleep 2
-		start
-		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
-	condrestart|try-restart&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;status -p &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pidfile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;app_log&#39;&lt;/span&gt; &amp;gt;&amp;amp;dev/null; &lt;span class=&quot;k&quot;&gt;then
-			&lt;/span&gt;stop
-			start
-		&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
-	force-reload|reload&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		reload
-		&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;$&quot;Usage: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$prog&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; {start|stop|restart|condrestart|try-restart|force-reload|reload|status|fullstatus|gracefull|help|configtest}&quot;&lt;/span&gt; 
-		&lt;span class=&quot;nv&quot;&gt;RETVAL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2
-&lt;span class=&quot;k&quot;&gt;esac
-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h4 id=&quot;nginx-&quot;&gt;nginx 代理负载&lt;/h4&gt;
-&lt;p&gt;用nginx代理负载，nginx的配置如下&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-conf&quot; data-lang=&quot;conf&quot;&gt;&lt;span class=&quot;n&quot;&gt;upstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt; {
-	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8811&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
-	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8812&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
-	&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;.&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;:&lt;span class=&quot;m&quot;&gt;8813&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weight&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_fails&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fail_timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;;
-}
-
-&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; {
-	&lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8001&lt;/span&gt;;
-	&lt;span class=&quot;n&quot;&gt;server_name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;localhost&lt;/span&gt;;
-	&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; /
-	{
-		&lt;span class=&quot;n&quot;&gt;proxy_pass&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;://&lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt;;
-		&lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;;
-		&lt;span class=&quot;n&quot;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;Forwarded&lt;/span&gt;-&lt;span class=&quot;n&quot;&gt;For&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;remote_addr&lt;/span&gt;;
-		&lt;span class=&quot;n&quot;&gt;proxy_cache_key&lt;/span&gt; $&lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;is_args&lt;/span&gt;$&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;;
-	}
-	&lt;span class=&quot;n&quot;&gt;access_log&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;off&lt;/span&gt;;
-}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;启动nginx之后，访问8001端口时，nginx就会负载均衡到每个端口，实现多进程，提升并发处理能力。&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 20 Mar 2018 18:04:00 +0800</pubDate>
-	<link>http://capeskychung.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link>
-	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid>
-        
-        <category>nginx</category>
-        
-        <category>balance</category>
-        
-        <category>linux</category>
-        
-        
-        <category>linux</category>
         
       </item>
     
