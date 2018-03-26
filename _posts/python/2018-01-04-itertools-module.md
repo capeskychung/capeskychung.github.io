@@ -5,7 +5,7 @@ categories: python
 #excerpt:
 tags: [itertools, python]
 image:
-#	teaser: /teaser/index.jpeg
+    teaser: /teaser/python.jpg
 date: 2018-01-04T11:04:00+01:00
 ---
 

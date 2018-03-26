@@ -5,7 +5,7 @@ categories: python
 #excerpt:
 tags: [winreg, python]
 image:
-#	teaser: /teaser/index.jpeg
+    teaser: /teaser/reg.jpg
 date: 2018-03-25T11:04:00+01:00
 ---
 

@@ -5,7 +5,7 @@ categories: linux
 #excerpt:
 tags: [find, linux]
 image:
-#	teaser: /teaser/index.jpeg
+    teaser: /teaser/shell.jpg
 date: 2018-03-20T11:04:00+01:00
 ---
 

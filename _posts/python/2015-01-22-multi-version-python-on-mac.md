@@ -4,8 +4,8 @@ title:  "在Mac电脑上安装多版本的Python"
 categories: python
 toc: false
 ads: true
-#image:
-#    teaser: /teaser/default.jpg
+image:
+    teaser: /teaser/python.jpg
 ---
 
 > 本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法

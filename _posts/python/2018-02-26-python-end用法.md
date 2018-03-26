@@ -5,7 +5,7 @@ categories: python
 #excerpt:
 tags: [end, python]
 image:
-#	teaser: /teaser/index.jpeg
+    teaser: /teaser/python.jpg
 date: 2018-02-26T11:04:00+01:00
 ---
 
