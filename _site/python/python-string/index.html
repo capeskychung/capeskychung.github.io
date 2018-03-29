@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>python string模块 • CapeskyChung</title>
+    <meta name="description" content="string模块用法.
+
+">
+    <meta name="keywords" content="string, python">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="python string模块">
+	<meta name="twitter:description" content="string模块用法.
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="python string模块">
+	<meta property="og:description" content="string模块用法.
+
+">
+	<meta property="og:url" content="/python/python-string/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/python/python-string/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/python/" >Python</a></li>
+  
+    
+    <li><a href="/linux/" >Linux</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/python/">
+        
+        <div class="title">Python</div>
+        
+      </a>
+    </li><li>
+      <a href="/linux/">
+        
+        <div class="title">Linux</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/python/" itemprop="url">
+        <span itemprop="title">Python</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>python string模块</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>string模块用法.</p>
+
+<h4 id="stringcapitalize">string.capitalize()</h4>
+<p>将字符串的第一个字符大写</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_capitalize</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="o">*</span><span class="n">s_new</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">newobj</span><span class="p">;</span>
+
+    <span class="n">newobj</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">newobj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">s_new</span> <span class="o">=</span> <span class="n">PyString_AsString</span><span class="p">(</span><span class="n">newobj</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="o">++</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="n">s_new</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="o">++</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">tolower</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="n">s_new</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">newobj</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringcenterwidth">string.center(width)</h4>
+<p>返回原字符串居中，并使用空格填充长度为width的新字符串</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_center</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">marg</span><span class="p">,</span> <span class="n">left</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">width</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">fillchar</span> <span class="o">=</span> <span class="sc">' '</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"n|c:center"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fillchar</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">width</span> <span class="o">&amp;&amp;</span> <span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">self</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">marg</span> <span class="o">=</span> <span class="n">width</span> <span class="o">-</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">marg</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">marg</span> <span class="o">&amp;</span> <span class="n">width</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">);</span>  <span class="c1">// 只有当原先字符串长度为偶数，width为奇数的时候，左边空格长度会加1
+</span>
+    <span class="k">return</span> <span class="n">pad</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">marg</span> <span class="o">-</span> <span class="n">left</span><span class="p">,</span> <span class="n">fillchar</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringcountstr-beg0-endlenstring">string.count(str, beg=0, end=len(string))</h4>
+<p>返回str在string里面出现的次数，如果指定beg和end则返回范围内str出现的次数</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_count</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">sub_obj</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="o">*</span><span class="n">sub</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">sub_len</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">PY_SSIZE_T_MAX</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">stringlib_parse_args_finds</span><span class="p">(</span><span class="s">"count"</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub_obj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">sub_obj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">sub_obj</span><span class="p">);</span>
+        <span class="n">sub_len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">sub_obj</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">sub_obj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Py_ssize_t</span> <span class="n">count</span><span class="p">;</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">PyUnicode_Count</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">sub_obj</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="n">PyInt_FromSsize_t</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">sub_obj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub_len</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">ADJUST_INDICES</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="n">PyInt_FromSsize_t</span><span class="p">(</span>
+        <span class="n">stringlib_count</span><span class="p">(</span><span class="n">str</span> <span class="o">+</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">sub_len</span><span class="p">,</span> <span class="n">PY_SSIZE_T_MAX</span><span class="p">)</span>
+        <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringdecodeencodingutf-8-errorsstrict">string.decode(encoding=’UTF-8’, errors=’strict’)</h4>
+<p>以encoding指定的编码格式解码string，如果出错默认报一个ValueError的异常，除非errors指定的诗ignore或者replace</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_decode</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">kwlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"encoding"</span><span class="p">,</span> <span class="s">"errors"</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">errors</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTupleAndKeywords</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="s">"|ss:decode"</span><span class="p">,</span>
+                                     <span class="n">kwlist</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">encoding</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">errors</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">PyString_AsDecodedObject</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">encoding</span><span class="p">,</span> <span class="n">errors</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">onError</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">PyErr_Format</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">,</span>
+                     <span class="s">"decoder did not return a string/unicode object "</span>
+                     <span class="s">"(type=%.400s)"</span><span class="p">,</span>
+                     <span class="n">Py_TYPE</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">tp_name</span><span class="p">);</span>
+        <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+
+ <span class="nl">onError:</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringencodeencodingutf-8-errorsstrict">string.encode(encoding=’UTF-8’, errors=’strict’)</h4>
+<p>以encoding指定的编码格式编码string，如果出错默认报一个ValueError的异常，除非errors指定的是ignore或者replace</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_encode</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">kwlist</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"encoding"</span><span class="p">,</span> <span class="s">"errors"</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">errors</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTupleAndKeywords</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="s">"|ss:encode"</span><span class="p">,</span>
+                                     <span class="n">kwlist</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">encoding</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">errors</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">PyString_AsEncodedObject</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">encoding</span><span class="p">,</span> <span class="n">errors</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">onError</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">PyErr_Format</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">,</span>
+                     <span class="s">"encoder did not return a string/unicode object "</span>
+                     <span class="s">"(type=%.400s)"</span><span class="p">,</span>
+                     <span class="n">Py_TYPE</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">tp_name</span><span class="p">);</span>
+        <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+
+ <span class="nl">onError:</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringendswithobj-beg0-endlenstring">string.endswith(obj, beg=0, end=len(string))</h4>
+<p>检查字符串是否以obj结束，如果beg或者end指定则检查指定范围内是否以obj结束，如果是返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_endswith</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">end</span> <span class="o">=</span> <span class="n">PY_SSIZE_T_MAX</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">subobj</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">stringlib_parse_args_finds</span><span class="p">(</span><span class="s">"endswith"</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyTuple_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">PyTuple_GET_SIZE</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_string_tailmatch</span><span class="p">(</span><span class="n">self</span><span class="p">,</span>
+                            <span class="n">PyTuple_GET_ITEM</span><span class="p">(</span><span class="n">subobj</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span>
+                            <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Py_RETURN_TRUE</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">Py_RETURN_FALSE</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_string_tailmatch</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">subobj</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">PyErr_ExceptionMatches</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">))</span>
+            <span class="n">PyErr_Format</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">,</span> <span class="s">"endswith first arg must be str, "</span>
+                         <span class="s">"unicode, or tuple, not %s"</span><span class="p">,</span> <span class="n">Py_TYPE</span><span class="p">(</span><span class="n">subobj</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">tp_name</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringexpandtabstabsize8">string.expandtabs(tabsize=8)</h4>
+<p>把字符串中的tab符号转为空格，tab符号默认的空格数为8.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_expandtabs</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">qe</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">q</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">incr</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">u</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">tabsize</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"|i:expandtabs"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tabsize</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="cm">/* First pass: determine size of output string */</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* chars up to and including most recent \n or \r */</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* chars since most recent \n or \r (use in tab calculations) */</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="cm">/* end of input */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">'\t'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">tabsize</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">incr</span> <span class="o">=</span> <span class="n">tabsize</span> <span class="o">-</span> <span class="p">(</span><span class="n">j</span> <span class="o">%</span> <span class="n">tabsize</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">PY_SSIZE_T_MAX</span> <span class="o">-</span> <span class="n">incr</span><span class="p">)</span>
+                    <span class="k">goto</span> <span class="n">overflow1</span><span class="p">;</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="n">incr</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">PY_SSIZE_T_MAX</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">goto</span> <span class="n">overflow1</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">'\n'</span> <span class="o">||</span> <span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">'\r'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">PY_SSIZE_T_MAX</span> <span class="o">-</span> <span class="n">j</span><span class="p">)</span>
+                    <span class="k">goto</span> <span class="n">overflow1</span><span class="p">;</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="n">j</span><span class="p">;</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">PY_SSIZE_T_MAX</span> <span class="o">-</span> <span class="n">j</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">overflow1</span><span class="p">;</span>
+
+    <span class="cm">/* Second pass: create output string and fill it */</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">u</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* same as in first pass */</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">u</span><span class="p">);</span> <span class="cm">/* next output char */</span>
+    <span class="n">qe</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">u</span><span class="p">);</span> <span class="cm">/* end of output */</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">'\t'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">tabsize</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">tabsize</span> <span class="o">-</span> <span class="p">(</span><span class="n">j</span> <span class="o">%</span> <span class="n">tabsize</span><span class="p">);</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
+                <span class="k">while</span> <span class="p">(</span><span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">&gt;=</span> <span class="n">qe</span><span class="p">)</span>
+                        <span class="k">goto</span> <span class="n">overflow2</span><span class="p">;</span>
+                    <span class="o">*</span><span class="n">q</span><span class="o">++</span> <span class="o">=</span> <span class="sc">' '</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">&gt;=</span> <span class="n">qe</span><span class="p">)</span>
+                <span class="k">goto</span> <span class="n">overflow2</span><span class="p">;</span>
+            <span class="o">*</span><span class="n">q</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">'\n'</span> <span class="o">||</span> <span class="o">*</span><span class="n">p</span> <span class="o">==</span> <span class="sc">'\r'</span><span class="p">)</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">u</span><span class="p">;</span>
+
+  <span class="nl">overflow2:</span>
+    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+  <span class="nl">overflow1:</span>
+    <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_OverflowError</span><span class="p">,</span> <span class="s">"new string is too long"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringfindstr-beg0endlenstring">string.find(str, beg=0,end=len(string))</h4>
+<p>检测str是够包含在string中，如果beg和end指定范围，则检查是否包含在指定范围内，如果是返回开始的索引值，否则返回-1</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_find</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">result</span> <span class="o">=</span> <span class="n">string_find_internal</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">PyInt_FromSsize_t</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">string_find_internal</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dir</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">subobj</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sub</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">sub_len</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">PY_SSIZE_T_MAX</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">stringlib_parse_args_finds</span><span class="p">(</span><span class="s">"find/rfind/index/rindex"</span><span class="p">,</span>
+                                    <span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span>
+        <span class="n">sub_len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_Find</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">subobj</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">dir</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub_len</span><span class="p">))</span>
+        <span class="cm">/* XXX - the "expected a character buffer object" is pretty
+           confusing for a non-expert.  remap to something else ? */</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dir</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stringlib_find_slice</span><span class="p">(</span>
+            <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span>
+            <span class="n">sub</span><span class="p">,</span> <span class="n">sub_len</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">stringlib_rfind_slice</span><span class="p">(</span>
+            <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span>
+            <span class="n">sub</span><span class="p">,</span> <span class="n">sub_len</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringindexstr-beg0-endlenstring">string.index(str, beg=0, end=len(string))</h4>
+<p>跟find()方法一样，如果str不在string中会报一个异常</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_index</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">result</span> <span class="o">=</span> <span class="n">string_find_internal</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_ValueError</span><span class="p">,</span>
+                        <span class="s">"substring not found"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyInt_FromSsize_t</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringisalnum">string.isalnum</h4>
+<p>如果string至少有一个字符并且所有的字符都是字母或者数字则返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_isalnum</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span>
+        <span class="n">isalnum</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isalnum</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringisalpha">string.isalpha</h4>
+<p>如果string至少有一个字符并且所有字符都是字母则返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_isalpha</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span>
+        <span class="n">isalpha</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isalpha</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringisdigit">string.isdigit</h4>
+<p>如果string只包含数字则返回True否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_isdigit</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span>
+        <span class="n">isdigit</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isdigit</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringislower">string.islower</h4>
+<p>如果string中包含至少一个区分大小写的字符，并且所有这些去跟大小写的字符都是小写则返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_islower</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">cased</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cased</span> <span class="o">&amp;&amp;</span> <span class="n">islower</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="n">cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">cased</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringisspace">string.isspace</h4>
+<p>如果string中只包含空格，则返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_isspace</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span>
+        <span class="n">isspace</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isspace</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringistitle">string.istitle</h4>
+<p>如果string是标题化的(见title()),则返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_istitle</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">uncased</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">cased</span><span class="p">,</span> <span class="n">previous_is_cased</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">previous_is_cased</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+            <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">previous_is_cased</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+            <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+            <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">cased</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringisupper">string.isupper</h4>
+<p>如果string中包含至少一个大写的字符并且所有这些（区分大小的）字符都是大写，则返回True，否则返回False</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="p">}</span>
+<span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="n">string_isupper</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span>
+        <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="k">register</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">cased</span><span class="p">;</span>
+
+    <span class="cm">/* Shortcut for single character strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="cm">/* Special case for empty strings */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">e</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cased</span> <span class="o">&amp;&amp;</span> <span class="n">isupper</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+            <span class="n">cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyBool_FromLong</span><span class="p">(</span><span class="n">cased</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringljustwidth">string.ljust(width)</h4>
+<p>返回一个原字符串左对齐，并使用空格填充至长度width的新字符串</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_ljust</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">width</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">fillchar</span> <span class="o">=</span> <span class="sc">' '</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"n|c:ljust"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fillchar</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">width</span> <span class="o">&amp;&amp;</span> <span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">self</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">pad</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">fillchar</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringlower">string.lower</h4>
+<p>将string中的所有大写字符转成小写</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_lower</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">newobj</span><span class="p">;</span>
+
+    <span class="n">newobj</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">newobj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">newobj</span><span class="p">);</span>
+
+    <span class="n">Py_MEMCPY</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">n</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_tolower</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">newobj</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringlstrip">string.lstrip</h4>
+<p>截掉string左边的空格</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_lstrip</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyTuple_GET_SIZE</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">do_strip</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">LEFTSTRIP</span><span class="p">);</span> <span class="cm">/* Common case */</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">do_argstrip</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">LEFTSTRIP</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="maxstring-minstring">max(string), min(string)</h4>
+<p>string中最大最小的字符</p>
+
+<h4 id="stringpartitionstr">string.partition(str)</h4>
+<p>从str出现的第一个位置起，把字符串string分为一个3元素的元组(string_pre_str,str,string_post_str),如果string中不包含str，则string_pre_str=string, str和string_post_str都为空</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_partition</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">sep_obj</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sep</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">sep_len</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">sep</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">);</span>
+        <span class="n">sep_len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_Partition</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">sep_obj</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sep</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sep_len</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">stringlib_partition</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span>
+        <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span>
+        <span class="n">sep_obj</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">sep_len</span>
+        <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringreplacestr1-str2-numstringcountstr1">string.replace(str1, str2, num=string.count(str1))</h4>
+<p>把string中的str1替换成str2，如果num指定，则替换不超过num次</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_replace</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">count</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">from</span><span class="p">,</span> <span class="o">*</span><span class="n">to</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">from_s</span><span class="p">,</span> <span class="o">*</span><span class="n">to_s</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">from_len</span><span class="p">,</span> <span class="n">to_len</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"OO|n:replace"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">from</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">to</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">count</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">from</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">from_s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">from</span><span class="p">);</span>
+        <span class="n">from_len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">from</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">from</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_Replace</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span>
+                                 <span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">count</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">from_s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">from_len</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">to</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">to_s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">to</span><span class="p">);</span>
+        <span class="n">to_len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">to</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">to</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_Replace</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span>
+                                 <span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">count</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">to_s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">to_len</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">replace</span><span class="p">((</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span>
+                               <span class="n">from_s</span><span class="p">,</span> <span class="n">from_len</span><span class="p">,</span>
+                               <span class="n">to_s</span><span class="p">,</span> <span class="n">to_len</span><span class="p">,</span> <span class="n">count</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringrfindstr-beg0-endlenstring">string.rfind(str, beg=0, end=len(string))</h4>
+<p>类似于find，不过是从右边开始查找</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_rfind</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">result</span> <span class="o">=</span> <span class="n">string_find_internal</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">PyInt_FromSsize_t</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringrindexstr-beg0-endlenstring">string.rindex(str, beg=0, end=len(string))</h4>
+<p>类似于index，不过从右边开始查找</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_rindex</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">result</span> <span class="o">=</span> <span class="n">string_find_internal</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_ValueError</span><span class="p">,</span>
+                        <span class="s">"substring not found"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">PyInt_FromSsize_t</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringrjustwidth">string.rjust(width)</h4>
+<p>返回一个原字符串右对齐，并使用空格填充至长度width的新字符串</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_rjust</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">width</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">fillchar</span> <span class="o">=</span> <span class="sc">' '</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"n|c:rjust"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fillchar</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">width</span> <span class="o">&amp;&amp;</span> <span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">self</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">pad</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">width</span> <span class="o">-</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fillchar</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringrpartitionstr">string.rpartition(str)</h4>
+<p>类似于partition，不过是从string的右边开始查找</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_rpartition</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">sep_obj</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sep</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">sep_len</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">sep</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">);</span>
+        <span class="n">sep_len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_RPartition</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">sep_obj</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">sep_obj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sep</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sep_len</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">stringlib_rpartition</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span>
+        <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span>
+        <span class="n">sep_obj</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">sep_len</span>
+        <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringrstrip">string.rstrip</h4>
+<p>删除string末尾的空格</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_rstrip</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyTuple_GET_SIZE</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">do_strip</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">RIGHTSTRIP</span><span class="p">);</span> <span class="cm">/* Common case */</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">do_argstrip</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">RIGHTSTRIP</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringrsplitstr-numstringcountstr">string.rsplit(str=””, num=string.count(str))</h4>
+<p>从右往左分隔字符串,返回的元组顺序还是从左往右</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_rsplit</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">maxsplit</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="o">*</span><span class="n">sub</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">subobj</span> <span class="o">=</span> <span class="n">Py_None</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"|On:rsplit"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">maxsplit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">maxsplit</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">maxsplit</span> <span class="o">=</span> <span class="n">PY_SSIZE_T_MAX</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subobj</span> <span class="o">==</span> <span class="n">Py_None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stringlib_rsplit_whitespace</span><span class="p">((</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_RSplit</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">subobj</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">stringlib_rsplit</span><span class="p">((</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">str</span> <span class="o">=</span> <span class="s">"Learning string"</span>
+<span class="nb">str</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s">'n'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="p">[</span><span class="s">'Learning stri'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">]</span></code></pre></figure>
+
+<h4 id="stringsplitstrnumstringcountstr">string.split(str=”“,num=string.count(str))</h4>
+<p>通过指定的字符串str分隔符对字符串进行切片，如果参数有num指定值，则仅分隔num个子字符串</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_split</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Py_ssize_t</span> <span class="n">len</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">maxsplit</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="o">*</span><span class="n">sub</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">subobj</span> <span class="o">=</span> <span class="n">Py_None</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"|On:split"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">maxsplit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">maxsplit</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">maxsplit</span> <span class="o">=</span> <span class="n">PY_SSIZE_T_MAX</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">subobj</span> <span class="o">==</span> <span class="n">Py_None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stringlib_split_whitespace</span><span class="p">((</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">subobj</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">subobj</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">PyUnicode_Split</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">subobj</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">);</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">subobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sub</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">stringlib_split</span><span class="p">((</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">maxsplit</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringsplitlineskeepends">string.splitlines([keepends])</h4>
+<p>按照行(‘\r’, ‘\n’, ‘\r\n’)分隔，返回一个包含各行作为元素的列表，如果参数keepends为False，不包含换行符，如果为True，则保留换行符</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_splitlines</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">keepends</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"|i:splitlines"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">keepends</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">stringlib_splitlines</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span> <span class="n">self</span><span class="p">,</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span>
+        <span class="n">keepends</span>
+    <span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringswapcase">string.swapcase</h4>
+<p>翻转string中的大小写</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_swapcase</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="o">*</span><span class="n">s_new</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">newobj</span><span class="p">;</span>
+
+    <span class="n">newobj</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">newobj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">s_new</span> <span class="o">=</span> <span class="n">PyString_AsString</span><span class="p">(</span><span class="n">newobj</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="o">++</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="p">{</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="p">{</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">tolower</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+            <span class="o">*</span><span class="n">s_new</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="n">s_new</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">newobj</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringtitle">string.title</h4>
+<p>返回”标题化”字符串，就是说所有单词都是以大写开始，其余字母否是小写</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span>
+<span class="nf">string_title</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="o">*</span><span class="n">s_new</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">newobj</span><span class="p">;</span>
+
+    <span class="n">newobj</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">newobj</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">s_new</span> <span class="o">=</span> <span class="n">PyString_AsString</span><span class="p">(</span><span class="n">newobj</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">s</span><span class="o">++</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">previous_is_cased</span><span class="p">)</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">isupper</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">previous_is_cased</span><span class="p">)</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">tolower</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+            <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span>
+            <span class="n">previous_is_cased</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">s_new</span><span class="o">++</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">newobj</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<h4 id="stringtranslatetable-del">string.translate(table, del=””)</h4>
+<p>根据参数str给出的表（包含256个字符）转换字符串中的字符没要过滤掉的字符放到del参数中。<br />
+table  翻译表，是通过maketrans方法转换过而来<br />
+deletechars  字符串中要过滤的字符列表</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_translate</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">register</span> <span class="kt">char</span> <span class="o">*</span><span class="n">input</span><span class="p">,</span> <span class="o">*</span><span class="n">output</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">table</span><span class="p">;</span>
+    <span class="k">register</span> <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">changed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">input_obj</span> <span class="o">=</span> <span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">output_start</span><span class="p">,</span> <span class="o">*</span><span class="n">del_table</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">inlen</span><span class="p">,</span> <span class="n">tablen</span><span class="p">,</span> <span class="n">dellen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">result</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">trans_table</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">tableobj</span><span class="p">,</span> <span class="o">*</span><span class="n">delobj</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">PyArg_UnpackTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s">"translate"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                          <span class="o">&amp;</span><span class="n">tableobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">delobj</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">tableobj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">tableobj</span><span class="p">);</span>
+        <span class="n">tablen</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">tableobj</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">tableobj</span> <span class="o">==</span> <span class="n">Py_None</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">tablen</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">tableobj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="cm">/* Unicode .translate() does not support the deletechars
+           parameter; instead a mapping to None will cause characters
+           to be deleted. */</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">delobj</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">,</span>
+            <span class="s">"deletions are implemented differently for unicode"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">PyUnicode_Translate</span><span class="p">((</span><span class="n">PyObject</span> <span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">,</span> <span class="n">tableobj</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="cp">#endif
+</span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">tableobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">table</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tablen</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">tablen</span> <span class="o">!=</span> <span class="mi">256</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_ValueError</span><span class="p">,</span>
+          <span class="s">"translation table must be 256 characters long"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">delobj</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">PyString_Check</span><span class="p">(</span><span class="n">delobj</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">del_table</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">delobj</span><span class="p">);</span>
+            <span class="n">dellen</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">delobj</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="cp">#ifdef Py_USING_UNICODE
+</span>        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyUnicode_Check</span><span class="p">(</span><span class="n">delobj</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_TypeError</span><span class="p">,</span>
+            <span class="s">"deletions are implemented differently for unicode"</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="cp">#endif
+</span>        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">PyObject_AsCharBuffer</span><span class="p">(</span><span class="n">delobj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">del_table</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dellen</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">del_table</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">dellen</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">inlen</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">input_obj</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">inlen</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">output_start</span> <span class="o">=</span> <span class="n">output</span> <span class="o">=</span> <span class="n">PyString_AsString</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="n">input</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">input_obj</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dellen</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">table</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* If no deletions are required, use faster code */</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">inlen</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">input</span><span class="o">++</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">Py_CHARMASK</span><span class="p">((</span><span class="o">*</span><span class="n">output</span><span class="o">++</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span> <span class="o">!=</span> <span class="n">c</span><span class="p">)</span>
+                <span class="n">changed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">changed</span> <span class="o">||</span> <span class="o">!</span><span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">input_obj</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">input_obj</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">input_obj</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">table</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">trans_table</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">trans_table</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dellen</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">trans_table</span><span class="p">[(</span><span class="kt">int</span><span class="p">)</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="n">del_table</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">inlen</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">input</span><span class="o">++</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">trans_table</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">Py_CHARMASK</span><span class="p">(</span><span class="o">*</span><span class="n">output</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">trans_table</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span>
+                <span class="k">continue</span><span class="p">;</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">changed</span> <span class="o">&amp;&amp;</span> <span class="n">PyString_CheckExact</span><span class="p">(</span><span class="n">input_obj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+        <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">input_obj</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">input_obj</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="cm">/* Fix the size of the resulting string */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inlen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">_PyString_Resize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">result</span><span class="p">,</span> <span class="n">output</span> <span class="o">-</span> <span class="n">output_start</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">maketrans</span>
+
+<span class="n">intab</span> <span class="o">=</span> <span class="s">"aeiou"</span>
+<span class="n">outtab</span> <span class="o">=</span> <span class="s">"12345"</span>
+<span class="n">trantab</span> <span class="o">=</span> <span class="n">naketrans</span><span class="p">(</span><span class="n">intab</span><span class="p">,</span> <span class="n">outtab</span><span class="p">)</span>
+
+<span class="nb">str</span> <span class="o">=</span> <span class="s">"this is string example ...wow!!!"</span>
+
+<span class="k">print</span> <span class="nb">str</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">trantab</span><span class="p">,</span> <span class="s">'xm'</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;</span> <span class="n">th3s</span> <span class="mi">3</span><span class="n">s</span> <span class="n">str3ng</span> <span class="mi">21</span><span class="n">p12</span> <span class="o">...</span><span class="n">w4w</span><span class="err">!!!</span></code></pre></figure>
+
+<h4 id="stringupper">string.upper</h4>
+<p>转换string中的小写字母为大写</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">static</span> <span class="n">PyObject</span> <span class="o">*</span>
+<span class="nf">string_upper</span><span class="p">(</span><span class="n">PyStringObject</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">Py_ssize_t</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">PyString_GET_SIZE</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+    <span class="n">PyObject</span> <span class="o">*</span><span class="n">newobj</span><span class="p">;</span>
+
+    <span class="n">newobj</span> <span class="o">=</span> <span class="n">PyString_FromStringAndSize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">newobj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">newobj</span><span class="p">);</span>
+
+    <span class="n">Py_MEMCPY</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">PyString_AS_STRING</span><span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="n">n</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Py_CHARMASK</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">islower</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_toupper</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">newobj</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=python%20string模块&amp;url=/python/python-string/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/python/python-string/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/python/python-string/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-03-26T17:04:00Z" itemprop="datePublished">March 26, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
