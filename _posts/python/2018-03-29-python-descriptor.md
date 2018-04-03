@@ -1,12 +1,12 @@
 ---
 layout: article
-title: "python用shell的end结束代码块"
+title: "python descriptor用法"
 categories: python
 #excerpt:
-tags: [end, python]
+tags: [descriptor, python]
 image:
     teaser: /teaser/python.jpg
-date: 2018-02-26T11:04:00+01:00
+date: 2018-03-29T19:04:00+01:00
 ---
 
 初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码

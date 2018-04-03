@@ -5,7 +5,7 @@ categories: python
 #excerpt:
 tags: [string, python]
 image:
-    teaser: /teaser/reg.jpg
+    teaser: /teaser/string.jpg
 date: 2018-03-26T10:04:00+01:00
 ---
 

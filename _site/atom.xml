@@ -7,7 +7,7 @@
     <subtitle>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</subtitle>
     <link href="/atom.xml" rel="self"/>
     <link href="/" rel="alternate" type="text/html"/>
-    <updated>2018-03-29T20:09:21+08:00</updated>
+    <updated>2018-03-30T16:49:51+08:00</updated>
     <id>/</id>
     <author>
 			<name>capeskychung</name>
@@ -15,6 +15,68 @@
 			
 		</author>
 
+    
+    <entry>
+        <title>python descriptor用法</title>
+        <link href="/python/python-descriptor/"/>
+        <updated>2018-03-30T02:04:00+08:00</updated>
+        <id>/python/python-descriptor</id>
+        <author>
+					<name>capeskychung</name>
+					<uri>/</uri>
+					
+				</author>
+        <content type="html">
+        	
+        	&lt;p&gt;初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;__builtins__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;gt; 0&#39;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;lt;= 0&#39;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+        </content>
+    </entry>
+    
+    <entry>
+        <title>python re模块</title>
+        <link href="/python/python-re%E6%A8%A1%E5%9D%97/"/>
+        <updated>2018-03-26T18:20:00+08:00</updated>
+        <id>/python/python-re模块</id>
+        <author>
+					<name>capeskychung</name>
+					<uri>/</uri>
+					
+				</author>
+        <content type="html">
+        	
+        	&lt;p&gt;python正则表达式&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;__builtins__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;gt; 0&#39;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;lt;= 0&#39;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+        </content>
+    </entry>
     
     <entry>
         <title>python string模块</title>
@@ -3133,37 +3195,6 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
 &lt;h4 id=&quot;find&quot;&gt;find&lt;/h4&gt;
 
 &lt;p&gt;可以用来删除文件 find . -name ‘*pyc’ -delete&lt;/p&gt;
-
-
-        </content>
-    </entry>
-    
-    <entry>
-        <title>python用shell的end结束代码块</title>
-        <link href="/python/python-re%E6%A8%A1%E5%9D%97/"/>
-        <updated>2018-02-26T18:04:00+08:00</updated>
-        <id>/python/python-re模块</id>
-        <author>
-					<name>capeskychung</name>
-					<uri>/</uri>
-					
-				</author>
-        <content type="html">
-        	
-        	&lt;p&gt;初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;__builtins__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;gt; 0&#39;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;lt;= 0&#39;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 
         </content>

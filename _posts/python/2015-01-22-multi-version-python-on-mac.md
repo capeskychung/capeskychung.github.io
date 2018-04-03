@@ -5,7 +5,7 @@ categories: python
 toc: false
 ads: true
 image:
-    teaser: /teaser/python.jpg
+    teaser: /teaser/mac.jpg
 ---
 
 > 本文将介绍如何在Mac电脑上实现多个版本的Python共存及切换的方法
