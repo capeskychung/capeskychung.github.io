@@ -5,9 +5,54 @@
     <description>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</description>
     <link>http://cenalulu.github.io/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 30 Mar 2018 16:49:51 +0800</pubDate>
-    <lastBuildDate>Fri, 30 Mar 2018 16:49:51 +0800</lastBuildDate>
+    <pubDate>Mon, 09 Apr 2018 02:58:04 -0700</pubDate>
+    <lastBuildDate>Mon, 09 Apr 2018 02:58:04 -0700</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>红黑树</title>
+        <description>&lt;p&gt;数据结构红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。二叉搜索树存在一个问题，如果树中插入的是随机数据，则执行的效果很好，但是如果插入的数据是有序或者逆序的数据，二叉搜索树的执行速度会变得很慢。因为当插入数值有序时，二叉树就是非平衡，排在一条线上，变成一个链表，它的快速查找、插入、删除不再具备。&lt;/p&gt;
+
+&lt;p&gt;以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数123据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。&lt;/p&gt;
+
+&lt;h4 id=&quot;特征&quot;&gt;特征&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;所有节点都有颜色&lt;/li&gt;
+  &lt;li&gt;在插入和删除的过程中，要遵循保持这些颜色的不同排列的规则。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;红黑树的主要规则：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;每个节点不是红色就是黑色；&lt;/li&gt;
+  &lt;li&gt;根节点总是黑色的；&lt;/li&gt;
+  &lt;li&gt;如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；&lt;/li&gt;
+  &lt;li&gt;从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（相同的黑色高度）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;在红黑树中插入的节点都是红色的，因为插入一个红色节点比插入一个黑色节点违背红黑原则的可能性更小。原因是：插入黑色节点总会改变黑色高度（规则4），但是插入红色节点只有一半的概率违背规则3.规则3比规则4更容易修正。&lt;/p&gt;
+
+&lt;h4 id=&quot;修正平衡性&quot;&gt;修正平衡性&lt;/h4&gt;
+&lt;p&gt;红黑树主要通过三种方式平衡，改变节点颜色、左旋和右旋。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;变色&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;改变节点颜色因为违背了规则3.假设现在节点E，然后插入节点A和S，节点A在左子节点，S在右子节点，目前是平衡的。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 08 Apr 2018 10:04:00 -0700</pubDate>
+	<link>http://capeskychung.github.io/algorithm/red-black-tree/</link>
+	<guid isPermaLink="true">http://cenalulu.github.io/algorithm/red-black-tree/</guid>
+        
+        <category>R-B Tree</category>
+        
+        <category>algorithm</category>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
     
       <item>
         <title>python descriptor用法</title>
@@ -27,7 +72,7 @@
 	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
-        <pubDate>Fri, 30 Mar 2018 02:04:00 +0800</pubDate>
+        <pubDate>Thu, 29 Mar 2018 11:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/python/python-descriptor/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/python/python-descriptor/</guid>
         
@@ -58,7 +103,7 @@
 	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
-        <pubDate>Mon, 26 Mar 2018 18:20:00 +0800</pubDate>
+        <pubDate>Mon, 26 Mar 2018 03:20:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/python/python-re%E6%A8%A1%E5%9D%97/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/python/python-re%E6%A8%A1%E5%9D%97/</guid>
         
@@ -1157,7 +1202,7 @@ deletechars  字符串中要过滤的字符列表&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
-        <pubDate>Mon, 26 Mar 2018 17:04:00 +0800</pubDate>
+        <pubDate>Mon, 26 Mar 2018 02:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/python/python-string/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/python/python-string/</guid>
         
@@ -1206,7 +1251,7 @@ deletechars  字符串中要过滤的字符列表&lt;/p&gt;
 
 &lt;p&gt;执行方式: python app_log 8811&lt;/p&gt;
 
-&lt;h4 id=&quot;shell&quot;&gt;shell启动&lt;/h4&gt;
+&lt;h4 id=&quot;shell启动&quot;&gt;shell启动&lt;/h4&gt;
 &lt;p&gt;可以通过shell脚本来控制多进程http服务器的启动和关闭.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
@@ -1287,7 +1332,7 @@ stop&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;
 &lt;span class=&quot;k&quot;&gt;esac
 &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$RETVAL&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;nginx-&quot;&gt;nginx 代理负载&lt;/h4&gt;
+&lt;h4 id=&quot;nginx-代理负载&quot;&gt;nginx 代理负载&lt;/h4&gt;
 &lt;p&gt;用nginx代理负载，nginx的配置如下&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-conf&quot; data-lang=&quot;conf&quot;&gt;&lt;span class=&quot;n&quot;&gt;upstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;app_log&lt;/span&gt; {
@@ -1312,7 +1357,7 @@ stop&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;
 &lt;p&gt;启动nginx之后，访问8001端口时，nginx就会负载均衡到每个端口，实现多进程，提升并发处理能力。&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 26 Mar 2018 05:00:00 +0800</pubDate>
+        <pubDate>Sun, 25 Mar 2018 14:00:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</guid>
         
@@ -2290,7 +2335,7 @@ REG_QWORD_LITLE_ENDIAN 12&lt;/p&gt;
 
 &lt;p&gt;参考：https://docs.python.org/2/library/_winreg.html&lt;/p&gt;
 </description>
-        <pubDate>Sun, 25 Mar 2018 18:04:00 +0800</pubDate>
+        <pubDate>Sun, 25 Mar 2018 03:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/python/python-winreg/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/python/python-winreg/</guid>
         
@@ -2509,12 +2554,14 @@ REG_QWORD_LITLE_ENDIAN 12&lt;/p&gt;
 &lt;p&gt;参考：https://fanchao01.github.io/blog/2016/11/13/python-pycode_and_frame/&lt;/p&gt;
 
 &lt;h4 id=&quot;iscode&quot;&gt;iscode&lt;/h4&gt;
-&lt;p&gt;代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。&lt;br /&gt;
-- co_argcount:普通参数的总数，不包括* 参数和 ** 参数&lt;br /&gt;
-- co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，&lt;br /&gt;
-- co_varnames:所有局部变量的元组。 &lt;br /&gt;
-- co_filename: 源代码所在的文件名。 &lt;br /&gt;
-- co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp;amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp;amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp;amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)&lt;/p&gt;
+&lt;p&gt;代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;co_argcount:普通参数的总数，不包括* 参数和 ** 参数&lt;/li&gt;
+  &lt;li&gt;co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，&lt;/li&gt;
+  &lt;li&gt;co_varnames:所有局部变量的元组。&lt;/li&gt;
+  &lt;li&gt;co_filename: 源代码所在的文件名。&lt;/li&gt;
+  &lt;li&gt;co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp;amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp;amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp;amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;iscode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;Return true if the object is a code object.
@@ -2795,7 +2842,7 @@ LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。&l
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;tuple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
-        <pubDate>Tue, 20 Mar 2018 18:04:00 +0800</pubDate>
+        <pubDate>Tue, 20 Mar 2018 03:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/python/python-inspect/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/python/python-inspect/</guid>
         
@@ -2812,19 +2859,19 @@ LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。&l
         <title>sed命令</title>
         <description>&lt;p&gt;sed指令, 流编辑器，文本处理中非常中的工具.与正则表达式完美配合使用，功能非常强大。执行时，把当前处理的行存储在临时缓冲区中，称为”模式空间”（pattern pace），sed命令处理缓冲区中的内容，处理完成后把缓冲区中的内容输出到屏幕上。接着处理下一行，不断循环，直至文件结束。文件内容并没有改变，除非重定向存储输出。sed主要用来编辑一个或者多个文件，简化了文件的反复操作，编写转换程序等。&lt;/p&gt;
 
-&lt;h4 id=&quot;section&quot;&gt;格式&lt;/h4&gt;
+&lt;h4 id=&quot;格式&quot;&gt;格式&lt;/h4&gt;
 &lt;p&gt;sed [options] ‘command’ file(s)&lt;br /&gt;
 sed [options] -f scriptfile file(s)&lt;/p&gt;
 
-&lt;h4 id=&quot;section-1&quot;&gt;选项&lt;/h4&gt;
+&lt;h4 id=&quot;选项&quot;&gt;选项&lt;/h4&gt;
 &lt;p&gt;-e&lt;script&gt;或--expression=&lt;script&gt;：以选项中的指定的script来处理输入的文本文件；  
 \-f&lt;script文件&gt;或--file=&lt;script文件&gt;：以选项中指定的script文件来处理输入的文本文件；  
 \-n或--quiet或——silent：仅显示script处理后的结果；&lt;/script文件&gt;&lt;/script文件&gt;&lt;/script&gt;&lt;/script&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;参数&lt;/h4&gt;
+&lt;h4 id=&quot;参数&quot;&gt;参数&lt;/h4&gt;
 &lt;p&gt;指定待处理的文本文件列表&lt;/p&gt;
 
-&lt;h4 id=&quot;section-3&quot;&gt;命令&lt;/h4&gt;
+&lt;h4 id=&quot;命令&quot;&gt;命令&lt;/h4&gt;
 &lt;p&gt;a\ 在当前行下面插入文本。&lt;br /&gt;
 i\ 在当前行上面插入文本。&lt;br /&gt;
 c\ 把选定的行改为新的文本。&lt;br /&gt;
@@ -2848,10 +2895,10 @@ T label 错误分支，从最后一行开始，一旦发生错误或者T，t命�
 w file 写并追加模板块到file末尾。 &lt;br /&gt;
 W file 写并追加模板块的第一行到file末尾。 &lt;br /&gt;
 ! 表示后面的命令对所有没有被选定的行发生作用。 &lt;br /&gt;
-= 打印当前行号码。 &lt;br /&gt;
-# 把注释扩展到下一个换行符以前。&lt;/p&gt;
+= 打印当前行号码。&lt;/p&gt;
+&lt;h1 id=&quot;把注释扩展到下一个换行符以前&quot;&gt;把注释扩展到下一个换行符以前。&lt;/h1&gt;
 
-&lt;h4 id=&quot;section-4&quot;&gt;替换标记&lt;/h4&gt;
+&lt;h4 id=&quot;替换标记&quot;&gt;替换标记&lt;/h4&gt;
 &lt;p&gt;g 表示行内全面替换。&lt;br /&gt;
 p 表示打印行。  &lt;br /&gt;
 w 表示把行写入一个文件。  &lt;br /&gt;
@@ -2860,7 +2907,7 @@ y 表示把一个字符翻译为另外的字符（但是不用于正则表达式
 \1 子串匹配标记 &lt;br /&gt;
 &amp;amp; 已匹配字符串标记&lt;/p&gt;
 
-&lt;h4 id=&quot;section-5&quot;&gt;元字符集&lt;/h4&gt;
+&lt;h4 id=&quot;元字符集&quot;&gt;元字符集&lt;/h4&gt;
 &lt;p&gt;^ 匹配行开始，如：/^sed/匹配所有以sed开头的行。 &lt;br /&gt;
 $ 匹配行结束，如：/sed$/匹配所有以sed结尾的行。  &lt;br /&gt;
 . 匹配一个非换行符的任意字符，如：/s.d/匹配s后接一个任意字符，最后是d。 &lt;br /&gt;
@@ -2875,7 +2922,7 @@ x{m} 重复字符x，m次，如：/0{5}/匹配包含5个0的行。&lt;br /&gt;
 x{m,} 重复字符x，至少m次，如：/0{5,}/匹配至少有5个0的行。&lt;br /&gt;
 x{m,n} 重复字符x，至少m次，不多于n次，如：/0{5,10}/匹配5~10个0的行。&lt;/p&gt;
 
-&lt;h4 id=&quot;section-6&quot;&gt;使用案例&lt;/h4&gt;
+&lt;h4 id=&quot;使用案例&quot;&gt;使用案例&lt;/h4&gt;
 &lt;p&gt;替换文本中的字符串&lt;br /&gt;
 sed ‘s/books/aook/’ file&lt;/p&gt;
 
@@ -2899,7 +2946,7 @@ skskSKSKSKSK
 &lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;sksksksksksk | sed &lt;span class=&quot;s1&quot;&gt;&#39;s/sk/SK/4g&#39;&lt;/span&gt;
 skskskSKSKSK&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h4 id=&quot;section-7&quot;&gt;定界符&lt;/h4&gt;
+&lt;h4 id=&quot;定界符&quot;&gt;定界符&lt;/h4&gt;
 &lt;p&gt;以上命令中字符 / 在sed中作为定界符使用，也可以使用任意的定界符：&lt;/p&gt;
 
 &lt;p&gt;sed ‘s:test:TEXT:g’ &lt;br /&gt;
@@ -2908,7 +2955,7 @@ sed ‘s|test|TEXT|g’ &lt;br /&gt;
 
 &lt;p&gt;sed ‘s/\/bin/\/usr\/local\/bin/g’&lt;/p&gt;
 
-&lt;h4 id=&quot;section-8&quot;&gt;删除操作&lt;/h4&gt;
+&lt;h4 id=&quot;删除操作&quot;&gt;删除操作&lt;/h4&gt;
 &lt;p&gt;删除空白行：&lt;/p&gt;
 
 &lt;p&gt;sed ‘/^$/d’ file &lt;br /&gt;
@@ -2925,7 +2972,7 @@ sed ‘s|test|TEXT|g’ &lt;br /&gt;
 
 &lt;p&gt;sed ‘/^test/’d file&lt;/p&gt;
 
-&lt;h4 id=&quot;section-9&quot;&gt;已匹配字符串标记 &amp;amp;&lt;/h4&gt;
+&lt;h4 id=&quot;已匹配字符串标记-&quot;&gt;已匹配字符串标记 &amp;amp;&lt;/h4&gt;
 
 &lt;p&gt;正则表达式 \w+ 匹配每一个单词，使用 [&amp;amp;] 替换它，&amp;amp; 对应于之前所匹配到的单词： &lt;br /&gt;
 echo this is a test line | sed ‘s/\w+/[&amp;amp;]/g’ &lt;br /&gt;
@@ -2936,7 +2983,7 @@ echo this is a test line | sed ‘s/\w+/[&amp;amp;]/g’ &lt;br /&gt;
 &lt;p&gt;sed ‘s/^192.168.0.1/&amp;amp;localhost/’ file  &lt;br /&gt;
 192.168.0.1localhost&lt;/p&gt;
 
-&lt;h4 id=&quot;section-10&quot;&gt;子串匹配标记 \1&lt;/h4&gt;
+&lt;h4 id=&quot;子串匹配标记-1&quot;&gt;子串匹配标记 \1&lt;/h4&gt;
 
 &lt;p&gt;匹配给定样式的其中一部分：&lt;/p&gt;
 
@@ -2950,21 +2997,21 @@ love被标记为1，所有loveable会被替换成lovers，并打印出来：&lt;
 
 &lt;p&gt;sed -n ‘s/(love)able/\1rs/p’ file&lt;/p&gt;
 
-&lt;h4 id=&quot;section-11&quot;&gt;组合多个表达式&lt;/h4&gt;
+&lt;h4 id=&quot;组合多个表达式&quot;&gt;组合多个表达式&lt;/h4&gt;
 &lt;p&gt;sed ‘表达式’ | sed ‘表达式’&lt;/p&gt;
 
 &lt;p&gt;等价于：&lt;/p&gt;
 
 &lt;p&gt;sed ‘表达式; 表达式’&lt;/p&gt;
 
-&lt;h4 id=&quot;section-12&quot;&gt;引用&lt;/h4&gt;
+&lt;h4 id=&quot;引用&quot;&gt;引用&lt;/h4&gt;
 &lt;p&gt;sed表达式可以使用单引号来引用，但是如果表达式内部包含变量字符串，就需要使用双引号。&lt;/p&gt;
 
 &lt;p&gt;test=hello  &lt;br /&gt;
 echo hello WORLD | sed “s/$test/HELLO” &lt;br /&gt;
 HELLO WORLD&lt;/p&gt;
 
-&lt;h4 id=&quot;section-13&quot;&gt;选定行的范围：,（逗号）&lt;/h4&gt;
+&lt;h4 id=&quot;选定行的范围逗号&quot;&gt;选定行的范围：,（逗号）&lt;/h4&gt;
 &lt;p&gt;所有在模板test和check所确定的范围内的行都被打印：&lt;/p&gt;
 
 &lt;p&gt;sed -n ‘/test/,/check/p’ file
@@ -2975,7 +3022,7 @@ HELLO WORLD&lt;/p&gt;
 
 &lt;p&gt;sed ‘/test/,/west/s/$/aaa bbb/’ file&lt;/p&gt;
 
-&lt;h4 id=&quot;e&quot;&gt;多点编辑 e命令&lt;/h4&gt;
+&lt;h4 id=&quot;多点编辑-e命令&quot;&gt;多点编辑 e命令&lt;/h4&gt;
 &lt;p&gt;-e选项允许在同一行里执行多条命令：&lt;/p&gt;
 
 &lt;p&gt;sed -e ‘1,5d’ -e ‘s/test/check/’ file &lt;br /&gt;
@@ -2985,12 +3032,12 @@ HELLO WORLD&lt;/p&gt;
 
 &lt;p&gt;sed –expression=’s/test/check/’ –expression=’/love/d’ file&lt;/p&gt;
 
-&lt;h4 id=&quot;r&quot;&gt;从文件读 r命令&lt;/h4&gt;
+&lt;h4 id=&quot;从文件读-r命令&quot;&gt;从文件读 r命令&lt;/h4&gt;
 &lt;p&gt;在example中所有包含test的行都被写入file里：&lt;/p&gt;
 
 &lt;p&gt;sed -n ‘/test/w file’ example&lt;/p&gt;
 
-&lt;h4 id=&quot;a&quot;&gt;追加 a\命令&lt;/h4&gt;
+&lt;h4 id=&quot;追加-a命令&quot;&gt;追加 a\命令&lt;/h4&gt;
 &lt;p&gt;追加到行下   &lt;br /&gt;
 将 this is a test line 追加到 以test 开头的行后面：&lt;/p&gt;
 
@@ -3000,7 +3047,7 @@ HELLO WORLD&lt;/p&gt;
 
 &lt;p&gt;sed -i ‘2a\this is a test line’ test.conf&lt;/p&gt;
 
-&lt;h4 id=&quot;i&quot;&gt;插入 行上  i\命令&lt;/h4&gt;
+&lt;h4 id=&quot;插入-行上--i命令&quot;&gt;插入 行上  i\命令&lt;/h4&gt;
 &lt;p&gt;将 this is a test line 追加到以test开头的行前面：&lt;/p&gt;
 
 &lt;p&gt;sed ‘/^test/i\this is a test line’ file
@@ -3008,16 +3055,16 @@ HELLO WORLD&lt;/p&gt;
 
 &lt;p&gt;sed -i ‘5i\this is a test line’ test.conf&lt;/p&gt;
 
-&lt;h4 id=&quot;n&quot;&gt;下一个：n命令&lt;/h4&gt;
+&lt;h4 id=&quot;下一个n命令&quot;&gt;下一个：n命令&lt;/h4&gt;
 &lt;p&gt;如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续：&lt;/p&gt;
 
-&lt;p&gt;sed ‘/test/{ n; s/aa/bb/; }’ file
-#### 变形：y命令
-把1~10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令：&lt;/p&gt;
+&lt;p&gt;sed ‘/test/{ n; s/aa/bb/; }’ file&lt;/p&gt;
+&lt;h4 id=&quot;变形y命令&quot;&gt;变形：y命令&lt;/h4&gt;
+&lt;p&gt;把1~10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令：&lt;/p&gt;
 
-&lt;p&gt;sed ‘1,10y/abcde/ABCDE/’ file
-#### 退出：q命令
-打印完第10行后，退出sed&lt;/p&gt;
+&lt;p&gt;sed ‘1,10y/abcde/ABCDE/’ file&lt;/p&gt;
+&lt;h4 id=&quot;退出q命令&quot;&gt;退出：q命令&lt;/h4&gt;
+&lt;p&gt;打印完第10行后，退出sed&lt;/p&gt;
 
 &lt;p&gt;sed ‘10q’ file
 保持和获取：h命令和G命令
@@ -3026,32 +3073,32 @@ HELLO WORLD&lt;/p&gt;
 &lt;p&gt;sed -e ‘/test/h’ -e ‘$G’ file
 在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中的行的末尾。在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。&lt;/p&gt;
 
-&lt;h4 id=&quot;hx&quot;&gt;保持和互换：h命令和x命令&lt;/h4&gt;
+&lt;h4 id=&quot;保持和互换h命令和x命令&quot;&gt;保持和互换：h命令和x命令&lt;/h4&gt;
 &lt;p&gt;互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换：&lt;/p&gt;
 
 &lt;p&gt;sed -e ‘/test/h’ -e ‘/check/x’ file&lt;/p&gt;
 
-&lt;h4 id=&quot;scriptfile&quot;&gt;脚本scriptfile&lt;/h4&gt;
+&lt;h4 id=&quot;脚本scriptfile&quot;&gt;脚本scriptfile&lt;/h4&gt;
 &lt;p&gt;sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。以#开头的行为注释行，且不能跨行。&lt;/p&gt;
 
-&lt;p&gt;sed [options] -f scriptfile file(s) &lt;br /&gt;
-#### 打印奇数行或偶数行  &lt;br /&gt;
-方法1：&lt;/p&gt;
+&lt;p&gt;sed [options] -f scriptfile file(s)&lt;/p&gt;
+&lt;h4 id=&quot;打印奇数行或偶数行&quot;&gt;打印奇数行或偶数行&lt;/h4&gt;
+&lt;p&gt;方法1：&lt;/p&gt;
 
 &lt;p&gt;sed -n ‘p;n’ test.txt  #奇数行 &lt;br /&gt;
 sed -n ‘n;p’ test.txt  #偶数行&lt;br /&gt;
 方法2：&lt;/p&gt;
 
 &lt;p&gt;sed -n ‘1~2p’ test.txt  #奇数行 &lt;br /&gt;
-sed -n ‘2~2p’ test.txt  #偶数行&lt;br /&gt;
-#### 打印匹配字符串的下一行
-grep -A 1 SCC URFILE
+sed -n ‘2~2p’ test.txt  #偶数行&lt;/p&gt;
+&lt;h4 id=&quot;打印匹配字符串的下一行&quot;&gt;打印匹配字符串的下一行&lt;/h4&gt;
+&lt;p&gt;grep -A 1 SCC URFILE
 sed -n ‘/SCC/{n;p}’ URFILE
 awk ‘/SCC/{getline; print}’ URFILE&lt;/p&gt;
 
 &lt;p&gt;来源   http://man.linuxde.net/sed&lt;/p&gt;
 </description>
-        <pubDate>Tue, 20 Mar 2018 18:04:00 +0800</pubDate>
+        <pubDate>Tue, 20 Mar 2018 03:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/linux/linux-sed/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-sed/</guid>
         
@@ -3077,7 +3124,7 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
 &lt;p&gt;-H: find遇到的每个符号链接求值得文件信息和文件类型就是该链接所引用的信息和类型，而不是链接本身。如果所引用文件不存在，那么会将文件信息和类型用于该链接本身。不在命令行上的所有符号链接的文件信息是链接本身的文件信息。&lt;br /&gt;
 -L: 符号链接求值的文件信息和文件类型就是该链接所引用文件的信息和类型，而不是该链接本身。&lt;/p&gt;
 
-&lt;h5 id=&quot;section&quot;&gt;选项&lt;/h5&gt;
+&lt;h5 id=&quot;选项&quot;&gt;选项&lt;/h5&gt;
 &lt;hr /&gt;
 &lt;ul&gt;
   &lt;li&gt;-amin&lt;分钟&gt;：查找在指定时间曾被存取过的文件或目录，单位以分钟计算&lt;/分钟&gt;&lt;/li&gt;
@@ -3137,7 +3184,7 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
   &lt;li&gt;-xtype&lt;文件类型&gt;：此参数的效果和指定“-type”参数类似，差别在于它针对符号连接检查。&lt;/文件类型&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&quot;section-1&quot;&gt;特殊用法&lt;/h5&gt;
+&lt;h5 id=&quot;特殊用法&quot;&gt;特殊用法&lt;/h5&gt;
 &lt;p&gt;可以用来删除文件 find . -name ‘*pyc’ -delete&lt;/p&gt;
 
 &lt;p&gt;+表示大于某个值， -表示小于某个值&lt;/p&gt;
@@ -3147,7 +3194,7 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
 &lt;h2 id=&quot;locate&quot;&gt;locate&lt;/h2&gt;
 &lt;p&gt;locate是find -name的另外一种写法，运行要快于后者。因为locate不搜索具体目录，只搜索数据库/var/lib/locatedb,这个数据库含有本地所有文件的信息。linux系统会自动创建这个数据库，并且每天自动更新一次，所以locate命令查找不到最修改变动的文件。可以通过updatedb的命令更新收据库&lt;/p&gt;
 
-&lt;h4 id=&quot;section-2&quot;&gt;选项&lt;/h4&gt;
+&lt;h4 id=&quot;选项-1&quot;&gt;选项&lt;/h4&gt;
 &lt;p&gt;-d 目录或者–datebase=&lt;目录&gt;；指定数据库所在的目录   
 -u 更新slocate数据库&lt;/目录&gt;&lt;/p&gt;
 
@@ -3160,7 +3207,7 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
 &lt;h2 id=&quot;type&quot;&gt;type&lt;/h2&gt;
 &lt;p&gt;type命令其实不能算查找命令，它是用来区分某个命令到底是由shell自带的，还是由shell外部的独立二进制文件提供的。如果一个命令是外部命令，那么使用-p参数，会显示该命令的路径，相当于which命令。&lt;/p&gt;
 </description>
-        <pubDate>Tue, 20 Mar 2018 18:04:00 +0800</pubDate>
+        <pubDate>Tue, 20 Mar 2018 03:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/linux/linux-find/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-find/</guid>
         
@@ -3182,7 +3229,7 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
 &lt;p&gt;可以用来删除文件 find . -name ‘*pyc’ -delete&lt;/p&gt;
 
 </description>
-        <pubDate>Tue, 20 Mar 2018 18:04:00 +0800</pubDate>
+        <pubDate>Tue, 20 Mar 2018 03:04:00 -0700</pubDate>
 	<link>http://capeskychung.github.io/linux/linux-awk/</link>
 	<guid isPermaLink="true">http://cenalulu.github.io/linux/linux-awk/</guid>
         
@@ -3192,37 +3239,6 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
         
         
         <category>linux</category>
-        
-      </item>
-    
-      <item>
-        <title>python用shell的end结束代码块</title>
-        <description>&lt;p&gt;初学python的时候，以为python的代码块结束以缩进来控制即可。随着深入学习，发现了python可以支持跟shell一样以end来结束代码&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;__builtins__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;gt; 0&#39;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;a &amp;lt;= 0&#39;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-</description>
-        <pubDate>Mon, 26 Feb 2018 18:04:00 +0800</pubDate>
-	<link>http://capeskychung.github.io/python/python-end%E7%94%A8%E6%B3%95/</link>
-	<guid isPermaLink="true">http://cenalulu.github.io/python/python-end%E7%94%A8%E6%B3%95/</guid>
-        
-        <category>end</category>
-        
-        <category>python</category>
-        
-        
-        <category>python</category>
         
       </item>
     

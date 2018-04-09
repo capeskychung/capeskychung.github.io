@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>红黑树 • CapeskyChung</title>
+    <meta name="description" content="数据结构红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。二叉搜索树存在一个问题，如果树中插入的是随机数据，则执行的效果很好，但是如果插入的数据是有序或者逆序的数据，二叉搜索树的执行速度会变得很慢。因为当插入数值有序时，二叉树就是非平衡，排在一条线上，变成一个链表，它的快速查找、插入、删除不再具备。
+
+">
+    <meta name="keywords" content="R-B Tree, algorithm">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="红黑树">
+	<meta name="twitter:description" content="数据结构红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。二叉搜索树存在一个问题，如果树中插入的是随机数据，则执行的效果很好，但是如果插入的数据是有序或者逆序的数据，二叉搜索树的执行速度会变得很慢。因为当插入数值有序时，二叉树就是非平衡，排在一条线上，变成一个链表，它的快速查找、插入、删除不再具备。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="红黑树">
+	<meta property="og:description" content="数据结构红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。二叉搜索树存在一个问题，如果树中插入的是随机数据，则执行的效果很好，但是如果插入的数据是有序或者逆序的数据，二叉搜索树的执行速度会变得很慢。因为当插入数值有序时，二叉树就是非平衡，排在一条线上，变成一个链表，它的快速查找、插入、删除不再具备。
+
+">
+	<meta property="og:url" content="/algorithm/red-black-tree/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/algorithm/red-black-tree/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/python/" >Python</a></li>
+  
+    
+    <li><a href="/linux/" >Linux</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/python/">
+        
+        <div class="title">Python</div>
+        
+      </a>
+    </li><li>
+      <a href="/linux/">
+        
+        <div class="title">Linux</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/algorithm/" itemprop="url">
+        <span itemprop="title">Algorithm</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>红黑树</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>数据结构红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。二叉搜索树存在一个问题，如果树中插入的是随机数据，则执行的效果很好，但是如果插入的数据是有序或者逆序的数据，二叉搜索树的执行速度会变得很慢。因为当插入数值有序时，二叉树就是非平衡，排在一条线上，变成一个链表，它的快速查找、插入、删除不再具备。</p>
+
+<p>以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数123据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。</p>
+
+<h4 id="特征">特征</h4>
+
+<ul>
+  <li>所有节点都有颜色</li>
+  <li>在插入和删除的过程中，要遵循保持这些颜色的不同排列的规则。</li>
+</ul>
+
+<p>红黑树的主要规则：</p>
+<ol>
+  <li>每个节点不是红色就是黑色；</li>
+  <li>根节点总是黑色的；</li>
+  <li>如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；</li>
+  <li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（相同的黑色高度）</li>
+</ol>
+
+<p>在红黑树中插入的节点都是红色的，因为插入一个红色节点比插入一个黑色节点违背红黑原则的可能性更小。原因是：插入黑色节点总会改变黑色高度（规则4），但是插入红色节点只有一半的概率违背规则3.规则3比规则4更容易修正。</p>
+
+<h4 id="修正平衡性">修正平衡性</h4>
+<p>红黑树主要通过三种方式平衡，改变节点颜色、左旋和右旋。</p>
+<ol>
+  <li>变色</li>
+</ol>
+
+<p>改变节点颜色因为违背了规则3.假设现在节点E，然后插入节点A和S，节点A在左子节点，S在右子节点，目前是平衡的。</p>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=红黑树&amp;url=/algorithm/red-black-tree/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/algorithm/red-black-tree/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/algorithm/red-black-tree/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-04-08T10:04:00Z" itemprop="datePublished">April 08, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
