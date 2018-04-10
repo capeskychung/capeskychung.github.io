@@ -5,17 +5,16 @@
     <description>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</description>
     <link>http://cenalulu.github.io/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 09 Apr 2018 02:58:04 -0700</pubDate>
-    <lastBuildDate>Mon, 09 Apr 2018 02:58:04 -0700</lastBuildDate>
+    <pubDate>Tue, 10 Apr 2018 01:19:52 -0700</pubDate>
+    <lastBuildDate>Tue, 10 Apr 2018 01:19:52 -0700</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>红黑树</title>
-        <description>&lt;p&gt;数据结构红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。二叉搜索树存在一个问题，如果树中插入的是随机数据，则执行的效果很好，但是如果插入的数据是有序或者逆序的数据，二叉搜索树的执行速度会变得很慢。因为当插入数值有序时，二叉树就是非平衡，排在一条线上，变成一个链表，它的快速查找、插入、删除不再具备。&lt;/p&gt;
+        <description>&lt;p&gt;二叉搜索树可以快速定位一个给定关键字的数据项，可以快速插入和删除数据。二叉树存在一个问题，如果插入的数据是正序或者逆序的数据，二叉搜索树的执行会变慢，因为有序的二叉树是非平衡的，此时的二叉树类似与链表。
+红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。&lt;/p&gt;
 
-&lt;p&gt;以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数123据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。&lt;/p&gt;
-
-&lt;h4 id=&quot;特征&quot;&gt;特征&lt;/h4&gt;
+&lt;h4 id=&quot;特征与规则&quot;&gt;特征与规则&lt;/h4&gt;
 
 &lt;ul&gt;
   &lt;li&gt;所有节点都有颜色&lt;/li&gt;
@@ -34,11 +33,55 @@
 
 &lt;h4 id=&quot;修正平衡性&quot;&gt;修正平衡性&lt;/h4&gt;
 &lt;p&gt;红黑树主要通过三种方式平衡，改变节点颜色、左旋和右旋。&lt;/p&gt;
+
 &lt;ol&gt;
   &lt;li&gt;变色&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;改变节点颜色因为违背了规则3.假设现在节点E，然后插入节点A和S，节点A在左子节点，S在右子节点，目前是平衡的。&lt;/p&gt;
+&lt;p&gt;改变节点颜色因为违背了规则3.假设现在节点E，然后插入节点A和S，节点A在左子节点，S在右子节点，目前是平衡的。如果此时插入一个节点，就出现了不平衡，因为红色节点的子节点必须为褐色，但是新差的节点是红色的，所以此时必须改变节点颜色。将根的两个子节点从红色变为黑色，将父节点从黑色变为红色。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;左旋
+通常左旋操作用于将一个向右倾斜的红色链接选座为向左链接。
+左旋示意图：对节点x进行左旋&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;     &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;                       &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; 
+     &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;                       &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;                       &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; 
+   &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;                     &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;lx&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;-----&amp;gt;&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ry&lt;/span&gt; 
+     &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;                 &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt; 
+    &lt;span class=&quot;n&quot;&gt;ly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ry&lt;/span&gt;               &lt;span class=&quot;n&quot;&gt;lx&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ly&lt;/span&gt;  &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;左旋做了三件事：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)&lt;/li&gt;
+  &lt;li&gt;将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;将y的左子节点设为x，将x的父节点设为y&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;右旋&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;右旋示意图：对节点y进行右旋&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;         &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;                   &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; 
+        &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;                   &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; 
+       &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;                   &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; 
+      &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;                 &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt; 
+     &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ry&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;-----&amp;gt;&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;lx&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; 
+    &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;                     &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;\&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;lx&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;rx&lt;/span&gt;                   &lt;span class=&quot;n&quot;&gt;rx&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ry&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;右旋做了三件事：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)&lt;/li&gt;
+  &lt;li&gt;将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)&lt;/li&gt;
+  &lt;li&gt;将x的右子节点设为y，将y的父节点设为x&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;红黑树操作&quot;&gt;红黑树操作&lt;/h4&gt;
 
 </description>
         <pubDate>Sun, 08 Apr 2018 10:04:00 -0700</pubDate>
