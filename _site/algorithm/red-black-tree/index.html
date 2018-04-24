@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>红黑树 • CapeskyChung</title>
+    <meta name="description" content="二叉搜索树可以快速定位一个给定关键字的数据项，可以快速插入和删除数据。二叉树存在一个问题，如果插入的数据是正序或者逆序的数据，二叉搜索树的执行会变慢，因为有序的二叉树是非平衡的，此时的二叉树类似与链表。
+红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。
+
+">
+    <meta name="keywords" content="R-B Tree, algorithm">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="红黑树">
+	<meta name="twitter:description" content="二叉搜索树可以快速定位一个给定关键字的数据项，可以快速插入和删除数据。二叉树存在一个问题，如果插入的数据是正序或者逆序的数据，二叉搜索树的执行会变慢，因为有序的二叉树是非平衡的，此时的二叉树类似与链表。
+红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="红黑树">
+	<meta property="og:description" content="二叉搜索树可以快速定位一个给定关键字的数据项，可以快速插入和删除数据。二叉树存在一个问题，如果插入的数据是正序或者逆序的数据，二叉搜索树的执行会变慢，因为有序的二叉树是非平衡的，此时的二叉树类似与链表。
+红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。
+
+">
+	<meta property="og:url" content="/algorithm/red-black-tree/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/algorithm/red-black-tree/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/python/" >Python</a></li>
+  
+    
+    <li><a href="/linux/" >Linux</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/python/">
+        
+        <div class="title">Python</div>
+        
+      </a>
+    </li><li>
+      <a href="/linux/">
+        
+        <div class="title">Linux</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/algorithm/" itemprop="url">
+        <span itemprop="title">Algorithm</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>红黑树</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>二叉搜索树可以快速定位一个给定关键字的数据项，可以快速插入和删除数据。二叉树存在一个问题，如果插入的数据是正序或者逆序的数据，二叉搜索树的执行会变慢，因为有序的二叉树是非平衡的，此时的二叉树类似与链表。
+红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。</p>
+
+<h4 id="特征与规则">特征与规则</h4>
+
+<ul>
+  <li>所有节点都有颜色</li>
+  <li>在插入和删除的过程中，要遵循保持这些颜色的不同排列的规则。</li>
+</ul>
+
+<p>红黑树的主要规则：</p>
+<ol>
+  <li>每个节点不是红色就是黑色；</li>
+  <li>根节点总是黑色的；</li>
+  <li>如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；</li>
+  <li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（相同的黑色高度）</li>
+</ol>
+
+<p>在红黑树中插入的节点都是红色的，因为插入一个红色节点比插入一个黑色节点违背红黑原则的可能性更小。原因是：插入黑色节点总会改变黑色高度（规则4），但是插入红色节点只有一半的概率违背规则3.规则3比规则4更容易修正。</p>
+
+<h4 id="修正平衡性">修正平衡性</h4>
+<p>红黑树主要通过三种方式平衡，改变节点颜色、左旋和右旋。</p>
+
+<ol>
+  <li>变色</li>
+</ol>
+
+<p>改变节点颜色因为违背了规则3.假设现在节点E，然后插入节点A和S，节点A在左子节点，S在右子节点，目前是平衡的。如果此时插入一个节点，就出现了不平衡，因为红色节点的子节点必须为褐色，但是新差的节点是红色的，所以此时必须改变节点颜色。将根的两个子节点从红色变为黑色，将父节点从黑色变为红色。</p>
+
+<ol>
+  <li>左旋
+通常左旋操作用于将一个向右倾斜的红色链接选座为向左链接。
+左旋示意图：对节点x进行左旋</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c">     <span class="n">p</span>                       <span class="n">p</span> 
+     <span class="o">/</span>                       <span class="o">/</span> 
+    <span class="n">x</span>                       <span class="n">y</span> 
+   <span class="o">/</span> <span class="err">\</span>                     <span class="o">/</span> <span class="err">\</span> 
+  <span class="n">lx</span>  <span class="n">y</span>      <span class="o">-----&gt;</span>       <span class="n">x</span>  <span class="n">ry</span> 
+     <span class="o">/</span> <span class="err">\</span>                 <span class="o">/</span> <span class="err">\</span> 
+    <span class="n">ly</span> <span class="n">ry</span>               <span class="n">lx</span> <span class="n">ly</span>  </code></pre></figure>
+
+<p>左旋做了三件事：</p>
+<ol>
+  <li>将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)</li>
+  <li>将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)</li>
+  <li>
+    <p>将y的左子节点设为x，将x的父节点设为y</p>
+  </li>
+  <li>右旋</li>
+</ol>
+
+<p>右旋示意图：对节点y进行右旋</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c">         <span class="n">p</span>                   <span class="n">p</span> 
+        <span class="o">/</span>                   <span class="o">/</span> 
+       <span class="n">y</span>                   <span class="n">x</span> 
+      <span class="o">/</span> <span class="err">\</span>                 <span class="o">/</span> <span class="err">\</span> 
+     <span class="n">x</span>  <span class="n">ry</span>   <span class="o">-----&gt;</span>      <span class="n">lx</span>  <span class="n">y</span> 
+    <span class="o">/</span> <span class="err">\</span>                     <span class="o">/</span> <span class="err">\</span> 
+  <span class="n">lx</span>  <span class="n">rx</span>                   <span class="n">rx</span> <span class="n">ry</span> </code></pre></figure>
+
+<p>右旋做了三件事：</p>
+<ol>
+  <li>将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)</li>
+  <li>将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)</li>
+  <li>将x的右子节点设为y，将y的父节点设为x</li>
+</ol>
+
+<h4 id="红黑树操作">红黑树操作</h4>
+
+<p>红黑树节点</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">RED</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">BLACK</span> <span class="o">=</span> <span class="bp">False</span>
+
+
+<span class="k">class</span> <span class="nc">RBNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>  <span class="c"># 默认为黑色</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+	<span class="k">def</span> <span class="nf">getKey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span>
+
+	<span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">color</span> <span class="o">=</span> <span class="s">"R"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="n">RED</span> <span class="k">else</span> <span class="s">"B"</span>
+		<span class="k">return</span> <span class="s">""</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">color</span>
+
+	<span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+			<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lt__</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gt__</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+			<span class="k">return</span> <span class="mi">1</span>
+
+	<span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RBNode</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="s">"cann't cmp other type"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">return</span> <span class="bp">False</span>
+
+	<span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RBNode</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="s">"cann't cmp other type"</span>
+		<span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">return</span> <span class="bp">False</span>
+
+	<span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RBNode</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="s">"cann't cmp other type"</span>
+		<span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">return</span> <span class="bp">False</span></code></pre></figure>
+
+<p>红黑树插入<br />
+红黑树的插入与二叉搜索树的实现一致，主要的是在于最后的insertFixUp操作。插入数据后会导致树不平衡，insertFixUp要根据情况，决定何时变色，左旋，右旋。
+第一次插入的时候，原树为空，只会违背规则2（根节点必须为黑色），只需要将根节点的颜色改为黑色即可。</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=红黑树&amp;url=/algorithm/red-black-tree/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/algorithm/red-black-tree/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/algorithm/red-black-tree/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-04-08T10:04:00Z" itemprop="datePublished">April 08, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

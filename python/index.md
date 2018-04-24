@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Latest Posts"
+title: "Python进阶"
 ---
 
 <div class="tiles">

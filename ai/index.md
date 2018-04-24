@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Latest Posts"
+title: "机器学习"
 ---
 
 <div class="tiles">

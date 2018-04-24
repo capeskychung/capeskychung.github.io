@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Latest Posts"
+title: "算法集锦"
 ---
 
 <div class="tiles">
