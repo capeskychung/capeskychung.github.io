@@ -7,7 +7,7 @@
     <subtitle>2018新的一年新的开始，需要做出一些改变，身体力行。#云在青天水在瓶# 不管你过得如何，生活永远的一往如既，所以不要站在原地。</subtitle>
     <link href="/atom.xml" rel="self"/>
     <link href="/" rel="alternate" type="text/html"/>
-    <updated>2018-03-30T16:49:51+08:00</updated>
+    <updated>2018-04-24T17:13:52+08:00</updated>
     <id>/</id>
     <author>
 			<name>capeskychung</name>
@@ -3190,9 +3190,9 @@ find [-H][-L][-P][-D debugopts][-O level] [path…] [expression]&lt;/p&gt;
 				</author>
         <content type="html">
         	
-        	&lt;p&gt;文件查找指令&lt;/p&gt;
+        	&lt;p&gt;用于在linux/unix下对文本和数据进行处理。数据可以来自标准输入(stdin)、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。awk有很多内建的功能，比如数组、函数等，这是它和C语言的相同之处，灵活性是awk最大的优势。&lt;/p&gt;
 
-&lt;h4 id=&quot;find&quot;&gt;find&lt;/h4&gt;
+&lt;h4 id=&quot;section&quot;&gt;命令格式与选项&lt;/h4&gt;
 
 &lt;p&gt;可以用来删除文件 find . -name ‘*pyc’ -delete&lt;/p&gt;
 
