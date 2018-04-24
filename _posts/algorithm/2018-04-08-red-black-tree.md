@@ -75,6 +75,60 @@ date: 2018-04-08T18:04:00+01:00
 
 #### 红黑树操作
 
+
+红黑树节点
 {% highlight python %}
 
+RED = True
+BLACK = False
+
+
+class RBNode(object):
+	def __init__(self, key, color):
+		self.color = color  # 默认为黑色
+		self.left = None
+		self.right = None
+		self.parent = None
+		self.key = key
+
+	def getKey(self):
+		return self.key
+
+	def __str__(self):
+		color = "R" if self.color == RED else "B"
+		return "" + str(self.key) + " " + color
+
+	def __cmp__(self, other):
+		if self.__eq__(other):
+			return 0
+		elif self.__lt__(other):
+			return -1
+		elif self.__gt__(other):
+			return 1
+
+	def __eq__(self, other):
+		if not isinstance(other, RBNode):
+			raise TypeError, "cann't cmp other type" + str(type(other))
+		if other.key == self.key:
+			return True
+		return False
+
+	def __lt__(self, other):
+		if not isinstance(other, RBNode):
+			raise TypeError, "cann't cmp other type"
+		if other.key > self.key:
+			return True
+		return False
+
+	def __gt__(self, other):
+		if not isinstance(other, RBNode):
+			raise TypeError, "cann't cmp other type"
+		if other.key < self.key:
+			return True
+		return False
 {% endhighlight %}
+
+
+红黑树插入  
+红黑树的插入与二叉搜索树的实现一致，主要的是在于最后的insertFixUp操作。插入数据后会导致树不平衡，insertFixUp要根据情况，决定何时变色，左旋，右旋。
+第一次插入的时候，原树为空，只会违背规则2（根节点必须为黑色），只需要将根节点的颜色改为黑色即可。

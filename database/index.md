@@ -1,10 +1,10 @@
 ---
 layout: archive
-title: "Python进阶"
+title: "SQL和NoSQL"
 ---
 
 <div class="tiles">
-{% for post in site.categories.python %}
+{% for post in site.categories.database %}
 	{% include post-grid.html %}
 {% endfor %}
 </div><!-- /.tiles -->

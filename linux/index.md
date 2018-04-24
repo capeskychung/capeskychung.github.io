@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Latest Posts"
+title: "Linux Mac"
 ---
 
 <div class="tiles">

@@ -226,6 +226,59 @@
 
 <h4 id="红黑树操作">红黑树操作</h4>
 
+<p>红黑树节点</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">RED</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">BLACK</span> <span class="o">=</span> <span class="bp">False</span>
+
+
+<span class="k">class</span> <span class="nc">RBNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>  <span class="c"># 默认为黑色</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+	<span class="k">def</span> <span class="nf">getKey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span>
+
+	<span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">color</span> <span class="o">=</span> <span class="s">"R"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="n">RED</span> <span class="k">else</span> <span class="s">"B"</span>
+		<span class="k">return</span> <span class="s">""</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">color</span>
+
+	<span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+			<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__lt__</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gt__</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+			<span class="k">return</span> <span class="mi">1</span>
+
+	<span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RBNode</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="s">"cann't cmp other type"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">return</span> <span class="bp">False</span>
+
+	<span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RBNode</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="s">"cann't cmp other type"</span>
+		<span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">return</span> <span class="bp">False</span>
+
+	<span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RBNode</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="nb">TypeError</span><span class="p">,</span> <span class="s">"cann't cmp other type"</span>
+		<span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">return</span> <span class="bp">False</span></code></pre></figure>
+
+<p>红黑树插入<br />
+红黑树的插入与二叉搜索树的实现一致，主要的是在于最后的insertFixUp操作。插入数据后会导致树不平衡，insertFixUp要根据情况，决定何时变色，左旋，右旋。
+第一次插入的时候，原树为空，只会违背规则2（根节点必须为黑色），只需要将根节点的颜色改为黑色即可。</p>
 
 				<hr />
 				<footer class="page-footer">
