@@ -62,10 +62,10 @@
     <li><a href="/" >Home</a></li>
   
     
-    <li><a href="/python/" >Python</a></li>
+    <li><a href="/language/" >Language</a></li>
   
     
-    <li><a href="/linux/" >Linux</a></li>
+    <li><a href="/os/" >OS</a></li>
   
     
     <li><a href="/algorithm/" >Algorithm</a></li>
@@ -93,15 +93,15 @@
         
       </a>
     </li><li>
-      <a href="/python/">
+      <a href="/language/">
         
-        <div class="title">Python</div>
+        <div class="title">Language</div>
         
       </a>
     </li><li>
-      <a href="/linux/">
+      <a href="/os/">
         
-        <div class="title">Linux</div>
+        <div class="title">OS</div>
         
       </a>
     </li><li>
@@ -364,14 +364,12 @@
 <p>参考：https://fanchao01.github.io/blog/2016/11/13/python-pycode_and_frame/</p>
 
 <h4 id="iscode">iscode</h4>
-<p>代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。</p>
-<ul>
-  <li>co_argcount:普通参数的总数，不包括* 参数和 ** 参数</li>
-  <li>co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，</li>
-  <li>co_varnames:所有局部变量的元组。</li>
-  <li>co_filename: 源代码所在的文件名。</li>
-  <li>co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)</li>
-</ul>
+<p>代码块由类源代码、函数源代码或者简单的代码编译。code属性全部是只读的。<br />
+- co_argcount:普通参数的总数，不包括* 参数和 ** 参数<br />
+- co_names:所有的参数名(包括* 参数和 ** 参数)和局部变量名的元组，<br />
+- co_varnames:所有局部变量的元组。 <br />
+- co_filename: 源代码所在的文件名。 <br />
+- co_flags:一个数值，每一个二进制度包含了特定的信息。 0b100(0x4)和0b1000(0x8)，如果co_flags &amp; 0b100 != 0，说明使用了* args参数；如果co_flags &amp; 0b1000 != 0，说明使用了**kwargs参数。如果co_flags &amp; 0b100000(0x20) != 0，则说明这是一个生成器函数(generator function)</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">iscode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="s">"""Return true if the object is a code object.
@@ -670,7 +668,7 @@ LOAD_FAST和STORE_FAST在代码对象的co_varnames属性中寻找变量名。<b
 </div><!-- /.share-this -->
 
 					<div class="page-meta">
-	<p>Updated <time datetime="2018-03-20T03:04:00Z" itemprop="datePublished">March 20, 2018</time></p>
+	<p>Updated <time datetime="2018-03-20T18:04:00Z" itemprop="datePublished">March 20, 2018</time></p>
 </div><!-- /.page-meta -->
 				</footer><!-- /.footer -->
 				<aside>

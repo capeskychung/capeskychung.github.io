@@ -65,16 +65,19 @@
     <li><a href="/" >Home</a></li>
   
     
-    <li><a href="/python/" >Python</a></li>
+    <li><a href="/language/" >Language</a></li>
   
     
-    <li><a href="/linux/" >Linux</a></li>
+    <li><a href="/os/" >OS</a></li>
   
     
     <li><a href="/algorithm/" >Algorithm</a></li>
   
     
     <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/database/" >Database</a></li>
   
     
     <li><a href="/about/" >About Me</a></li>
@@ -93,15 +96,15 @@
         
       </a>
     </li><li>
-      <a href="/python/">
+      <a href="/language/">
         
-        <div class="title">Python</div>
+        <div class="title">Language</div>
         
       </a>
     </li><li>
-      <a href="/linux/">
+      <a href="/os/">
         
-        <div class="title">Linux</div>
+        <div class="title">OS</div>
         
       </a>
     </li><li>
@@ -114,6 +117,12 @@
       <a href="/ai/">
         
         <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/database/">
+        
+        <div class="title">Database</div>
         
       </a>
     </li><li>
@@ -157,24 +166,22 @@
 				<p>二叉搜索树可以快速定位一个给定关键字的数据项，可以快速插入和删除数据。二叉树存在一个问题，如果插入的数据是正序或者逆序的数据，二叉搜索树的执行会变慢，因为有序的二叉树是非平衡的，此时的二叉树类似与链表。
 红黑树,基于二叉搜索树，二叉搜索树可以快速地找到一个给定的关键字的数据项，并且可以快速地插入和删除数据项。以较快的时间O(logN)来搜索一棵树，需要保证树总是平衡的，树种的每个节点在它左边的后代数目和在它右边的后代数据应该大致相等。红黑树就是一棵平衡树，对要插入的数据项，插入过程要检查是否破坏树的特征，是则程序需要纠正，改变树的结构，从而保持树的平衡。</p>
 
-<h4 id="特征与规则">特征与规则</h4>
+<h4 id="section">特征与规则</h4>
 
 <ul>
   <li>所有节点都有颜色</li>
   <li>在插入和删除的过程中，要遵循保持这些颜色的不同排列的规则。</li>
 </ul>
 
-<p>红黑树的主要规则：</p>
-<ol>
-  <li>每个节点不是红色就是黑色；</li>
-  <li>根节点总是黑色的；</li>
-  <li>如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；</li>
-  <li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（相同的黑色高度）</li>
-</ol>
+<p>红黑树的主要规则：
+1. 每个节点不是红色就是黑色；
+2. 根节点总是黑色的；
+3. 如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；
+4. 从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（相同的黑色高度）</p>
 
 <p>在红黑树中插入的节点都是红色的，因为插入一个红色节点比插入一个黑色节点违背红黑原则的可能性更小。原因是：插入黑色节点总会改变黑色高度（规则4），但是插入红色节点只有一半的概率违背规则3.规则3比规则4更容易修正。</p>
 
-<h4 id="修正平衡性">修正平衡性</h4>
+<h4 id="section-1">修正平衡性</h4>
 <p>红黑树主要通过三种方式平衡，改变节点颜色、左旋和右旋。</p>
 
 <ol>
@@ -197,13 +204,12 @@
      <span class="o">/</span> <span class="err">\</span>                 <span class="o">/</span> <span class="err">\</span> 
     <span class="n">ly</span> <span class="n">ry</span>               <span class="n">lx</span> <span class="n">ly</span>  </code></pre></figure>
 
-<p>左旋做了三件事：</p>
+<p>左旋做了三件事： <br />
+  1. 将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)  <br />
+  2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)  <br />
+  3. 将y的左子节点设为x，将x的父节点设为y</p>
+
 <ol>
-  <li>将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)</li>
-  <li>将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)</li>
-  <li>
-    <p>将y的左子节点设为x，将x的父节点设为y</p>
-  </li>
   <li>右旋</li>
 </ol>
 
@@ -217,14 +223,12 @@
     <span class="o">/</span> <span class="err">\</span>                     <span class="o">/</span> <span class="err">\</span> 
   <span class="n">lx</span>  <span class="n">rx</span>                   <span class="n">rx</span> <span class="n">ry</span> </code></pre></figure>
 
-<p>右旋做了三件事：</p>
-<ol>
-  <li>将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)</li>
-  <li>将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)</li>
-  <li>将x的右子节点设为y，将y的父节点设为x</li>
-</ol>
+<p>右旋做了三件事： 
+  1. 将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时) <br />
+  2. 将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)  <br />
+  3. 将x的右子节点设为y，将y的父节点设为x</p>
 
-<h4 id="红黑树操作">红黑树操作</h4>
+<h4 id="section-2">红黑树操作</h4>
 
 <p>红黑树节点</p>
 
@@ -298,7 +302,7 @@
 </div><!-- /.share-this -->
 
 					<div class="page-meta">
-	<p>Updated <time datetime="2018-04-08T10:04:00Z" itemprop="datePublished">April 08, 2018</time></p>
+	<p>Updated <time datetime="2018-04-09T01:04:00Z" itemprop="datePublished">April 09, 2018</time></p>
 </div><!-- /.page-meta -->
 				</footer><!-- /.footer -->
 				<aside>

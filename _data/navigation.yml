@@ -5,11 +5,11 @@
   excerpt:
   image: sunny-sunset-morning.jpg
 
-- title: Python
-  url: /python/
+- title: Language
+  url: /language/
 
-- title: Linux
-  url: /linux/
+- title: OS
+  url: /os/
 
 - title: Algorithm
   url: /algorithm/
