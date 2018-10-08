@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>bully算法 • CapeskyChung</title>
+    <meta name="description" content="Bully算法是一种协调者(主节点)竞选算法，主要思想是集群中的每个成员都可以声明它是主节点并通知其他节点。其他节点可以选择接受这个声明或者拒绝并进入主节点竞争。被其他所有节点接受的节点才能成为主节点。节点按照一些属性(比如进程ID)来判断应该接受谁胜出。Mongo早期的版本便是采用bully进行主节点选取。
+
+">
+    <meta name="keywords" content="bully, algorithm">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="bully算法">
+	<meta name="twitter:description" content="Bully算法是一种协调者(主节点)竞选算法，主要思想是集群中的每个成员都可以声明它是主节点并通知其他节点。其他节点可以选择接受这个声明或者拒绝并进入主节点竞争。被其他所有节点接受的节点才能成为主节点。节点按照一些属性(比如进程ID)来判断应该接受谁胜出。Mongo早期的版本便是采用bully进行主节点选取。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="bully算法">
+	<meta property="og:description" content="Bully算法是一种协调者(主节点)竞选算法，主要思想是集群中的每个成员都可以声明它是主节点并通知其他节点。其他节点可以选择接受这个声明或者拒绝并进入主节点竞争。被其他所有节点接受的节点才能成为主节点。节点按照一些属性(比如进程ID)来判断应该接受谁胜出。Mongo早期的版本便是采用bully进行主节点选取。
+
+">
+	<meta property="og:url" content="/algorithm/bully/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/algorithm/bully/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/language/" >Language</a></li>
+  
+    
+    <li><a href="/os/" >OS</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/database/" >Database</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/language/">
+        
+        <div class="title">Language</div>
+        
+      </a>
+    </li><li>
+      <a href="/os/">
+        
+        <div class="title">OS</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/database/">
+        
+        <div class="title">Database</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/algorithm/" itemprop="url">
+        <span itemprop="title">Algorithm</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>bully算法</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>Bully算法是一种协调者(主节点)竞选算法，主要思想是集群中的每个成员都可以声明它是主节点并通知其他节点。其他节点可以选择接受这个声明或者拒绝并进入主节点竞争。被其他所有节点接受的节点才能成为主节点。节点按照一些属性(比如进程ID)来判断应该接受谁胜出。Mongo早期的版本便是采用bully进行主节点选取。</p>
+
+<h4 id="section">算法流程</h4>
+<p>在很多实际的应用中，用来判断节点胜出的条件都会不一致，可以根据具体的环境选择。算法定义的时候给出的例子是以最大的可用进程ID为主节点。
+算法有三种消息：<br />
+1) 选举消息(Election Message)<br />
+2) 应答消息(Answer(Alive) Message)<br />
+3) 选举成功消息(Coordinator(Victory) Message )</p>
+
+<p>当一个进程P从故障中恢复过来，或者接受到主节点失效的信息时，操作如下：<br />
+1) 如果进程P有最大的进程ID，向其他进程广播选举成功消息.否则向进程号比自己大的进程发送选举消息。<br />
+2) 如果进程P发送选举消息之后，没有接收到应答，就会向其他的节点广播选举成功消息，并成为主节点。 <br />
+3) 如果进程P收到比它进程ID大的进程的Answer Message，选举失败，等待接收其他进程的Victory Message。<br />
+4) 如果进程P收到比它进程ID小的进程的Election Message时，向该进程发送一个Answer Message。并启动选举进程，向比他更高的进程发送Election Message。 <br />
+5) 如果进程P收到Victory Message，会把发送这条消息的节点当成主节点。</p>
+
+<h4 id="section-1">算法实现</h4>
+
+<p><img src="/images/algorithm/bully/bully.png" alt="算法流程" />  <br />
+1. 最初集群有5个节点，节点5是一个公认的协调者。<br />
+2. 假设节点5挂了，并且节点2和节点3同时发现了这一情况。两个节点开始竞选并发送竞选消息给ID更大的节点。<br />
+3. 节点4淘汰了节点2和3，节点3淘汰了节点2。<br />
+4. 这时候节点1察觉了节点5失效并向所有ID更大的节点发送了竞选信息。<br />
+5. 节点2、3和4都淘汰了节点1。<br />
+6. 节点4发送竞选信息给节点5。<br />
+7. 节点5没有响应，所以节点4宣布自己当选并向其他节点通告了这一消息</p>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=bully算法&amp;url=/algorithm/bully/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/algorithm/bully/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/algorithm/bully/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-05-03T05:04:00Z" itemprop="datePublished">May 03, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

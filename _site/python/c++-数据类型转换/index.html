@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>c++ tinyxml使用 • CapeskyChung</title>
+    <meta name="description" content="主要介绍tinyxml的使用、优缺点.以及源码阅读。
+
+">
+    <meta name="keywords" content="tinyxml, c++">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="c++ tinyxml使用">
+	<meta name="twitter:description" content="主要介绍tinyxml的使用、优缺点.以及源码阅读。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="c++ tinyxml使用">
+	<meta property="og:description" content="主要介绍tinyxml的使用、优缺点.以及源码阅读。
+
+">
+	<meta property="og:url" content="/python/c++-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/python/c++-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/language/" >Language</a></li>
+  
+    
+    <li><a href="/os/" >OS</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/database/" >Database</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/language/">
+        
+        <div class="title">Language</div>
+        
+      </a>
+    </li><li>
+      <a href="/os/">
+        
+        <div class="title">OS</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/database/">
+        
+        <div class="title">Database</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/python/" itemprop="url">
+        <span itemprop="title">Python</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>c++ tinyxml使用</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>主要介绍tinyxml的使用、优缺点.以及源码阅读。</p>
+
+<h4 id="tinyxml">tinyxml</h4>
+<p>tinyxml2和tinyxml1都是Thomason编写的。tinyxml2适用于大部分的c/c++项目，久经考验，所以实用性毋庸置疑。相对于tinyxml1来说，tinyxml2只有两个文件，更为简洁；tinyxml1则有6个文件，一般生成静态库使用，也可生成动态。
+tinyxml2于tinyxml1的API相似，测试案例足够丰富。tinyxml2解析器基本上是重写，更适合游戏开发使用，使用内存更少，更快，使用更少的内存分配。另外tinyxml2取消了对STL的支持，字符串查询均使用const char *来比奥斯减少了string类型对象的构造，代码更为简洁。    <br />
+相同的地方： <br />
+* 使用简单易用的API<br />
+* 基于DOM的解析器<br />
+* 都支持UTF-8编码</p>
+
+<p>tinyxml2优点：<br />
+* 对C/C++项目普适性高  <br />
+* 内存消耗更少，相对于tinyxml1节省近40%，速度更快 <br />
+* 无需C++ STL支持 <br />
+* 使用较新的C++特性<br />
+* 处理特殊的空白字符，空格，TAB和回车</p>
+
+<p>tinyxml1的优点： <br />
+* 较好的错误跟踪，可以显示错误的位置<br />
+* 提供C++ STL的支持，流、字符串等 <br />
+* 经历更多更好的测试</p>
+
+<h4 id="section">实际使用</h4>
+<p>在项目中的使用有多重方式，一般有三种方式： <br />
+1. 直接将tinyxml2.h和tinyxml2.cpp代码copy到相应的工程目录，然后#include “tinyxmml2.h”, using namespace tinyxml2即可在代码中使用<br />
+2. 生成静态库，代码下载之后直接build可生成静态库，静态库相对文件比较大 <br />
+3. 生成动态库，可以分离出使用，并可以进行代码更新 <br />
+大部分项目使用第一种和第三种方式，第三种方式一般在需要对xml功能进行定制化开发，添加一些额外功能使用的较多。</p>
+
+<p>动态库生成，在tinyxml2.h前面加上</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#define TINYXML2_EXPORT </span></code></pre></figure>
+
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=c++%20tinyxml使用&amp;url=/python/c++-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/python/c++-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/python/c++-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-04-25T04:04:00Z" itemprop="datePublished">April 25, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

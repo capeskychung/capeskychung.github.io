@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>mongo孤儿数据 • CapeskyChung</title>
+    <meta name="description" content="主要介绍什么是孤儿数据，以及孤儿数据的产生，另外还有为什么孤儿数据会被查询到，并对查询的结果产生影响。
+
+">
+    <meta name="keywords" content="orphaned document, mongo">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="mongo孤儿数据">
+	<meta name="twitter:description" content="主要介绍什么是孤儿数据，以及孤儿数据的产生，另外还有为什么孤儿数据会被查询到，并对查询的结果产生影响。
+
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="mongo孤儿数据">
+	<meta property="og:description" content="主要介绍什么是孤儿数据，以及孤儿数据的产生，另外还有为什么孤儿数据会被查询到，并对查询的结果产生影响。
+
+">
+	<meta property="og:url" content="/database/mongo-orphaned-document/">
+	<meta property="og:site_name" content="CapeskyChung">
+
+    <link rel="canonical" href="/database/mongo-orphaned-document/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="CapeskyChung Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title">CapeskyChung</a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/">CapeskyChung</a></li>
+	
+    
+    <li><a href="/" >Home</a></li>
+  
+    
+    <li><a href="/language/" >Language</a></li>
+  
+    
+    <li><a href="/os/" >OS</a></li>
+  
+    
+    <li><a href="/algorithm/" >Algorithm</a></li>
+  
+    
+    <li><a href="/ai/" >AI</a></li>
+  
+    
+    <li><a href="/database/" >Database</a></li>
+  
+    
+    <li><a href="/about/" >About Me</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5>CapeskyChung <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/">
+        <img src="/images/sunny-sunset-morning.jpg" alt="teaser" class="teaser">
+        <div class="title">Home</div>
+        
+      </a>
+    </li><li>
+      <a href="/language/">
+        
+        <div class="title">Language</div>
+        
+      </a>
+    </li><li>
+      <a href="/os/">
+        
+        <div class="title">OS</div>
+        
+      </a>
+    </li><li>
+      <a href="/algorithm/">
+        
+        <div class="title">Algorithm</div>
+        
+      </a>
+    </li><li>
+      <a href="/ai/">
+        
+        <div class="title">AI</div>
+        
+      </a>
+    </li><li>
+      <a href="/database/">
+        
+        <div class="title">Database</div>
+        
+      </a>
+    </li><li>
+      <a href="/about/">
+        
+        <div class="title">About Me</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/database/" itemprop="url">
+        <span itemprop="title">Database</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>mongo孤儿数据</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>主要介绍什么是孤儿数据，以及孤儿数据的产生，另外还有为什么孤儿数据会被查询到，并对查询的结果产生影响。</p>
+
+<h4 id="section">官方定义</h4>
+<p>Mongodb官方文档中，关于orphaned document的描述：</p>
+
+<blockquote>
+  <p>In a sharded cluster, orphaned documents are those documents on a shard that also exist in chunks on other shards as a result of failed migrations or incomplete migration cleanup due to abnormal shutdown. Delete orphaned documents using cleanupOrphaned to reclaim disk space and reduce.</p>
+</blockquote>
+
+<p>孤儿文档是指在sharded cluster集群下，同时存在不同shard上的document。在mongodb sharded cluster集群中，分布在不同shard的数据自己是正交，一个文档只能出现在一个shard中。docuemnt宇shard的映射关系维护在config server中。在mongo发生迁移的过程中，mongod进程shutdown，导致迁移过程失败或者部分完成。</p>
+
+<h4 id="section-1">产生原因</h4>
+
+<blockquote>
+  <p>参考: https://www.cnblogs.com/xybaby/p/7131776.html?utm_source=itdadao&amp;utm_medium=referral</p>
+</blockquote>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="capeskychung">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author">capeskychung</span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=mongo孤儿数据&amp;url=/database/mongo-orphaned-document/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/database/mongo-orphaned-document/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/database/mongo-orphaned-document/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2018-10-08T03:20:00Z" itemprop="datePublished">October 08, 2018</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2018 <a href="">CapeskyChung</a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>
